@@ -872,3 +872,14 @@
         margin-bottom: 1rem;
     }
 }
+/* Ajuste dos Depoimentos no celular */
+@media (max-width: 768px) {
+    .depoimentos-grid {
+        grid-template-columns: 1fr !important;
+        gap: 1.5rem;
+    }
+
+    .depoimento {
+        padding: 1.5rem;
+    }
+}
