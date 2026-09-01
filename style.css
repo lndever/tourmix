@@ -732,6 +732,12 @@ h1, h2, h3 {
 }
 
 /* ===== FOOTER ===== */
+.footer {
+    background: #0a2e38;
+    color: rgba(255, 255, 255, 0.8);
+    padding-top: 3.5rem;
+}
+
 .footer-brand {
     display: flex;
     flex-direction: column;
@@ -739,13 +745,8 @@ h1, h2, h3 {
     gap: 1rem;
 }
 
-.footer-brand .logo {
-    display: block;
-    margin-bottom: 0.3rem;
-}
-
-.logo-footer,
-.footer-brand .logo-img {
+.footer-brand .logo-img,
+.logo-footer {
     height: 72px !important;
     width: auto !important;
     display: block;
@@ -760,29 +761,26 @@ h1, h2, h3 {
 }
 
 .footer-links h4 {
-    color: white;
+    color: #ffffff;
     font-size: 1rem;
     margin-bottom: 1.1rem;
-    font-family: 'Montserrat', sans-serif;
 }
 
 .footer-links a,
 .footer-links p {
-    display: block;
-    margin-bottom: 0.55rem;
-    font-size: 0.9rem;
-    transition: var(--transition);
+    color: rgba(255, 255, 255, 0.8);
 }
 
 .footer-links a:hover {
-    color: var(--accent);
+    color: #eab308;
 }
 
 .footer-bottom {
-    border-top: 1px solid rgba(255,255,255,0.1);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
     padding: 1.3rem 0;
     text-align: center;
     font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.65);
 }
 
 /* ===== WHATSAPP FLOAT ===== */
