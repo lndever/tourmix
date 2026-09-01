@@ -900,3 +900,67 @@ h1, h2, h3 {
         grid-template-columns: 1fr !important;
     }
 }
+/* Correção do rodapé */
+.footer-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    margin-bottom: 2rem;
+}
+
+.footer-brand {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+.footer-brand .logo-img {
+    height: 72px !important;
+    width: auto !important;
+    display: block;
+}
+
+.footer-desc {
+    font-size: 0.95rem;
+    line-height: 1.7;
+    max-width: 280px;
+    color: rgba(255, 255, 255, 0.8);
+    margin: 0;
+}
+
+.footer-links h4 {
+    color: #ffffff;
+    font-size: 1rem;
+    margin-bottom: 0.9rem;
+    margin-top: 0.5rem;
+}
+
+.footer-links a,
+.footer-links p {
+    display: block !important;
+    margin-bottom: 0.65rem !important;
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.8);
+    line-height: 1.5;
+}
+
+.footer-links a:hover {
+    color: #eab308;
+}
+
+.footer-bottom {
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
+    padding: 1.3rem 0;
+    text-align: center;
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.6);
+}
+
+@media (min-width: 768px) {
+    .footer-grid {
+        grid-template-columns: 1.5fr 1fr 1fr 1fr;
+        gap: 2.5rem;
+    }
+}
