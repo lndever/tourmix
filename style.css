@@ -732,27 +732,31 @@ h1, h2, h3 {
 }
 
 /* ===== FOOTER ===== */
-.footer {
-    background: #0a2e38;
-    color: rgba(255,255,255,0.8);
-    padding-top: 3.5rem;
+.footer-brand {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
 }
 
-.footer-grid {
-    display: grid;
-    grid-template-columns: 1.5fr 1fr 1fr 1fr;
-    gap: 2.5rem;
-    margin-bottom: 2.5rem;
+.footer-brand .logo {
+    display: block;
+    margin-bottom: 0.3rem;
 }
 
-.footer .logo {
-    margin-bottom: 1rem;
+.logo-footer,
+.footer-brand .logo-img {
+    height: 72px !important;
+    width: auto !important;
+    display: block;
 }
 
-.footer-brand p {
-    font-size: 0.92rem;
-    max-width: 260px;
+.footer-desc {
+    font-size: 0.95rem;
     line-height: 1.65;
+    max-width: 280px;
+    color: rgba(255, 255, 255, 0.8);
+    margin: 0;
 }
 
 .footer-links h4 {
