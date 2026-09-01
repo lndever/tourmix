@@ -1,27 +1,28 @@
-document.addEventListener('DOMContentLoaded', function() {
-        const menuToggle = document.getElementById('menuToggle');
-            const nav = document.getElementById('nav');
+document.addEventListener('DOMContentLoaded', function () {
+    const header = document.getElementById('header');
+    if (header) {
+        window.addEventListener('scroll', function () {
+            if (window.scrollY > 40) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+    }
 
-                if (menuToggle && nav) {
-                        menuToggle.addEventListener('click', function() {
-                                    nav.classList.toggle('open');
-                                            });
-
-                                                    // Fecha o menu ao clicar em qualquer link
-                                                            nav.querySelectorAll('a').forEach(function(link) {
-                                                                        link.addEventListener('click', function() {
-                                                                                        nav.classList.remove('open');
-                                                                                                    });
-                                                                                                            });
-                                                                                                                }
-
-                                                                                                                    // Header com fundo ao rolar
-                                                                                                                        const header = document.getElementById('header');
-                                                                                                                            window.addEventListener('scroll', function() {
-                                                                                                                                    if (window.scrollY > 40) {
-                                                                                                                                                header.classList.add('scrolled');
-                                                                                                                                                        } else {
-                                                                                                                                                                    header.classList.remove('scrolled');
-                                                                                                                                                                            }
-                                                                                                                                                                                });
-                                                                                                                                                                                });
+    const form = document.getElementById('contatoForm');
+    if (form) {
+        form.addEventListener('submit', function (e) {
+            e.preventDefault();
+            const nome = document.getElementById('nome')?.value || '';
+            const destino = document.getElementById('destino')?.value || '';
+            const mensagem = document.getElementById('mensagem')?.value || '';
+            const texto = encodeURIComponent(
+                'Olá! Meu nome é ' + nome +
+                (destino ? '. Tenho interesse em: ' + destino : '') +
+                (mensagem ? '. ' + mensagem : '')
+            );
+            window.open('https://wa.me/5511914841404?text=' + texto, '_blank');
+        });
+    }
+});
