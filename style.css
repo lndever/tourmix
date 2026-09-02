@@ -832,7 +832,7 @@ h1, h2, h3 {
 
 @media (max-width: 768px) {
     .nav {
-        display: none;
+        display: flex !important;
     }
 
     .destinos-grid {
@@ -1001,4 +1001,45 @@ PORTIFOLIO
     opacity: 0.9;
     margin: 0;
     color: rgba(255,255,255,0.9);
+}
+/* Menu compacto no mobile */
+@media (max-width: 768px) {
+    .nav {
+        display: flex !important;
+        align-items: center;
+        gap: 0.35rem;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        max-width: 70%;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .nav a {
+        color: #0f172a !important;
+        font-size: 0.68rem !important;
+        font-weight: 600;
+        padding: 0.35rem 0.45rem !important;
+        white-space: nowrap;
+        border-radius: 50px;
+    }
+
+    .header:not(.scrolled) .nav a {
+        color: rgba(255, 255, 255, 0.95) !important;
+    }
+
+    .nav .btn-nav {
+        background: #eab308 !important;
+        color: #0f172a !important;
+        padding: 0.35rem 0.6rem !important;
+        font-size: 0.68rem !important;
+        border-radius: 50px;
+    }
+
+    .logo-img {
+        height: 36px !important;
+    }
+
+    .header-inner {
+        gap: 0.5rem;
+    }
 }
