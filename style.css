@@ -1043,3 +1043,27 @@ PORTIFOLIO
         gap: 0.5rem;
     }
 }
+/* Cadastur e CNPJ no rodapé */
+.footer-legal {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    padding: 1.2rem 1rem 0.4rem;
+    text-align: center;
+}
+
+.cadastur-logo {
+    height: 48px;
+    width: auto;
+    display: block;
+    object-fit: contain;
+}
+
+.footer-cnpj {
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.75);
+    margin: 0;
+    letter-spacing: 0.2px;
+}
