@@ -1067,14 +1067,15 @@ PORTIFOLIO
     margin: 0;
     letter-spacing: 0.2px;
 }
-/* Ícones do rodapé */
+/* Ícones do rodapé — alinhados com o texto */
 .footer-icon-link {
     display: flex !important;
-    align-items: center;
-    gap: 0.55rem;
-    margin-bottom: 0.7rem !important;
+    align-items: center !important;
+    gap: 0.6rem;
+    margin-bottom: 0.85rem !important;
     color: rgba(255, 255, 255, 0.85);
-    font-size: 0.9rem;
+    font-size: 0.95rem;
+    line-height: 1.2;
     text-decoration: none;
 }
 
@@ -1086,5 +1087,7 @@ PORTIFOLIO
     width: 18px;
     height: 18px;
     flex-shrink: 0;
-    opacity: 0.9;
+    display: block;
+    position: relative;
+    top: 1px; /* sobe/desce 1px se ainda ficar torto */
 }
