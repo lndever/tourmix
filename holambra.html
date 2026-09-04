@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Holambra – Cidade das Flores | TOURMIX</title>
+    <link rel="icon" type="image/png" href="LOGO-05.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body { font-family: 'Montserrat', system-ui, sans-serif; background: #fffdf5; }
+        h1, h2, h3, h4 { font-family: 'Montserrat', system-ui, sans-serif; font-weight: 700; }
+
+        .pacote-hero {
+            height: 52vh;
+            min-height: 340px;
+            background: url('https://images.pexels.com/photos/56866/garden-flower-purple-yellow-56866.jpeg?auto=compress&cs=tinysrgb&w=1600') center/cover no-repeat;
+            position: relative;
+            display: flex;
+            align-items: flex-end;
+            color: white;
+        }
+        .pacote-hero-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(30,20,0,0.8), rgba(0,0,0,0.25));
+        }
+        .pacote-hero-content {
+            position: relative;
+            z-index: 2;
+            padding: 2.5rem 1.2rem;
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .voltar {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+            padding: 0.55rem 1.3rem;
+            background: rgba(255,255,255,0.92);
+            color: #a16207;
+            font-weight: 600;
+            font-size: 0.9rem;
+            border-radius: 50px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.12);
+        }
+        .voltar:hover { background: #fff; }
+
+        .badge-data {
+            display: inline-block;
+            background: #eab308;
+            color: #1c1917;
+            font-size: 0.78rem;
+            font-weight: 700;
+            padding: 0.35rem 0.9rem;
+            border-radius: 50px;
+            margin-bottom: 0.75rem;
+        }
+
+        .pacote-detalhes { padding: 3.5rem 0 4.5rem; }
+        .pacote-grid {
+            display: grid;
+            grid-template-columns: 1.55fr 1fr;
+            gap: 2.5rem;
+            align-items: start;
+        }
+
+        .intro-text {
+            color: #57534e;
+            line-height: 1.75;
+            margin-bottom: 1.8rem;
+            font-size: 1.02rem;
+        }
+
+        /* ACCORDION */
+        .acordeon { display: flex; flex-direction: column; gap: 0.75rem; }
+
+        .acordeon-item {
+            background: #fff;
+            border: 1px solid #f5e6b8;
+            border-radius: 14px;
+            overflow: hidden;
+            box-shadow: 0 4px 14px rgba(161, 98, 7, 0.06);
+        }
+
+        .acordeon-btn {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            padding: 1.1rem 1.25rem;
+            background: #fffbeb;
+            border: none;
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 1rem;
+            font-weight: 700;
+            color: #854d0e;
+            text-align: left;
+            transition: background 0.2s ease;
+        }
+        .acordeon-btn:hover { background: #fef3c7; }
+
+        .acordeon-btn .seta {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: #eab308;
+            color: #1c1917;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.85rem;
+            flex-shrink: 0;
+            transition: transform 0.25s ease;
+        }
+
+        .acordeon-item.aberto .acordeon-btn .seta {
+            transform: rotate(180deg);
+        }
+
+        .acordeon-corpo {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.35s ease;
+        }
+        .acordeon-item.aberto .acordeon-corpo {
+            max-height: 800px;
+        }
+        .acordeon-inner {
+            padding: 0 1.25rem 1.3rem;
+            color: #44403c;
+            font-size: 0.95rem;
+            line-height: 1.65;
+        }
+
+        .lista-limpa {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .lista-limpa li {
+            padding: 0.55rem 0;
+            padding-left: 1.6rem;
+            position: relative;
+            border-bottom: 1px solid #f5f5f4;
+        }
+        .lista-limpa li:last-child { border-bottom: none; }
+        .lista-limpa li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #eab308;
+            font-weight: 700;
+        }
+
+        .ponto {
+            display: flex;
+            gap: 0.75rem;
+            padding: 0.7rem 0;
+            border-bottom: 1px solid #f5f5f4;
+        }
+        .ponto:last-child { border-bottom: none; }
+        .ponto strong {
+            color: #a16207;
+            min-width: 70px;
+            font-size: 0.9rem;
+        }
+
+        /* SIDE CARD */
+        .info-box {
+            background: #fff;
+            border-radius: 16px;
+            padding: 1.8rem;
+            box-shadow: 0 10px 30px rgba(161, 98, 7, 0.1);
+            border: 1px solid #f5e6b8;
+            position: sticky;
+            top: 90px;
+        }
+        .info-box .label {
+            font-size: 0.85rem;
+            color: #78716c;
+            margin-bottom: 0.25rem;
+        }
+        .info-box .preco {
+            font-size: 1.75rem;
+            color: #a16207;
+            font-weight: 800;
+            margin-bottom: 0.25rem;
+        }
+        .info-box .preco small {
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: #78716c;
+        }
+        .info-box .pix {
+            font-size: 0.95rem;
+            color: #57534e;
+            margin-bottom: 1.2rem;
+        }
+        .info-box .meta {
+            font-size: 0.9rem;
+            color: #44403c;
+            margin-bottom: 0.4rem;
+        }
+        .info-box .meta strong { color: #a16207; }
+
+        .btn-amarelo {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            padding: 0.95rem 1.2rem;
+            background: #eab308;
+            color: #1c1917;
+            font-weight: 700;
+            font-size: 0.95rem;
+            border-radius: 50px;
+            border: none;
+            cursor: pointer;
+            text-decoration: none;
+            margin-top: 1.2rem;
+            transition: background 0.2s ease, transform 0.2s ease;
+        }
+        .btn-amarelo:hover {
+            background: #ca8a04;
+            transform: translateY(-2px);
+            color: #1c1917;
+        }
+
+        .obs {
+            font-size: 0.8rem;
+            color: #78716c;
+            line-height: 1.55;
+            margin-top: 1rem;
+            padding-top: 0.9rem;
+            border-top: 1px solid #f5e6b8;
+        }
+
+        .logo-img { height: 48px; width: auto; }
+
+        @media (max-width: 900px) {
+            .pacote-grid { grid-template-columns: 1fr; }
+            .info-box { position: static; }
+            .pacote-hero { height: 42vh; }
+        }
+    </style>
+</head>
+<body>
+    <header class="header scrolled" id="header">
+        <div class="container header-inner">
+            <a href="/" class="logo">
+                <img src="LOGO-05.png" alt="TOURMIX" class="logo-img">
+            </a>
+            <nav class="nav" id="nav">
+                <a href="/">Início</a>
+                <a href="/excursoes">Excursões</a>
+                <a href="/#pacotes">Pacotes</a>
+                <a href="/#contato" class="btn-nav">Fale Conosco</a>
+            </nav>
+        </div>
+    </header>
+
+    <section class="pacote-hero">
+        <div class="pacote-hero-overlay"></div>
+        <div class="pacote-hero-content">
+            <a href="/excursoes" class="voltar">← Voltar para Excursões</a>
+            <span class="badge-data">25 de outubro · Domingo</span>
+            <h1 style="font-size: clamp(1.9rem, 5vw, 2.6rem); margin-bottom: 0.4rem;">Holambra</h1>
+            <p style="opacity: 0.92; font-size: 1.1rem;">A Cidade das Flores · Excursão de 1 dia</p>
+        </div>
+    </section>
+
+    <section class="pacote-detalhes">
+        <div class="container pacote-grid">
+            <div>
+                <p class="intro-text">
+                    Um dia especial para conhecer lugares encantadores, apreciar as flores,
+                    tirar muitas fotos e aproveitar Holambra com tranquilidade.
+                    Prepare-se para um passeio leve, colorido e cheio de charme holandês.
+                </p>
+
+                <div class="acordeon">
+
+                    <!-- EMBARQUE -->
+                    <div class="acordeon-item">
+                        <button type="button" class="acordeon-btn" aria-expanded="false">
+                            Embarque e horários
+                            <span class="seta">▼</span>
+                        </button>
+                        <div class="acordeon-corpo">
+                            <div class="acordeon-inner">
+                                <div class="ponto">
+                                    <strong>6h20</strong>
+                                    <span>Posto 35km — Itaquaquecetuba</span>
+                                </div>
+                                <div class="ponto">
+                                    <strong>7h30</strong>
+                                    <span>Estação Barra Funda — São Paulo</span>
+                                </div>
+                                <p style="margin-top: 0.9rem; font-size: 0.88rem; color: #78716c;">
+                                    Chegue com antecedência. Leve documento com foto.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ROTEIRO -->
+                    <div class="acordeon-item">
+                        <button type="button" class="acordeon-btn" aria-expanded="false">
+                            Roteiro
+                            <span class="seta">▼</span>
+                        </button>
+                        <div class="acordeon-corpo">
+                            <div class="acordeon-inner">
+                                <ul class="lista-limpa">
+                                    <li>Portal de Holambra</li>
+                                    <li>Campo de Flores (opcional)</li>
+                                    <li>Moinho Gigante</li>
+                                    <li>Rua dos Guarda-Chuvas</li>
+                                    <li>Deck do Amor</li>
+                                    <li>Parque Van Gogh</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- INCLUSO -->
+                    <div class="acordeon-item">
+                        <button type="button" class="acordeon-btn" aria-expanded="false">
+                            O que está incluso
+                            <span class="seta">▼</span>
+                        </button>
+                        <div class="acordeon-corpo">
+                            <div class="acordeon-inner">
+                                <ul class="lista-limpa">
+                                    <li>Micro-ônibus executivo</li>
+                                    <li>Guia de turismo credenciado</li>
+                                    <li>Seguro viagem Hero</li>
+                                    <li>Kit experience Tourmix</li>
+                                    <li>Sorteios durante o passeio</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- INVESTIMENTO -->
+                    <div class="acordeon-item">
+                        <button type="button" class="acordeon-btn" aria-expanded="false">
+                            Investimento e pagamento
+                            <span class="seta">▼</span>
+                        </button>
+                        <div class="acordeon-corpo">
+                            <div class="acordeon-inner">
+                                <div class="ponto">
+                                    <strong>PIX</strong>
+                                    <span>2x de R$ 80,00 até o dia da viagem</span>
+                                </div>
+                                <div class="ponto">
+                                    <strong>À vista</strong>
+                                    <span>R$ 159,90</span>
+                                </div>
+                                <div class="ponto">
+                                    <strong>Cartão</strong>
+                                    <span>Até 12x (com taxas da operadora)</span>
+                                </div>
+                                <div class="ponto">
+                                    <strong>Reserva</strong>
+                                    <span>30% do valor total</span>
+                                </div>
+                                <div class="ponto">
+                                    <strong>PIX</strong>
+                                    <span>CNPJ 65.063.425/0001-95</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <aside class="info-box">
+                <p class="label">Investimento a partir de</p>
+                <div class="preco">R$ 159,90 <small>à vista</small></div>
+                <p class="pix">ou 2x de R$ 80,00 no PIX</p>
+
+                <p class="meta"><strong>Data:</strong> 25 de outubro (domingo)</p>
+                <p class="meta"><strong>Duração:</strong> 1 dia</p>
+                <p class="meta"><strong>Saídas:</strong> Itaquaquecetuba e Barra Funda</p>
+                <p class="meta"><strong>Reserva:</strong> 30% do valor</p>
+
+                <a href="https://wa.me/5511914841404?text=Olá! Quero reservar a excursão de Holambra no dia 25 de outubro." target="_blank" class="btn-amarelo">
+                    Reservar no WhatsApp
+                </a>
+
+                <p class="obs">
+                    Tourmix Br — Viagens e Experiências.<br>
+                    Vagas limitadas. Valores sujeitos a disponibilidade.
+                </p>
+            </aside>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container footer-bottom">
+            <p>© 2026 TOURMIX. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+
+    <a href="https://wa.me/5511914841404?text=Olá! Quero saber sobre a excursão de Holambra." target="_blank" class="whatsapp-float" aria-label="WhatsApp">
+        <svg viewBox="0 0 32 32" width="28" height="28"><path fill="white" d="M16.004 0C7.174 0 0 7.176 0 16.004c0 2.824.74 5.566 2.146 7.99L0 32l8.202-2.15A15.92 15.92 0 0 0 16.004 32C24.83 32 32 24.824 32 16.004 32 7.176 24.83 0 16.004 0zm0 29.24a13.18 13.18 0 0 1-6.72-1.846l-.482-.286-4.868 1.276 1.3-4.748-.314-.498A13.18 13.18 0 0 1 2.76 16.004c0-7.3 5.94-13.24 13.244-13.24 7.3 0 13.24 5.94 13.24 13.24 0 7.304-5.94 13.236-13.24 13.236z"/></svg>
+    </a>
+
+    <script>
+        document.querySelectorAll('.acordeon-btn').forEach(function (btn) {
+            btn.addEventListener('click', function () {
+                var item = btn.parentElement;
+                var aberto = item.classList.contains('aberto');
+                document.querySelectorAll('.acordeon-item').forEach(function (el) {
+                    el.classList.remove('aberto');
+                    el.querySelector('.acordeon-btn').setAttribute('aria-expanded', 'false');
+                });
+                if (!aberto) {
+                    item.classList.add('aberto');
+                    btn.setAttribute('aria-expanded', 'true');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
