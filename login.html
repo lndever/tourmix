@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | TOURMIX (teste)</title>
+    <link rel="icon" type="image/png" href="LOGO-05.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Montserrat', system-ui, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(145deg, #0e7490 0%, #0a2e38 55%, #083344 100%);
+            padding: 1.5rem;
+        }
+        .card {
+            width: 100%;
+            max-width: 400px;
+            background: #fff;
+            border-radius: 18px;
+            padding: 2rem 1.75rem;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.25);
+        }
+        .logo-wrap {
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+        .logo-wrap img {
+            height: 52px;
+            width: auto;
+            display: inline-block;
+        }
+        .logo-text {
+            font-size: 1.6rem;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+        }
+        .logo-text .tour { color: #0e7490; }
+        .logo-text .mix { color: #eab308; }
+        h1 {
+            font-size: 1.25rem;
+            color: #0f172a;
+            text-align: center;
+            margin-bottom: 0.35rem;
+        }
+        .sub {
+            text-align: center;
+            font-size: 0.88rem;
+            color: #64748b;
+            margin-bottom: 1.5rem;
+        }
+        .aviso {
+            background: #fffbeb;
+            border: 1px solid #fde68a;
+            color: #854d0e;
+            font-size: 0.8rem;
+            padding: 0.75rem 0.9rem;
+            border-radius: 10px;
+            margin-bottom: 1.25rem;
+            line-height: 1.45;
+        }
+        .aviso strong { display: block; margin-bottom: 0.2rem; }
+        label {
+            display: block;
+            font-size: 0.82rem;
+            font-weight: 600;
+            color: #0e7490;
+            margin-bottom: 0.35rem;
+        }
+        input {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            border: 1.5px solid #e2e8f0;
+            border-radius: 10px;
+            font-family: inherit;
+            font-size: 0.95rem;
+            background: #f8fafc;
+            margin-bottom: 1rem;
+            transition: border-color 0.2s;
+        }
+        input:focus {
+            outline: none;
+            border-color: #eab308;
+            background: #fff;
+        }
+        button {
+            width: 100%;
+            padding: 0.9rem;
+            border: none;
+            border-radius: 50px;
+            background: #eab308;
+            color: #0f172a;
+            font-family: inherit;
+            font-weight: 700;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: background 0.2s, transform 0.15s;
+        }
+        button:hover { background: #ca8a04; transform: translateY(-1px); }
+        .erro {
+            display: none;
+            background: #fef2f2;
+            border: 1px solid #fecaca;
+            color: #b91c1c;
+            font-size: 0.85rem;
+            padding: 0.7rem 0.9rem;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+        .voltar {
+            display: block;
+            text-align: center;
+            margin-top: 1.25rem;
+            font-size: 0.88rem;
+            color: #0e7490;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .voltar:hover { color: #eab308; }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <div class="logo-wrap">
+            <img src="LOGO-05.png" alt="TOURMIX" onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+            <div class="logo-text" style="display:none"><span class="tour">Tour</span><span class="mix">MIX</span></div>
+        </div>
+
+        <h1>Área de teste</h1>
+        <p class="sub">Login apenas para demonstração</p>
+
+        <div class="aviso">
+            <strong>Dados de teste</strong>
+            E-mail: <code>teste@tourmix.com</code><br>
+            Senha: <code>123456</code>
+        </div>
+
+        <div class="erro" id="erro">E-mail ou senha incorretos.</div>
+
+        <form id="formLogin">
+            <label for="email">E-mail</label>
+            <input type="email" id="email" placeholder="seu@email.com" required autocomplete="username">
+
+            <label for="senha">Senha</label>
+            <input type="password" id="senha" placeholder="••••••" required autocomplete="current-password">
+
+            <button type="submit">Entrar</button>
+        </form>
+
+        <a href="/" class="voltar">← Voltar ao site</a>
+    </div>
+
+    <script>
+        // Login de teste — NÃO usar em produção
+        var USUARIO_TESTE = {
+            email: 'teste@tourmix.com',
+            senha: '123456',
+            nome: 'Usuário Teste'
+        };
+
+        // Se já estiver logado, vai para a área logada
+        if (localStorage.getItem('tourmix_logado') === '1') {
+            window.location.href = 'area-teste.html';
+        }
+
+        document.getElementById('formLogin').addEventListener('submit', function (e) {
+            e.preventDefault();
+            var email = document.getElementById('email').value.trim().toLowerCase();
+            var senha = document.getElementById('senha').value;
+            var erro = document.getElementById('erro');
+
+            if (email === USUARIO_TESTE.email && senha === USUARIO_TESTE.senha) {
+                localStorage.setItem('tourmix_logado', '1');
+                localStorage.setItem('tourmix_nome', USUARIO_TESTE.nome);
+                window.location.href = 'area-teste.html';
+            } else {
+                erro.style.display = 'block';
+            }
+        });
+    </script>
+</body>
+</html>
