@@ -12,5 +12,5 @@
 
 window.TOURMIX_AUTH = {
     supabaseUrl: 'hzxkugznxopvtazmuypo',
-    supabaseAnonKey: 'sb_publishable_F-bVAnC9WXSPbZADpyFm6A_mnHVN8Bc'
+    supabaseAnonKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imh6eGt1Z3pueG9wdnRhem11eXBvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODk5MDk2OTQsImV4cCI6MjEwNTQ4NTY5NH0.utC6taOw50Cm_URHivvFSWs_czgKUJw3IW5ItLvVUQE'
 };
