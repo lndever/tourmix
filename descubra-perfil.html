@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Descubra seu perfil de viajante | TOURMIX</title>
+    <meta name="description" content="Responda 7 perguntas rápidas e descubra seu perfil de viajante TOURMIX com destinos ideais.">
+    <link rel="icon" type="image/png" href="LOGO-05.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #0e7490;
+            --primary-dark: #0a2e38;
+            --accent: #eab308;
+            --accent-hover: #ca8a04;
+            --bg: #f0f9ff;
+            --text: #0f172a;
+            --muted: #64748b;
+            --card: #ffffff;
+            --radius: 18px;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Montserrat', system-ui, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+        }
+        a { text-decoration: none; color: inherit; }
+
+        .topbar {
+            background: rgba(255,255,255,0.95);
+            border-bottom: 1px solid #e2e8f0;
+            padding: 0.85rem 1.25rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 20;
+        }
+        .logo {
+            font-weight: 800;
+            font-size: 1.25rem;
+        }
+        .logo .t { color: var(--primary); }
+        .logo .mix { color: var(--accent); }
+        .topbar a.back {
+            font-size: 0.88rem;
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        .wrap {
+            width: min(640px, 92%);
+            margin: 0 auto;
+            padding: 2rem 0 3.5rem;
+        }
+
+        /* TELAS */
+        .screen { display: none; }
+        .screen.active { display: block; animation: fadeIn 0.35s ease; }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: none; }
+        }
+
+        .card {
+            background: var(--card);
+            border-radius: var(--radius);
+            padding: 2rem 1.5rem;
+            box-shadow: 0 16px 40px rgba(14,116,144,0.1);
+            border: 1px solid #e2e8f0;
+            text-align: center;
+        }
+
+        .badge-icon {
+            width: 64px;
+            height: 64px;
+            border-radius: 18px;
+            background: linear-gradient(145deg, var(--accent), #f59e0b);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.25rem;
+            font-size: 1.6rem;
+            box-shadow: 0 10px 24px rgba(234,179,8,0.35);
+        }
+
+        h1 {
+            font-size: clamp(1.5rem, 4vw, 1.9rem);
+            line-height: 1.2;
+            margin-bottom: 0.75rem;
+        }
+        h1 span { color: var(--accent); }
+        .lead {
+            color: var(--muted);
+            font-size: 0.95rem;
+            line-height: 1.65;
+            margin-bottom: 1.75rem;
+        }
+
+        .meta-row {
+            display: flex;
+            justify-content: center;
+            gap: 1.25rem;
+            flex-wrap: wrap;
+            font-size: 0.8rem;
+            color: var(--muted);
+            margin-top: 1.25rem;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.4rem;
+            padding: 0.95rem 1.6rem;
+            border-radius: 50px;
+            font-family: inherit;
+            font-weight: 700;
+            font-size: 0.95rem;
+            border: none;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .btn-primary {
+            background: var(--primary-dark);
+            color: #fff;
+        }
+        .btn-primary:hover { background: var(--primary); }
+        .btn-accent {
+            background: var(--accent);
+            color: var(--text);
+        }
+        .btn-accent:hover { background: var(--accent-hover); }
+        .btn-outline {
+            background: transparent;
+            border: 1.5px solid var(--primary);
+            color: var(--primary);
+        }
+        .btn-block { width: 100%; }
+
+        /* PROGRESSO */
+        .progress-wrap {
+            margin-bottom: 1.25rem;
+        }
+        .progress-top {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 0.45rem;
+        }
+        .progress-bar {
+            height: 8px;
+            background: #e2e8f0;
+            border-radius: 50px;
+            overflow: hidden;
+        }
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            border-radius: 50px;
+            transition: width 0.3s ease;
+            width: 0%;
+        }
+
+        .q-card { text-align: left; }
+        .q-card h2 {
+            font-size: 1.2rem;
+            color: var(--primary-dark);
+            margin-bottom: 1.25rem;
+            line-height: 1.35;
+            text-align: center;
+        }
+
+        .opcoes {
+            display: flex;
+            flex-direction: column;
+            gap: 0.7rem;
+        }
+        .opcao {
+            display: flex;
+            align-items: center;
+            gap: 0.85rem;
+            padding: 1rem 1.1rem;
+            border: 1.5px solid #e2e8f0;
+            border-radius: 14px;
+            background: #fff;
+            cursor: pointer;
+            text-align: left;
+            font-family: inherit;
+            font-size: 0.92rem;
+            font-weight: 500;
+            color: var(--text);
+            transition: 0.2s;
+        }
+        .opcao:hover {
+            border-color: var(--primary);
+            background: #f0f9ff;
+        }
+        .opcao .emoji {
+            font-size: 1.35rem;
+            width: 32px;
+            text-align: center;
+            flex-shrink: 0;
+        }
+
+        /* RESULTADO */
+        .result-hero {
+            background: linear-gradient(145deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: #fff;
+            border-radius: var(--radius);
+            padding: 2rem 1.5rem;
+            text-align: center;
+            margin-bottom: 1.25rem;
+            position: relative;
+            overflow: hidden;
+        }
+        .result-hero::after {
+            content: '';
+            position: absolute;
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            background: rgba(234,179,8,0.15);
+            top: -40px;
+            right: -30px;
+        }
+        .result-emoji {
+            font-size: 3rem;
+            margin-bottom: 0.6rem;
+            position: relative;
+            z-index: 1;
+        }
+        .result-hero .tag {
+            display: inline-block;
+            background: var(--accent);
+            color: var(--text);
+            font-size: 0.72rem;
+            font-weight: 700;
+            padding: 0.3rem 0.75rem;
+            border-radius: 50px;
+            margin-bottom: 0.75rem;
+            position: relative;
+            z-index: 1;
+        }
+        .result-hero h2 {
+            font-size: 1.55rem;
+            margin-bottom: 0.5rem;
+            position: relative;
+            z-index: 1;
+        }
+        .result-hero p {
+            opacity: 0.92;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            position: relative;
+            z-index: 1;
+            max-width: 420px;
+            margin: 0 auto;
+        }
+
+        .result-section {
+            background: #fff;
+            border: 1px solid #e2e8f0;
+            border-radius: 16px;
+            padding: 1.25rem;
+            margin-bottom: 1rem;
+            text-align: left;
+        }
+        .result-section h3 {
+            font-size: 0.95rem;
+            color: var(--primary);
+            margin-bottom: 0.75rem;
+        }
+        .result-section ul {
+            list-style: none;
+            padding: 0;
+        }
+        .result-section li {
+            padding: 0.45rem 0 0.45rem 1.5rem;
+            position: relative;
+            font-size: 0.9rem;
+            color: #475569;
+            line-height: 1.45;
+        }
+        .result-section li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+            font-weight: 700;
+        }
+
+        .destinos {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 0.65rem;
+        }
+        @media (min-width: 520px) {
+            .destinos { grid-template-columns: 1fr 1fr; }
+        }
+        .destino-chip {
+            display: block;
+            padding: 0.85rem 1rem;
+            background: #f0f9ff;
+            border: 1px solid #bae6fd;
+            border-radius: 12px;
+            font-size: 0.88rem;
+            font-weight: 600;
+            color: var(--primary-dark);
+            transition: 0.2s;
+        }
+        .destino-chip:hover {
+            background: var(--primary);
+            color: #fff;
+            border-color: var(--primary);
+        }
+        .destino-chip small {
+            display: block;
+            font-weight: 500;
+            font-size: 0.75rem;
+            opacity: 0.8;
+            margin-top: 0.2rem;
+        }
+
+        .cta-box {
+            background: #fffbeb;
+            border: 1px solid #fde68a;
+            border-radius: 16px;
+            padding: 1.25rem;
+            text-align: center;
+            margin-top: 0.5rem;
+        }
+        .cta-box p {
+            font-size: 0.9rem;
+            color: #854d0e;
+            margin-bottom: 1rem;
+            line-height: 1.5;
+        }
+        .actions {
+            display: flex;
+            flex-direction: column;
+            gap: 0.65rem;
+            margin-top: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="topbar">
+        <a href="/" class="logo"><span class="t">Tour</span><span class="mix">MIX</span></a>
+        <a href="/" class="back">← Site</a>
+    </div>
+
+    <div class="wrap">
+        <!-- INÍCIO -->
+        <section id="screen-start" class="screen active">
+            <div class="card">
+                <div class="badge-icon">✈️</div>
+                <h1>Descubra seu<br><span>perfil de viajante</span></h1>
+                <p class="lead">
+                    Responda 7 perguntas rápidas sobre o que você gosta de fazer em uma viagem.
+                    No final, revele seu perfil TOURMIX com destinos ideais e dicas personalizadas.
+                </p>
+                <button type="button" class="btn btn-primary btn-block" id="btnStart">Começar o quiz agora →</button>
+                <div class="meta-row">
+                    <span>100% gratuito</span>
+                    <span>·</span>
+                    <span>Leva menos de 2 minutos</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- PERGUNTAS -->
+        <section id="screen-quiz" class="screen">
+            <div class="progress-wrap">
+                <div class="progress-top">
+                    <span id="progressLabel">Pergunta 1 de 7</span>
+                    <span id="progressPct">14%</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+            </div>
+            <div class="card q-card">
+                <h2 id="perguntaTexto">…</h2>
+                <div class="opcoes" id="opcoes"></div>
+            </div>
+        </section>
+
+        <!-- RESULTADO -->
+        <section id="screen-result" class="screen">
+            <div class="result-hero">
+                <div class="result-emoji" id="resEmoji">🌿</div>
+                <div class="tag">SEU PERFIL TOURMIX</div>
+                <h2 id="resTitulo">—</h2>
+                <p id="resDesc">—</p>
+            </div>
+
+            <div class="result-section">
+                <h3>O que combina com você</h3>
+                <ul id="resDicas"></ul>
+            </div>
+
+            <div class="result-section">
+                <h3>Destinos ideais na TOURMIX</h3>
+                <div class="destinos" id="resDestinos"></div>
+            </div>
+
+            <div class="cta-box">
+                <p>Quer montar essa viagem com acompanhamento de verdade? Fale com a equipe TOURMIX no WhatsApp.</p>
+                <a id="btnWhats" class="btn btn-accent btn-block" target="_blank" rel="noopener">
+                    Montar minha viagem no WhatsApp
+                </a>
+            </div>
+
+            <div class="actions">
+                <button type="button" class="btn btn-outline btn-block" id="btnRedo">Refazer o quiz</button>
+                <a href="/excursoes" class="btn btn-primary btn-block">Ver excursões</a>
+            </div>
+        </section>
+    </div>
+
+    <script>
+    (function () {
+        var perguntas = [
+            {
+                q: 'O que mais te atrai em uma viagem?',
+                opcoes: [
+                    { t: 'Natureza, trilhas e paisagens', e: '🌿', p: 'natureza' },
+                    { t: 'Praia, sol e cidade animada', e: '🏖️', p: 'praia' },
+                    { t: 'Charme, flores e lugares fotogênicos', e: '🌷', p: 'romantico' },
+                    { t: 'Descansar em águas termais e spa', e: '♨️', p: 'relax' }
+                ]
+            },
+            {
+                q: 'Com quem você prefere viajar?',
+                opcoes: [
+                    { t: 'Em casal', e: '💑', p: 'romantico' },
+                    { t: 'Com amigos', e: '🎉', p: 'praia' },
+                    { t: 'Com a família', e: '👨‍👩‍👧‍👦', p: 'relax' },
+                    { t: 'Sozinho(a) ou em grupo de aventura', e: '🎒', p: 'natureza' }
+                ]
+            },
+            {
+                q: 'Qual ritmo de viagem é o seu?',
+                opcoes: [
+                    { t: 'Agenda cheia de passeios', e: '📋', p: 'cultural' },
+                    { t: 'Um pouco de tudo, com tempo livre', e: '⚖️', p: 'romantico' },
+                    { t: 'Bem leve, foco em descanso', e: '😴', p: 'relax' },
+                    { t: 'Ativo: trilha, banho de rio, explorar', e: '🥾', p: 'natureza' }
+                ]
+            },
+            {
+                q: 'Qual cenário dos sonhos?',
+                opcoes: [
+                    { t: 'Cachoeiras e águas cristalinas', e: '💧', p: 'natureza' },
+                    { t: 'Orla urbana e vida noturna', e: '🌃', p: 'praia' },
+                    { t: 'Campos de flores e arquitetura fofa', e: '🏡', p: 'romantico' },
+                    { t: 'Parques aquáticos e águas quentes', e: '🏊', p: 'relax' }
+                ]
+            },
+            {
+                q: 'Na hora de comer, você prefere…',
+                opcoes: [
+                    { t: 'Comida caseira e regional', e: '🍲', p: 'cultural' },
+                    { t: 'Restaurantes com vista linda', e: '🍷', p: 'romantico' },
+                    { t: 'Algo prático perto da praia', e: '🍹', p: 'praia' },
+                    { t: 'O que vier no roteiro, sem estresse', e: '🙂', p: 'relax' }
+                ]
+            },
+            {
+                q: 'O que não pode faltar na mala?',
+                opcoes: [
+                    { t: 'Tênis e protetor solar para trilha', e: '👟', p: 'natureza' },
+                    { t: 'Roupa de banho e chinelo', e: '🩴', p: 'praia' },
+                    { t: 'Look bonito para fotos', e: '📸', p: 'romantico' },
+                    { t: 'Roupa confortável e pijama', e: '🧸', p: 'relax' }
+                ]
+            },
+            {
+                q: 'Qual frase mais combina com você?',
+                opcoes: [
+                    { t: '“Quero viver a natureza de perto.”', e: '🌲', p: 'natureza' },
+                    { t: '“Quero sol, mar e animação.”', e: '☀️', p: 'praia' },
+                    { t: '“Quero momentos e fotos inesquecíveis.”', e: '✨', p: 'romantico' },
+                    { t: '“Quero desligar e só relaxar.”', e: '🧘', p: 'relax' }
+                ]
+            }
+        ];
+
+        var perfis = {
+            natureza: {
+                emoji: '🌿',
+                titulo: 'Explorador da Natureza',
+                desc: 'Você se recarrega longe do concreto. Prefere águas claras, trilhas e paisagens que tiram o fôlego.',
+                dicas: [
+                    'Priorize destinos com ecoturismo e boa estrutura de passeios',
+                    'Leve roupa leve, tênis e capa de chuva',
+                    'Reserve com antecedência atrações que esgotam rápido',
+                    'Combine aventura com um dia mais leve no meio do roteiro'
+                ],
+                destinos: [
+                    { nome: 'Bonito/MS', sub: 'Rios cristalinos e flutuação', href: '/bonito' },
+                    { nome: 'Foz do Iguaçu', sub: 'Cataratas e natureza imponente', href: '/foz-iguacu' }
+                ],
+                whats: 'Olá! Fiz o quiz da TOURMIX e meu perfil é Explorador da Natureza. Quero montar uma viagem!'
+            },
+            praia: {
+                emoji: '🏖️',
+                titulo: 'Praiano Urbano',
+                desc: 'Você gosta de sol, mar e uma cidade que não para. Energia alta, orla bonita e boa gastronomia.',
+                dicas: [
+                    'Escolha hotéis perto da praia ou do centro',
+                    'Misture praia de dia e programação na cidade à noite',
+                    'Fique de olho na previsão do tempo da costa',
+                    'Reserve transfers para aproveitar mais o tempo'
+                ],
+                destinos: [
+                    { nome: 'Balneário Camboriú', sub: 'Orla famosa e cidade completa', href: '/balneario-camboriu' },
+                    { nome: 'Foz do Iguaçu', sub: 'Para variar com natureza + cidade', href: '/foz-iguacu' }
+                ],
+                whats: 'Olá! Fiz o quiz da TOURMIX e meu perfil é Praiano Urbano. Quero dicas de pacote!'
+            },
+            romantico: {
+                emoji: '🌷',
+                titulo: 'Romântico Fotogênico',
+                desc: 'Você viaja para criar memórias bonitas. Flores, ruas charmosas e cenários de cinema são a sua praia.',
+                dicas: [
+                    'Programe horários com luz boa para fotos',
+                    'Inclua cafés, mirantes e passeios a pé',
+                    'Reserve restaurantes especiais com antecedência',
+                    'Combine um dia mais calmo com outro de roteiro cheio'
+                ],
+                destinos: [
+                    { nome: 'Holambra', sub: 'Cidade das Flores · 1 dia', href: '/holambra' },
+                    { nome: 'Gramado', sub: 'Serra, charme e clima europeu', href: '/gramado' }
+                ],
+                whats: 'Olá! Fiz o quiz da TOURMIX e meu perfil é Romântico Fotogênico. Quero montar essa viagem!'
+            },
+            relax: {
+                emoji: '♨️',
+                titulo: 'Mestre do Descanso',
+                desc: 'Sua viagem ideal é desligar o modo corrida. Águas quentes, conforto e zero pressão na agenda.',
+                dicas: [
+                    'Prefira resorts ou hotéis com estrutura completa',
+                    'Deixe folgas entre um passeio e outro',
+                    'Invista em experiências de bem-estar',
+                    'Viajar em baixa temporada costuma ser mais tranquilo'
+                ],
+                destinos: [
+                    { nome: 'Caldas Novas', sub: 'Águas termais e resort', href: '/caldas-novas' },
+                    { nome: 'Gramado', sub: 'Aconchego na serra', href: '/gramado' }
+                ],
+                whats: 'Olá! Fiz o quiz da TOURMIX e meu perfil é Mestre do Descanso. Quero um roteiro leve!'
+            },
+            cultural: {
+                emoji: '🏛️',
+                titulo: 'Viajante Cultural',
+                desc: 'Você gosta de história, gastronomia regional e de entender o lugar além do cartão-postal.',
+                dicas: [
+                    'Inclua atrativos históricos e experiências locais',
+                    'Pesquise pratos típicos da região',
+                    'Reserve um dia livre para se perder nas ruas',
+                    'Combine cultura com um passeio ao ar livre'
+                ],
+                destinos: [
+                    { nome: 'Gramado', sub: 'Cultura, gastronomia e serra', href: '/gramado' },
+                    { nome: 'Foz do Iguaçu', sub: 'Natureza + experiências únicas', href: '/foz-iguacu' }
+                ],
+                whats: 'Olá! Fiz o quiz da TOURMIX e meu perfil é Viajante Cultural. Quero sugestões de roteiro!'
+            }
+        };
+
+        var scores = { natureza: 0, praia: 0, romantico: 0, relax: 0, cultural: 0 };
+        var idx = 0;
+
+        var elStart = document.getElementById('screen-start');
+        var elQuiz = document.getElementById('screen-quiz');
+        var elResult = document.getElementById('screen-result');
+
+        function show(screen) {
+            [elStart, elQuiz, elResult].forEach(function (s) { s.classList.remove('active'); });
+            screen.classList.add('active');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function renderPergunta() {
+            var p = perguntas[idx];
+            var total = perguntas.length;
+            var pct = Math.round(((idx) / total) * 100);
+            document.getElementById('progressLabel').textContent = 'Pergunta ' + (idx + 1) + ' de ' + total;
+            document.getElementById('progressPct').textContent = Math.round(((idx + 1) / total) * 100) + '%';
+            document.getElementById('progressFill').style.width = Math.round(((idx + 1) / total) * 100) + '%';
+            document.getElementById('perguntaTexto').textContent = p.q;
+
+            var box = document.getElementById('opcoes');
+            box.innerHTML = '';
+            p.opcoes.forEach(function (op) {
+                var btn = document.createElement('button');
+                btn.type = 'button';
+                btn.className = 'opcao';
+                btn.innerHTML = '<span class="emoji">' + op.e + '</span><span>' + op.t + '</span>';
+                btn.addEventListener('click', function () {
+                    scores[op.p] = (scores[op.p] || 0) + 1;
+                    idx += 1;
+                    if (idx >= perguntas.length) {
+                        mostrarResultado();
+                    } else {
+                        renderPergunta();
+                    }
+                });
+                box.appendChild(btn);
+            });
+        }
+
+        function perfilVencedor() {
+            var best = 'romantico';
+            var max = -1;
+            Object.keys(scores).forEach(function (k) {
+                if (scores[k] > max) {
+                    max = scores[k];
+                    best = k;
+                }
+            });
+            return perfis[best];
+        }
+
+        function mostrarResultado() {
+            var r = perfilVencedor();
+            document.getElementById('resEmoji').textContent = r.emoji;
+            document.getElementById('resTitulo').textContent = r.titulo;
+            document.getElementById('resDesc').textContent = r.desc;
+
+            var ul = document.getElementById('resDicas');
+            ul.innerHTML = '';
+            r.dicas.forEach(function (d) {
+                var li = document.createElement('li');
+                li.textContent = d;
+                ul.appendChild(li);
+            });
+
+            var dest = document.getElementById('resDestinos');
+            dest.innerHTML = '';
+            r.destinos.forEach(function (d) {
+                var a = document.createElement('a');
+                a.className = 'destino-chip';
+                a.href = d.href;
+                a.innerHTML = d.nome + '<small>' + d.sub + '</small>';
+                dest.appendChild(a);
+            });
+
+            document.getElementById('btnWhats').href =
+                'https://wa.me/5511914841404?text=' + encodeURIComponent(r.whats);
+
+            show(elResult);
+        }
+
+        document.getElementById('btnStart').addEventListener('click', function () {
+            scores = { natureza: 0, praia: 0, romantico: 0, relax: 0, cultural: 0 };
+            idx = 0;
+            renderPergunta();
+            show(elQuiz);
+        });
+
+        document.getElementById('btnRedo').addEventListener('click', function () {
+            scores = { natureza: 0, praia: 0, romantico: 0, relax: 0, cultural: 0 };
+            idx = 0;
+            show(elStart);
+        });
+    })();
+    </script>
+</body>
+</html>
