@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Entrar | TOURMIX</title>
+    <link rel="icon" type="image/png" href="LOGO-05.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Montserrat', system-ui, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            background: #f0f9ff;
+        }
+        .panel-brand {
+            display: none;
+            width: 42%;
+            background: linear-gradient(160deg, #0e7490 0%, #0a2e38 100%);
+            color: #fff;
+            padding: 3rem;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+            overflow: hidden;
+        }
+        .panel-brand::after {
+            content: '';
+            position: absolute;
+            width: 280px;
+            height: 280px;
+            border-radius: 50%;
+            background: rgba(234, 179, 8, 0.12);
+            bottom: -60px;
+            right: -40px;
+        }
+        .brand-top { position: relative; z-index: 1; }
+        .brand-logo {
+            font-size: 1.6rem;
+            font-weight: 800;
+            margin-bottom: 2.5rem;
+        }
+        .brand-logo .mix { color: #eab308; }
+        .brand-top h2 {
+            font-size: 1.85rem;
+            line-height: 1.25;
+            margin-bottom: 1rem;
+            max-width: 320px;
+        }
+        .brand-top p {
+            opacity: 0.88;
+            line-height: 1.65;
+            max-width: 300px;
+            font-size: 0.95rem;
+        }
+        .brand-bottom {
+            position: relative;
+            z-index: 1;
+            font-size: 0.82rem;
+            opacity: 0.7;
+        }
+        .panel-form {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem 1.25rem;
+        }
+        .card {
+            width: 100%;
+            max-width: 400px;
+        }
+        .mobile-logo {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+            font-weight: 800;
+        }
+        .mobile-logo .t { color: #0e7490; }
+        .mobile-logo .mix { color: #eab308; }
+        h1 {
+            font-size: 1.45rem;
+            color: #0f172a;
+            margin-bottom: 0.35rem;
+        }
+        .sub {
+            color: #64748b;
+            font-size: 0.92rem;
+            margin-bottom: 1.5rem;
+        }
+        .tabs {
+            display: flex;
+            background: #e2e8f0;
+            border-radius: 50px;
+            padding: 4px;
+            margin-bottom: 1.5rem;
+        }
+        .tab {
+            flex: 1;
+            border: none;
+            background: transparent;
+            padding: 0.65rem;
+            border-radius: 50px;
+            font-family: inherit;
+            font-weight: 600;
+            font-size: 0.88rem;
+            color: #64748b;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .tab.active {
+            background: #fff;
+            color: #0e7490;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+        }
+        label {
+            display: block;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #0e7490;
+            margin-bottom: 0.35rem;
+        }
+        input {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            border: 1.5px solid #e2e8f0;
+            border-radius: 12px;
+            font-family: inherit;
+            font-size: 0.95rem;
+            background: #fff;
+            margin-bottom: 1rem;
+            transition: border-color 0.2s;
+        }
+        input:focus {
+            outline: none;
+            border-color: #eab308;
+        }
+        .btn-submit {
+            width: 100%;
+            padding: 0.9rem;
+            border: none;
+            border-radius: 50px;
+            background: #eab308;
+            color: #0f172a;
+            font-family: inherit;
+            font-weight: 700;
+            font-size: 0.95rem;
+            cursor: pointer;
+            margin-top: 0.25rem;
+            transition: 0.2s;
+        }
+        .btn-submit:hover { background: #ca8a04; }
+        .btn-submit:disabled {
+            opacity: 0.65;
+            cursor: not-allowed;
+        }
+        .msg {
+            display: none;
+            padding: 0.75rem 0.9rem;
+            border-radius: 10px;
+            font-size: 0.85rem;
+            margin-bottom: 1rem;
+            line-height: 1.45;
+        }
+        .msg.erro {
+            display: block;
+            background: #fef2f2;
+            border: 1px solid #fecaca;
+            color: #b91c1c;
+        }
+        .msg.ok {
+            display: block;
+            background: #ecfdf5;
+            border: 1px solid #a7f3d0;
+            color: #047857;
+        }
+        .msg.warn {
+            display: block;
+            background: #fffbeb;
+            border: 1px solid #fde68a;
+            color: #854d0e;
+        }
+        .voltar {
+            display: block;
+            text-align: center;
+            margin-top: 1.4rem;
+            font-size: 0.88rem;
+            color: #0e7490;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .voltar:hover { color: #eab308; }
+        .form-panel { display: none; }
+        .form-panel.active { display: block; }
+        .hint {
+            font-size: 0.75rem;
+            color: #94a3b8;
+            margin-top: -0.65rem;
+            margin-bottom: 1rem;
+        }
+        @media (min-width: 900px) {
+            .panel-brand { display: flex; }
+            .mobile-logo { display: none; }
+        }
+    </style>
+</head>
+<body>
+    <aside class="panel-brand">
+        <div class="brand-top">
+            <div class="brand-logo">Tour<span class="mix">MIX</span></div>
+            <h2>Sua conta com seguranca de verdade</h2>
+            <p>
+                Senha criptografada no servidor, sessao protegida e sem guardar
+                dados sensiveis no navegador de forma insegura.
+            </p>
+        </div>
+        <div class="brand-bottom">TOURMIX · Viagens e Experiencias</div>
+    </aside>
+
+    <div class="panel-form">
+        <div class="card">
+            <div class="mobile-logo"><span class="t">Tour</span><span class="mix">MIX</span></div>
+
+            <h1 id="titulo">Entrar</h1>
+            <p class="sub" id="subtitulo">Acesse sua conta TOURMIX</p>
+
+            <div class="tabs">
+                <button type="button" class="tab active" data-tab="login">Entrar</button>
+                <button type="button" class="tab" data-tab="cadastro">Criar conta</button>
+            </div>
+
+            <div id="msg" class="msg"></div>
+
+            <form id="formLogin" class="form-panel active" autocomplete="on">
+                <label for="loginEmail">E-mail</label>
+                <input type="email" id="loginEmail" required autocomplete="email" placeholder="seu@email.com">
+
+                <label for="loginSenha">Senha</label>
+                <input type="password" id="loginSenha" required minlength="6" autocomplete="current-password" placeholder="Minimo 6 caracteres">
+
+                <button type="submit" class="btn-submit" id="btnLogin">Entrar</button>
+            </form>
+
+            <form id="formCadastro" class="form-panel" autocomplete="on">
+                <label for="cadNome">Nome</label>
+                <input type="text" id="cadNome" required autocomplete="name" placeholder="Seu nome">
+
+                <label for="cadEmail">E-mail</label>
+                <input type="email" id="cadEmail" required autocomplete="email" placeholder="seu@email.com">
+
+                <label for="cadSenha">Senha</label>
+                <input type="password" id="cadSenha" required minlength="6" autocomplete="new-password" placeholder="Minimo 6 caracteres">
+                <p class="hint">Use pelo menos 6 caracteres. Nao compartilhe sua senha.</p>
+
+                <button type="submit" class="btn-submit" id="btnCadastro">Criar conta</button>
+            </form>
+
+            <a href="/" class="voltar">← Voltar ao site</a>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="auth-config.js"></script>
+    <script src="auth.js"></script>
+    <script>
+        (function () {
+            var msg = document.getElementById('msg');
+            var tabs = document.querySelectorAll('.tab');
+            var formLogin = document.getElementById('formLogin');
+            var formCadastro = document.getElementById('formCadastro');
+
+            function showMsg(texto, tipo) {
+                msg.className = 'msg ' + tipo;
+                msg.textContent = texto;
+            }
+            function clearMsg() {
+                msg.className = 'msg';
+                msg.textContent = '';
+            }
+
+            TourmixAuth.getUser().then(function (user) {
+                if (user) window.location.href = 'minha-conta.html';
+            });
+
+            if (!TourmixAuth.configOk()) {
+                showMsg('Configure o arquivo auth-config.js com a URL e a chave do Supabase para ativar o login real.', 'warn');
+            }
+
+            tabs.forEach(function (tab) {
+                tab.addEventListener('click', function () {
+                    tabs.forEach(function (t) { t.classList.remove('active'); });
+                    tab.classList.add('active');
+                    clearMsg();
+                    var qual = tab.getAttribute('data-tab');
+                    formLogin.classList.toggle('active', qual === 'login');
+                    formCadastro.classList.toggle('active', qual === 'cadastro');
+                    document.getElementById('titulo').textContent = qual === 'login' ? 'Entrar' : 'Criar conta';
+                    document.getElementById('subtitulo').textContent = qual === 'login'
+                        ? 'Acesse sua conta TOURMIX'
+                        : 'Cadastre-se para acompanhar suas viagens';
+                });
+            });
+
+            formLogin.addEventListener('submit', async function (e) {
+                e.preventDefault();
+                clearMsg();
+                var btn = document.getElementById('btnLogin');
+                btn.disabled = true;
+                btn.textContent = 'Entrando...';
+                try {
+                    await TourmixAuth.signIn(
+                        document.getElementById('loginEmail').value,
+                        document.getElementById('loginSenha').value
+                    );
+                    window.location.href = 'minha-conta.html';
+                } catch (err) {
+                    var t = (err && err.message) ? err.message : 'Nao foi possivel entrar.';
+                    if (t.indexOf('Invalid login') !== -1) t = 'E-mail ou senha incorretos.';
+                    if (t.indexOf('Email not confirmed') !== -1) t = 'Confirme seu e-mail antes de entrar (veja a caixa de entrada).';
+                    showMsg(t, 'erro');
+                } finally {
+                    btn.disabled = false;
+                    btn.textContent = 'Entrar';
+                }
+            });
+
+            formCadastro.addEventListener('submit', async function (e) {
+                e.preventDefault();
+                clearMsg();
+                var btn = document.getElementById('btnCadastro');
+                btn.disabled = true;
+                btn.textContent = 'Criando...';
+                try {
+                    var data = await TourmixAuth.signUp(
+                        document.getElementById('cadEmail').value,
+                        document.getElementById('cadSenha').value,
+                        document.getElementById('cadNome').value
+                    );
+                    if (data.session) {
+                        window.location.href = 'minha-conta.html';
+                    } else {
+                        showMsg('Conta criada! Se a confirmacao de e-mail estiver ativa no Supabase, verifique sua caixa de entrada e depois faca login.', 'ok');
+                        formCadastro.reset();
+                    }
+                } catch (err) {
+                    var t = (err && err.message) ? err.message : 'Nao foi possivel criar a conta.';
+                    if (t.indexOf('already registered') !== -1) t = 'Este e-mail ja esta cadastrado. Tente entrar.';
+                    showMsg(t, 'erro');
+                } finally {
+                    btn.disabled = false;
+                    btn.textContent = 'Criar conta';
+                }
+            });
+        })();
+    </script>
+</body>
+</html>

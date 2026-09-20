@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minha conta | TOURMIX</title>
+    <link rel="icon" type="image/png" href="LOGO-05.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Montserrat', system-ui, sans-serif;
+            background: #f0f9ff;
+            color: #0f172a;
+            min-height: 100vh;
+        }
+        header {
+            background: rgba(255,255,255,0.97);
+            border-bottom: 1px solid #e2e8f0;
+            padding: 0.9rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 50;
+        }
+        .header-inner {
+            width: min(960px, 92%);
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+        }
+        .logo {
+            font-size: 1.35rem;
+            font-weight: 800;
+            text-decoration: none;
+        }
+        .logo .t { color: #0e7490; }
+        .logo .mix { color: #eab308; }
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        .header-actions span {
+            font-size: 0.88rem;
+            color: #64748b;
+        }
+        .header-actions strong { color: #0e7490; }
+        main {
+            width: min(960px, 92%);
+            margin: 2rem auto 3rem;
+        }
+        .hero-card {
+            background: linear-gradient(135deg, #0e7490, #0a2e38);
+            color: #fff;
+            border-radius: 18px;
+            padding: 1.75rem 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        .hero-card h1 {
+            font-size: 1.45rem;
+            margin-bottom: 0.4rem;
+        }
+        .hero-card p {
+            opacity: 0.9;
+            font-size: 0.95rem;
+            line-height: 1.55;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1rem;
+        }
+        @media (min-width: 720px) {
+            .grid { grid-template-columns: 1fr 1fr; }
+        }
+        .card {
+            background: #fff;
+            border: 1px solid #e2e8f0;
+            border-radius: 16px;
+            padding: 1.35rem;
+            box-shadow: 0 8px 24px rgba(14,116,144,0.06);
+        }
+        .card h2 {
+            font-size: 1rem;
+            color: #0e7490;
+            margin-bottom: 0.75rem;
+        }
+        .card p, .card li {
+            font-size: 0.9rem;
+            color: #64748b;
+            line-height: 1.55;
+        }
+        .card ul {
+            margin: 0.5rem 0 0 1.1rem;
+        }
+        .card li { margin-bottom: 0.35rem; }
+        .dado {
+            display: flex;
+            justify-content: space-between;
+            gap: 1rem;
+            padding: 0.65rem 0;
+            border-bottom: 1px solid #f1f5f9;
+            font-size: 0.9rem;
+        }
+        .dado:last-child { border-bottom: none; }
+        .dado span { color: #94a3b8; }
+        .dado strong { color: #0f172a; font-weight: 600; text-align: right; word-break: break-all; }
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.7rem 1.2rem;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.88rem;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            font-family: inherit;
+        }
+        .btn-primary { background: #eab308; color: #0f172a; }
+        .btn-outline {
+            background: transparent;
+            color: #0e7490;
+            border: 1.5px solid #0e7490;
+        }
+        .btn-sair {
+            background: #fef2f2;
+            color: #b91c1c;
+            font-size: 0.82rem;
+            padding: 0.5rem 0.95rem;
+        }
+        .acoes {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.6rem;
+            margin-top: 1.25rem;
+        }
+        .seguro {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.65rem;
+            background: #ecfdf5;
+            border: 1px solid #a7f3d0;
+            border-radius: 12px;
+            padding: 0.9rem 1rem;
+            margin-top: 1rem;
+            font-size: 0.82rem;
+            color: #047857;
+            line-height: 1.45;
+        }
+        #loading {
+            text-align: center;
+            padding: 4rem 1rem;
+            color: #64748b;
+            font-size: 0.95rem;
+        }
+        #conteudo { display: none; }
+    </style>
+</head>
+<body>
+    <div id="loading">Verificando sessão segura...</div>
+
+    <div id="conteudo">
+        <header>
+            <div class="header-inner">
+                <a href="/" class="logo"><span class="t">Tour</span><span class="mix">MIX</span></a>
+                <div class="header-actions">
+                    <span>Olá, <strong id="nomeUser">—</strong></span>
+                    <button type="button" class="btn btn-sair" id="btnSair">Sair</button>
+                </div>
+            </div>
+        </header>
+
+        <main>
+            <div class="hero-card">
+                <h1>Minha conta</h1>
+                <p>Área logada com autenticação real. Sua senha não fica exposta no site.</p>
+            </div>
+
+            <div class="grid">
+                <div class="card">
+                    <h2>Seus dados</h2>
+                    <div class="dado"><span>Nome</span><strong id="dadoNome">—</strong></div>
+                    <div class="dado"><span>E-mail</span><strong id="dadoEmail">—</strong></div>
+                    <div class="dado"><span>ID da conta</span><strong id="dadoId" style="font-size:0.75rem">—</strong></div>
+                </div>
+
+                <div class="card">
+                    <h2>Segurança</h2>
+                    <ul>
+                        <li>Senha armazenada com hash no servidor (Supabase)</li>
+                        <li>Sessão com token que renova automaticamente</li>
+                        <li>Conexão HTTPS no Vercel</li>
+                        <li>Nenhum arquivo do site guarda sua senha</li>
+                    </ul>
+                    <div class="seguro">
+                        Não compartilhe o link da sua sessão nem senhas por WhatsApp ou e-mail.
+                    </div>
+                </div>
+            </div>
+
+            <div class="acoes">
+                <a href="/" class="btn btn-primary">Ir para o site</a>
+                <a href="/excursoes" class="btn btn-outline">Excursões</a>
+                <a href="/#contato" class="btn btn-outline">Fale conosco</a>
+            </div>
+        </main>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="auth-config.js"></script>
+    <script src="auth.js"></script>
+    <script>
+        (async function () {
+            var user = await TourmixAuth.requireAuth('login.html');
+            if (!user) return;
+
+            document.getElementById('loading').style.display = 'none';
+            document.getElementById('conteudo').style.display = 'block';
+
+            var nome = TourmixAuth.displayName(user);
+            document.getElementById('nomeUser').textContent = nome;
+            document.getElementById('dadoNome').textContent = nome;
+            document.getElementById('dadoEmail').textContent = user.email || '—';
+            document.getElementById('dadoId').textContent = user.id || '—';
+
+            document.getElementById('btnSair').addEventListener('click', async function () {
+                await TourmixAuth.signOut();
+                window.location.href = 'login.html';
+            });
+        })();
+    </script>
+</body>
+</html>
