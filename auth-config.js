@@ -11,6 +11,6 @@
 // NUNCA coloque a service_role key aqui (essa sim é secreta).
 
 window.TOURMIX_AUTH = {
-    supabaseUrl: 'https://hzxugznxopvtazmuyo.supabase.co',
+    supabaseUrl: 'https://hzxkugznxopvtazmuyo.supabase.co',
     supabaseAnonKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imh6eGt1Z3pueG9wdnRhem11eXBvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODk5MDk2OTQsImV4cCI6MjEwNTQ4NTY5NH0.utC6taOw50Cm_URHivvFSWs_czgKUJw3IW5ItLvVUQE'
 };
