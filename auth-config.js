@@ -11,6 +11,6 @@
 // NUNCA coloque a service_role key aqui (essa sim é secreta).
 
 window.TOURMIX_AUTH = {
-    supabaseUrl: 'COLE_AQUI_A_PROJECT_URL',
-    supabaseAnonKey: 'COLE_AQUI_A_ANON_KEY'
+    supabaseUrl: 'hzxkugznxopvtazmuypo',
+    supabaseAnonKey: 'sb_publishable_F-bVAnC9WXSPbZADpyFm6A_mnHVN8Bc'
 };
