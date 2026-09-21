@@ -120,6 +120,23 @@ var CATALOGO=[
 {id:'caldas',nome:'Caldas Novas',tipo:'Pacote 5 noites',tags:['termas','relax','caldas'],resumo:'Resort com águas quentinhas, café e jantar inclusos.',data:'Várias saídas',preco:'A partir de 12x de R$ 145',inclui:'Aéreo, resort (café e jantar), transfer e seguro',link:'/caldas-novas'}
 ];
 var NOME_PATH={'/holambra':'Holambra','/holambra.html':'Holambra','/gramado':'Gramado','/gramado.html':'Gramado','/bonito':'Bonito','/bonito.html':'Bonito','/foz-iguacu':'Foz do Iguaçu','/foz-iguacu.html':'Foz do Iguaçu','/balneario-camboriu':'Balneário Camboriú','/balneario-camboriu.html':'Balneário Camboriú','/caldas-novas':'Caldas Novas','/caldas-novas.html':'Caldas Novas','/excursoes':'Excursões','/excursoes.html':'Excursões','/descubra-perfil':'Quiz','/descubra-perfil.html':'Quiz'};
+var lastBotIntent='';
+var turn=0;
+var greetingsDone=false;
+function pick(arr){return arr[Math.floor(Math.random()*arr.length)];}
+function isSaudacao(t){
+  t=(' '+t+' ').replace(/\s+/g,' ');
+  return /^\s*(oi|ola|olá|oie|eai|e aí|eae|hey|hi|hello|bom dia|boa tarde|boa noite|fala|falaê|falae)\s*[!?.]*\s*$/i.test(t)
+    || /^\s*(oi|ola|olá)\s+(tudo|td)\s*/i.test(t);
+}
+function isTudoBem(t){
+  return /tudo bem|td bem|como vai|como você está|como voce esta|suave|tranquilo\?|beleza\?/.test(t);
+}
+function isDespedida(t){
+  return /^(tchau|flw|falou|até mais|ate mais|até logo|bye|obrigad[oa]|valeu|vlw)[\s!?.]*$/i.test(t)
+    || /^(obrigad[oa]|valeu|vlw)\b/.test(t);
+}
+
 function loadJSON(key,fb){try{return JSON.parse(localStorage.getItem(key)||JSON.stringify(fb));}catch(e){return fb;}}
 function getScores(){return loadJSON(SCORES_KEY,{});}
 function getPerfilKey(){var scores=getScores(),best=null,max=0;Object.keys(scores).forEach(function(k){if(scores[k]>max){max=scores[k];best=k;}});if(best)return best;return loadJSON(PERFIL_KEY,null);}
@@ -151,79 +168,144 @@ function querIndicacao(t){
 return /indique|indicar|indica|sugira|suger|recomend|para mim|no meu estilo|com base no meu|baseado no meu|destino pra mim|opcao pra mim|opção pra mim/.test(t);
 }
 function querPerfil(t){
-// só perfil "puro" — não quando a pessoa pede indicação
 if(querIndicacao(t)) return false;
-return /^(qual |meu |mostra |ver )?meu perfil|quem sou|como me ve|descobri sobre mim|meu estilo de viajante/.test(t) || (t.indexOf('perfil')!==-1 && t.indexOf('indicar')===-1 && t.indexOf('indica')===-1 && t.indexOf('destino')===-1);
+return /meu perfil|qual meu perfil|mostra meu perfil|quem sou|como me ve|meu estilo de viajante/.test(t);
 }
-function responder(texto){var t=norm(texto);
+function responder(texto){
+var t=norm(texto);
+turn++;
 ['praia','natureza','flores','termas','serra','aventura','relax','foto'].forEach(function(k){if(t.indexOf(k)!==-1)addInteresses([k]);});
 addScoreFromChat(['natureza','praia','mar','flores','romantico','termas','relax','serra','aventura','bonito','foz'].filter(function(k){return t.indexOf(k)!==-1;}));
 renderSidebar();
+var key=getPerfilKey();
+var nomePerfil=(key&&PERFIS[key])?(PERFIS[key].titulo+' '+PERFIS[key].emoji):'';
 
-// 1) INDICAÇÃO primeiro (mesmo se a frase tiver a palavra perfil)
+// --- conversa natural (estilo chat) ---
+if(isSaudacao(t)){
+  greetingsDone=true;
+  lastBotIntent='saudacao';
+  if(key&&PERFIS[key]){
+    return pick([
+      'Oi! Que bom te ver por aqui ✨<br>Já te conheço como <strong>'+PERFIS[key].titulo+'</strong> '+PERFIS[key].emoji+'. Quer uma indicação de destino ou prefere perguntar um valor?',
+      'E aí! Tudo certo?<br>Posso te indicar algo no estilo <strong>'+PERFIS[key].titulo+'</strong> ou falar de algum pacote específico.',
+      'Oi oi! 👋<br>Manda sua dúvida — valor, destino ou “me indica uma viagem” que eu resolvo.'
+    ]);
+  }
+  return pick([
+    'Oi! Tudo bem? 👋<br>Sou o assistente da TOURMIX. Posso te ajudar com destinos, valores e o que está incluso nos pacotes.',
+    'Olá! Que bom que veio ✨<br>Pode mandar um “me indica um destino”, perguntar preço ou falar o nome do lugar.',
+    'E aí! Bora planejar uma viagem?<br>Pergunta à vontade — eu respondo na hora.'
+  ]);
+}
+
+if(isTudoBem(t)){
+  lastBotIntent='smalltalk';
+  return pick([
+    'Tudo ótimo por aqui, obrigado por perguntar 😄<br>E você? Já sabe pra onde quer viajar ou quer que eu indique?',
+    'Tudo certo! Pronto pra te ajudar a achar um destino top.<br>Quer indicação ou prefere olhar um pacote específico?'
+  ]);
+}
+
+if(isDespedida(t) || /obrigad|valeu|vlw|thanks/.test(t)){
+  lastBotIntent='despedida';
+  return pick([
+    'Eu que agradeço! Qualquer coisa é só chamar 😉',
+    'Disponha! Quando quiser fechar a viagem, o WhatsApp é <a href="https://wa.me/5511914841404" target="_blank">(11) 91484-1404</a>.',
+    'Valeu demais! Volta quando quiser — tô por aqui.'
+  ]);
+}
+
+if(/quem e voce|quem é você|o que voce faz|o que você faz|voce e uma ia|você é uma ia/.test(t)){
+  return 'Eu sou o assistente da <strong>TOURMIX</strong> ✈️<br>Te ajudo a escolher destino, ver valores e entender o que entra em cada pacote. Não substituo o atendimento humano, mas agilizo bastante — e se precisar, te passo o WhatsApp do time.';
+}
+
+if(/nao sei|não sei|tô em dúvida|to em duvida|me ajuda a escolher|indeciso/.test(t)){
+  lastBotIntent='indicacao';
+  var lista=recomendar();
+  var html=nomePerfil
+    ? 'Sem problema, a gente descobre junto 🙌<br>Pelo seu perfil <strong>'+nomePerfil+'</strong>, eu começaria por:<br><br>'
+    : 'Sem problema, a gente descobre junto 🙌<br>Algumas ideias boas do catálogo:<br><br>';
+  lista.forEach(function(p){html+=formatPacote(p)+'<br><br>';});
+  return html+'Algum te puxou mais, ou prefere outro clima (praia, natureza, relax…)?';
+}
+
+// respostas curtas de continuidade
+if(/^(sim|pode|quero|bora|vamos|manda|isso|pode ser|claro|yes)[\s!?.]*$/i.test(t)){
+  if(lastBotIntent==='indicacao' || lastBotIntent==='saudacao' || lastBotIntent==='smalltalk'){
+    var lista=recomendar();
+    var html='Fechado! Então olha só o que eu indico:<br><br>';
+    lista.forEach(function(p){html+=formatPacote(p)+'<br><br>';});
+    lastBotIntent='indicacao';
+    return html+'Qual desses te agrada mais?';
+  }
+}
+
+// INDICAÇÃO
 if(querIndicacao(t)){
-var lista=recomendar();
-var key=getPerfilKey();
-var html='';
-if(key&&PERFIS[key]){
-html+='Beleza — pensando no seu estilo <strong>'+PERFIS[key].titulo+'</strong> '+PERFIS[key].emoji+', eu iria de:<br><br>';
-}else{
-html+='Ainda tô te conhecendo, mas com o que tem no catálogo eu apostaria nestes:<br><br>';
-}
-lista.forEach(function(p,i){
-html+=(i===0?'🌟 ':'• ')+formatPacote(p)+'<br><br>';
-});
-html+='Quer que eu detalhe <strong>preço</strong> ou <strong>o que está incluso</strong> de algum? Ou te passo o WhatsApp pra já reservar?';
-return html;
+  lastBotIntent='indicacao';
+  var lista=recomendar();
+  var html='';
+  if(key&&PERFIS[key]){
+    html+='Beleza — pensando no seu estilo <strong>'+PERFIS[key].titulo+'</strong> '+PERFIS[key].emoji+', eu iria de:<br><br>';
+  }else{
+    html+='Ainda tô te conhecendo, mas com o catálogo de agora eu apostaria nestes:<br><br>';
+  }
+  lista.forEach(function(p,i){html+=(i===0?'🌟 ':'• ')+formatPacote(p)+'<br><br>';});
+  html+='Quer que eu detalhe <strong>preço</strong> ou <strong>o que está incluso</strong> de algum?';
+  return html;
 }
 
-// 2) PERFIL (só quando a pessoa pergunta do perfil em si)
-if(querPerfil(t) || (/perfil/.test(t) && !querIndicacao(t) && t.indexOf('destino')===-1 && t.indexOf('pacote')===-1)){
-var key=getPerfilKey();
-if(key&&PERFIS[key]){
-return 'Olha o que eu já descobri sobre você 👀<br><br>'+PERFIS[key].emoji+' <strong>'+PERFIS[key].titulo+'</strong><br>'+PERFIS[key].desc+
-'<br><br>Se quiser, é só falar <strong>“me indica um destino”</strong> que eu já te mando opções nesse estilo.';
-}
-return 'Ainda tô te conhecendo 😄<br>Faz o <a href="/descubra-perfil">quiz rapidinho</a> ou abre uns destinos no site — daí eu monto seu perfil e já indico viagem.';
+// PERFIL
+if(querPerfil(t) || (/perfil/.test(t) && !querIndicacao(t) && t.indexOf('destino')===-1 && t.indexOf('pacote')===-1 && t.indexOf('indica')===-1)){
+  lastBotIntent='perfil';
+  if(key&&PERFIS[key]){
+    return 'Olha o que eu já descobri sobre você 👀<br><br>'+PERFIS[key].emoji+' <strong>'+PERFIS[key].titulo+'</strong><br>'+PERFIS[key].desc+
+      '<br><br>Se quiser, é só falar <strong>“me indica um destino”</strong> que eu já te mando opções.';
+  }
+  return 'Ainda tô te conhecendo 😄<br>Faz o <a href="/descubra-perfil">quiz</a> ou abre uns destinos no site — daí eu monto seu perfil.';
 }
 
 if(/pacotes|catalogo|catálogo|opcoes|opções|o que tem/.test(t)){
-var html='Bora lá, o que a gente tem agora:<br><br>';
-CATALOGO.forEach(function(p){html+='• <strong>'+p.nome+'</strong> — '+p.preco+' · <a href="'+p.link+'">ver</a><br>';});
-return html+'<br>Manda o nome de um que eu abro tudo: valor, incluso e data.';
+  lastBotIntent='catalogo';
+  var html='Bora lá, o que a gente tem agora:<br><br>';
+  CATALOGO.forEach(function(p){html+='• <strong>'+p.nome+'</strong> — '+p.preco+' · <a href="'+p.link+'">ver</a><br>';});
+  return html+'<br>Manda o nome de um que eu abro valor, incluso e data.';
 }
-if(/whatsapp|contato|atendente|humano/.test(t))return 'Fechado! Fala com o time no <a href="https://wa.me/5511914841404" target="_blank">(11) 91484-1404</a> 🙌<br>Se quiser, me diz o destino que eu já deixo a mensagem pronta na sua cabeça.';
-if(/cadastur|cnpj|pix/.test(t))return 'CNPJ / Cadastur: <strong>65.063.425/0001-95</strong><br>PIX nesse CNPJ. Na dúvida, confirma no WhatsApp antes de pagar, combinado?';
+if(/whatsapp|contato|atendente|humano/.test(t)){
+  lastBotIntent='whats';
+  return 'Fechado! Fala com o time no <a href="https://wa.me/5511914841404" target="_blank">(11) 91484-1404</a> 🙌';
+}
+if(/cadastur|cnpj|pix/.test(t)){
+  return 'CNPJ / Cadastur: <strong>65.063.425/0001-95</strong><br>PIX nesse CNPJ. Na dúvida, confirma no WhatsApp antes de pagar.';
+}
 
 var hits=buscar(texto);
 if(hits.length){
-var html=hits.length===1?'Achei na hora 👇<br><br>':'Separei o que combina com o que você falou:<br><br>';
-hits.slice(0,3).forEach(function(p){html+=formatPacote(p)+'<br><br>';addInteresses(p.tags.slice(0,3));});
-renderSidebar();
-return html+'Quer que eu compare com outro destino ou prefere ir pro WhatsApp pra fechar data?';
+  lastBotIntent='destino';
+  var html=hits.length===1?'Achei na hora 👇<br><br>':'Separei o que combina com o que você falou:<br><br>';
+  hits.slice(0,3).forEach(function(p){html+=formatPacote(p)+'<br><br>';addInteresses(p.tags.slice(0,3));});
+  renderSidebar();
+  return html+'Quer que eu compare com outro ou prefere ir pro WhatsApp pra fechar data?';
 }
 if(/pre[cç]o|valor|quanto|investimento|incluso|inclui|parcel/.test(t)){
-var hits2=buscar(texto);
-if(hits2.length){
-var p=hits2[0];
-return 'Sobre <strong>'+p.nome+'</strong>:<br>💰 '+p.preco+'<br>✅ '+p.inclui+(p.embarque?'<br>🚌 '+p.embarque:'')+'<br><a href="'+p.link+'">Ver página →</a><br><br>Quer que eu te indique algo parecido também?';
+  var hits2=buscar(texto);
+  if(hits2.length){
+    var p=hits2[0];
+    lastBotIntent='preco';
+    return 'Sobre <strong>'+p.nome+'</strong>:<br>💰 '+p.preco+'<br>✅ '+p.inclui+(p.embarque?'<br>🚌 '+p.embarque:'')+'<br><a href="'+p.link+'">Ver página →</a><br><br>Quer que eu indique algo parecido também?';
+  }
+  return 'Me fala o destino (Holambra, Gramado, Bonito, Foz, Camboriú ou Caldas) que eu te passo valor e o que entra no pacote 💰';
 }
-return 'Me fala o destino (Holambra, Gramado, Bonito, Foz, Camboriú ou Caldas) que eu te passo valor e o que entra no pacote 💰';
+
+// fallback mais humano
+lastBotIntent='fallback';
+return pick([
+  'Não tenho certeza se entendi direito 😅<br>Pode tentar assim: “me indica um destino”, “quanto custa Gramado?” ou só mandar o nome do lugar.',
+  'Hmm, não achei isso no catálogo.<br>Destinos de agora: <strong>Holambra, Foz, Camboriú, Gramado, Bonito e Caldas</strong>. Qual te interessa?',
+  'Pode reformular pra mim?<br>Ex.: “quero praia”, “me indica com base no meu perfil” ou “valor de Holambra”.'
+]);
 }
-if(/oi|ola|olá|eai|e aí|bom dia|boa tarde|boa noite|ajuda|help/.test(t)&&t.length<36){
-var key=getPerfilKey();
-if(key&&PERFIS[key])return 'E aí! Já te conheço como <strong>'+PERFIS[key].titulo+'</strong> '+PERFIS[key].emoji+'<br>Pode mandar: “me indica um destino”, perguntar valor ou falar o nome do lugar.';
-return 'Opa! Bora achar sua próxima viagem? ✈️<br>Pode pedir indicação, valor ou falar o destino direto.';
-}
-if(/obrigad|valeu|thanks|tmj|top|show|perfeito|ótimo|otimo/.test(t))return 'Disponha! Qualquer coisa é só chamar. Se quiser, a gente já olha outro destino ou manda pro WhatsApp 😉';
-if(/sim|pode|quero|bora|vamos|manda/.test(t) && t.length<24){
-var lista=recomendar();
-var html='Fechado, bora! Com base no seu perfil, eu indico:<br><br>';
-lista.forEach(function(p){html+=formatPacote(p)+'<br><br>';});
-return html+'Qual desses te puxou mais?';
-}
-return 'Não achei isso no catálogo agora 😅<br>Tenta o nome do destino ou manda <strong>“me indica um destino”</strong> que eu executo na hora.';
-}
+
 document.getElementById('form').addEventListener('submit',function(e){e.preventDefault();var text=document.getElementById('input').value.trim();if(!text)return;addMsg(text.replace(/</g,'&lt;'),'user');document.getElementById('input').value='';setTimeout(function(){addMsg(responder(text),'bot');},280);});
 document.getElementById('sugestoes').addEventListener('click',function(e){var btn=e.target.closest('button[data-q]');if(!btn)return;document.getElementById('input').value=btn.getAttribute('data-q');document.getElementById('form').dispatchEvent(new Event('submit',{bubbles:true,cancelable:true}));});
 document.getElementById('btnLimpar').addEventListener('click',function(){messages.innerHTML='';addMsg('Chat zerado! Seu perfil continua salvo por aqui 😉','bot');});
