@@ -1,15 +1,86 @@
 /**
- * TOURMIX — botão flutuante do Assistente
- * Cole antes de </body> em qualquer página:
+ * TOURMIX — botão flutuante + rastreio de perfil
+ * Cole antes de </body>:
  * <script src="assistente-widget.js"></script>
  */
 (function () {
     if (window.__tourmixAssistenteWidget) return;
     window.__tourmixAssistenteWidget = true;
 
-    // Não mostra na própria página do assistente
-    var path = (window.location.pathname || '').toLowerCase();
-    if (path.indexOf('assistente') !== -1) return;
+    var PERFIL_KEY = 'tourmix_perfil_quiz';
+    var SCORES_KEY = 'tourmix_perfil_scores';
+    var INTERESSES_KEY = 'tourmix_interesses';
+    var HISTORICO_KEY = 'tourmix_historico_nav';
+
+    var PAGE_SIGNALS = {
+        '/holambra': { romantico: 3, cultural: 1, tags: ['flores', 'holambra', 'romantico'] },
+        '/holambra.html': { romantico: 3, cultural: 1, tags: ['flores', 'holambra', 'romantico'] },
+        '/gramado': { romantico: 2, cultural: 2, relax: 1, tags: ['serra', 'gramado', 'romantico'] },
+        '/gramado.html': { romantico: 2, cultural: 2, relax: 1, tags: ['serra', 'gramado', 'romantico'] },
+        '/bonito': { natureza: 3, tags: ['natureza', 'bonito', 'aventura'] },
+        '/bonito.html': { natureza: 3, tags: ['natureza', 'bonito', 'aventura'] },
+        '/foz-iguacu': { natureza: 2, cultural: 1, tags: ['natureza', 'foz', 'cataratas'] },
+        '/foz-iguacu.html': { natureza: 2, cultural: 1, tags: ['natureza', 'foz', 'cataratas'] },
+        '/balneario-camboriu': { praia: 3, tags: ['praia', 'camboriu', 'litoral'] },
+        '/balneario-camboriu.html': { praia: 3, tags: ['praia', 'camboriu', 'litoral'] },
+        '/caldas-novas': { relax: 3, tags: ['termas', 'caldas', 'relax'] },
+        '/caldas-novas.html': { relax: 3, tags: ['termas', 'caldas', 'relax'] },
+        '/excursoes': { romantico: 1, tags: ['excursoes'] },
+        '/excursoes.html': { romantico: 1, tags: ['excursoes'] },
+        '/descubra-perfil': { tags: ['quiz'] },
+        '/descubra-perfil.html': { tags: ['quiz'] }
+    };
+
+    function loadScores() {
+        try { return JSON.parse(localStorage.getItem(SCORES_KEY) || '{}'); }
+        catch (e) { return {}; }
+    }
+
+    function saveScores(s) {
+        localStorage.setItem(SCORES_KEY, JSON.stringify(s));
+        var best = null, max = -1;
+        Object.keys(s).forEach(function (k) {
+            if (s[k] > max) { max = s[k]; best = k; }
+        });
+        if (best && max > 0) localStorage.setItem(PERFIL_KEY, JSON.stringify(best));
+    }
+
+    function addInteresses(tags) {
+        var list;
+        try { list = JSON.parse(localStorage.getItem(INTERESSES_KEY) || '[]'); }
+        catch (e) { list = []; }
+        (tags || []).forEach(function (t) {
+            if (list.indexOf(t) === -1) list.push(t);
+        });
+        if (list.length > 16) list = list.slice(-16);
+        localStorage.setItem(INTERESSES_KEY, JSON.stringify(list));
+    }
+
+    function registrarPagina() {
+        var path = (window.location.pathname || '/').toLowerCase();
+        if (path.length > 1 && path.slice(-1) === '/') path = path.slice(0, -1);
+        var signal = PAGE_SIGNALS[path];
+        if (!signal) return;
+
+        var scores = loadScores();
+        Object.keys(signal).forEach(function (k) {
+            if (k === 'tags') return;
+            scores[k] = (scores[k] || 0) + signal[k];
+        });
+        saveScores(scores);
+        addInteresses(signal.tags || []);
+
+        var hist;
+        try { hist = JSON.parse(localStorage.getItem(HISTORICO_KEY) || '[]'); }
+        catch (e) { hist = []; }
+        hist.push({ path: path, t: Date.now() });
+        if (hist.length > 40) hist = hist.slice(-40);
+        localStorage.setItem(HISTORICO_KEY, JSON.stringify(hist));
+    }
+
+    registrarPagina();
+
+    if ((window.location.pathname || '').toLowerCase().indexOf('assistente') !== -1) return;
 
     var css = document.createElement('style');
     css.textContent = [
@@ -37,14 +108,10 @@
         '<button type="button" id="tourmix-fab" aria-label="Abrir Assistente TOURMIX">' +
         '<img src="LOGO-05.png" alt="TOURMIX" id="tourmix-fab-img">' +
         '</button>';
-
-    function go() {
-        window.location.href = '/assistente';
-    }
-
     document.body.appendChild(wrap);
-    document.getElementById('tourmix-fab').addEventListener('click', go);
-
+    document.getElementById('tourmix-fab').addEventListener('click', function () {
+        window.location.href = '/assistente';
+    });
     var img = document.getElementById('tourmix-fab-img');
     img.onerror = function () {
         img.style.display = 'none';
