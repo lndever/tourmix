@@ -42,15 +42,8 @@
             z-index: 20;
         }
         .logo {
-    display: flex;
-    align-items: center;
-}
-
-.logo-img {
-    height: 70px;
-    width: auto;
-    display: block;
-}
+            font-weight: 800;
+            font-size: 1.25rem;
         }
         .logo .t { color: var(--primary); }
         .logo .mix { color: var(--accent); }
@@ -360,9 +353,7 @@
 </head>
 <body>
     <div class="topbar">
-        <a href="/" class="logo">
-    <img src="LOGO-05.png" alt="TOURMIX" class="logo-img">
-</a>
+        <a href="/" class="logo"><span class="t">Tour</span><span class="mix">MIX</span></a>
         <a href="/" class="back">← Site</a>
     </div>
 
@@ -637,11 +628,19 @@
                     best = k;
                 }
             });
-            return perfis[best];
+            return { key: best, data: perfis[best] };
         }
 
         function mostrarResultado() {
-            var r = perfilVencedor();
+            var result = perfilVencedor();
+            var r = result.data;
+            // Salva perfil para o assistente TOURMIX
+            try {
+                localStorage.setItem('tourmix_perfil_quiz', JSON.stringify(result.key));
+                var sc = {};
+                Object.keys(scores).forEach(function (k) { sc[k] = scores[k]; });
+                localStorage.setItem('tourmix_perfil_scores', JSON.stringify(sc));
+            } catch (e) {}
             document.getElementById('resEmoji').textContent = r.emoji;
             document.getElementById('resTitulo').textContent = r.titulo;
             document.getElementById('resDesc').textContent = r.desc;
@@ -684,6 +683,5 @@
         });
     })();
     </script>
-<script src="assistente-widget.js"></script>
 </body>
 </html>

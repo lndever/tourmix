@@ -1,288 +1,173 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Assistente TOURMIX</title>
-    <link rel="icon" type="image/png" href="LOGO-05.png">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <style>
-        :root { --primary:#0e7490; --primary-dark:#0a2e38; --accent:#eab308; --bg:#f0f9ff; --text:#0f172a; --muted:#64748b; }
-        * { margin:0; padding:0; box-sizing:border-box; }
-        body { font-family:Montserrat,system-ui,sans-serif; background:var(--bg); color:var(--text); height:100vh; display:flex; flex-direction:column; }
-        a { color:inherit; text-decoration:none; }
-        .topbar { background:#fff; border-bottom:1px solid #e2e8f0; padding:.75rem 1rem; display:flex; align-items:center; justify-content:space-between; gap:.75rem; }
-        .brand { display:flex; align-items:center; gap:.6rem; font-weight:800; font-size:1.05rem; }
-        .brand img { height:36px; width:auto; }
-        .brand .mix { color:var(--accent); } .brand .t { color:var(--primary); }
-        .top-links { display:flex; gap:.5rem; align-items:center; flex-wrap:wrap; }
-        .top-links a, .top-links button { font-size:.8rem; font-weight:600; color:var(--primary); background:none; border:none; cursor:pointer; font-family:inherit; padding:.35rem .6rem; }
-        .layout { flex:1; display:grid; grid-template-columns:1fr; min-height:0; }
-        @media (min-width:900px) { .layout { grid-template-columns:300px 1fr; } }
-        .sidebar { display:none; background:#fff; border-right:1px solid #e2e8f0; padding:1.25rem; overflow-y:auto; }
-        @media (min-width:900px) { .sidebar { display:block; } }
-        .sidebar h2 { font-size:.75rem; text-transform:uppercase; letter-spacing:.04em; color:var(--muted); margin:1rem 0 .6rem; }
-        .sidebar h2:first-child { margin-top:0; }
-        .perfil-box { background:linear-gradient(145deg,var(--primary),var(--primary-dark)); color:#fff; border-radius:14px; padding:1rem; }
-        .perfil-box .emoji { font-size:1.6rem; }
-        .perfil-box strong { display:block; margin:.35rem 0 .25rem; font-size:1rem; }
-        .perfil-box p { font-size:.8rem; opacity:.9; line-height:1.4; }
-        .perfil-box .fonte { margin-top:.65rem; font-size:.72rem; opacity:.75; }
-        .perfil-box a { display:inline-block; margin-top:.55rem; font-size:.78rem; font-weight:700; color:var(--accent); }
-        .chip-list { display:flex; flex-wrap:wrap; gap:.35rem; }
-        .chip { font-size:.72rem; font-weight:600; background:#e0f2fe; color:var(--primary-dark); padding:.28rem .5rem; border-radius:50px; }
-        .hist-item { font-size:.78rem; color:#475569; padding:.35rem 0; border-bottom:1px solid #f1f5f9; }
-        .bar-row { display:grid; grid-template-columns:70px 1fr 28px; gap:.35rem; align-items:center; margin-bottom:.35rem; font-size:.72rem; color:#475569; }
-        .bar { height:6px; background:#e2e8f0; border-radius:50px; overflow:hidden; }
-        .bar i { display:block; height:100%; background:linear-gradient(90deg,var(--primary),var(--accent)); border-radius:50px; }
-        .chat-wrap { display:flex; flex-direction:column; min-height:0; height:100%; }
-        .messages { flex:1; overflow-y:auto; padding:1.25rem 1rem; display:flex; flex-direction:column; gap:.85rem; }
-        .msg { max-width:min(540px,94%); padding:.85rem 1rem; border-radius:16px; font-size:.92rem; line-height:1.55; }
-        .msg.bot { background:#fff; border:1px solid #e2e8f0; align-self:flex-start; border-bottom-left-radius:4px; }
-        .msg.user { background:var(--primary); color:#fff; align-self:flex-end; border-bottom-right-radius:4px; }
-        .msg.bot strong { color:var(--primary-dark); }
-        .msg a { color:var(--primary); font-weight:700; text-decoration:underline; }
-        .sugestoes { display:flex; flex-wrap:wrap; gap:.45rem; padding:0 1rem .6rem; }
-        .sugestoes button { border:1px solid #bae6fd; background:#fff; color:var(--primary); font-family:inherit; font-size:.78rem; font-weight:600; padding:.45rem .75rem; border-radius:50px; cursor:pointer; }
-        .composer { border-top:1px solid #e2e8f0; background:#fff; padding:.75rem 1rem 1rem; display:flex; gap:.5rem; }
-        .composer input { flex:1; border:1.5px solid #e2e8f0; border-radius:50px; padding:.8rem 1.1rem; font-family:inherit; font-size:.92rem; }
-        .composer input:focus { outline:none; border-color:var(--accent); }
-        .composer button { border:none; background:var(--accent); color:var(--text); font-weight:700; font-family:inherit; padding:0 1.2rem; border-radius:50px; cursor:pointer; }
-        .mobile-perfil { display:block; margin:.75rem 1rem 0; }
-        @media (min-width:900px) { .mobile-perfil { display:none; } }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Assistente TOURMIX</title>
+<link rel="icon" type="image/png" href="LOGO-05.png">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--primary:#0e7490;--primary-dark:#0a2e38;--accent:#eab308;--bg:#eef8fc;--text:#0f172a;--muted:#64748b}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:Montserrat,system-ui,sans-serif;background:radial-gradient(1200px 500px at 10% -10%,rgba(234,179,8,.12),transparent),radial-gradient(900px 400px at 100% 0,rgba(14,116,144,.12),transparent),var(--bg);color:var(--text);height:100vh;display:flex;flex-direction:column}
+a{color:inherit;text-decoration:none}
+.topbar{background:rgba(255,255,255,.92);backdrop-filter:blur(12px);border-bottom:1px solid #e2e8f0;padding:.8rem 1.1rem;display:flex;align-items:center;justify-content:space-between;gap:.75rem}
+.brand{display:flex;align-items:center;gap:.65rem;font-weight:800;font-size:1.05rem}
+.brand img{height:38px;width:auto}.brand .mix{color:var(--accent)}.brand .t{color:var(--primary)}
+.brand small{display:block;font-size:.68rem;font-weight:600;color:var(--muted)}
+.top-links{display:flex;gap:.35rem;flex-wrap:wrap;align-items:center}
+.top-links a,.top-links button{font-size:.78rem;font-weight:600;color:var(--primary);background:#f0f9ff;border:1px solid #bae6fd;border-radius:50px;cursor:pointer;font-family:inherit;padding:.4rem .75rem}
+.top-links button{background:#fff;border-color:#e2e8f0;color:#64748b}
+.layout{flex:1;display:grid;grid-template-columns:1fr;min-height:0;width:min(1100px,100%);margin:0 auto}
+@media(min-width:920px){.layout{grid-template-columns:310px 1fr}}
+.sidebar{display:none;padding:1.25rem 1rem 1.5rem;overflow-y:auto}
+@media(min-width:920px){.sidebar{display:block}}
+.perfil-card{background:linear-gradient(155deg,#0e7490 0%,#0a2e38 70%);color:#fff;border-radius:20px;padding:1.25rem 1.15rem;box-shadow:0 16px 40px rgba(10,46,56,.25);position:relative;overflow:hidden}
+.perfil-card::after{content:'';position:absolute;width:140px;height:140px;border-radius:50%;background:rgba(234,179,8,.16);top:-40px;right:-30px}
+.perfil-card .badge{display:inline-block;background:rgba(234,179,8,.95);color:#1c1917;font-size:.68rem;font-weight:800;padding:.25rem .6rem;border-radius:50px;margin-bottom:.65rem;position:relative;z-index:1}
+.perfil-card .emoji{font-size:2.2rem;position:relative;z-index:1;line-height:1}
+.perfil-card strong{display:block;margin:.45rem 0 .35rem;font-size:1.15rem;position:relative;z-index:1}
+.perfil-card p{font-size:.84rem;opacity:.92;line-height:1.5;position:relative;z-index:1}
+.perfil-card .fonte{margin-top:.75rem;font-size:.72rem;opacity:.75;position:relative;z-index:1}
+.perfil-card a{display:inline-flex;margin-top:.85rem;font-size:.8rem;font-weight:700;color:#fde68a;position:relative;z-index:1}
+.side-block{background:#fff;border:1px solid #e2e8f0;border-radius:16px;padding:.95rem;margin-top:.85rem;box-shadow:0 6px 18px rgba(14,116,144,.05)}
+.side-block h2{font-size:.72rem;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);margin-bottom:.65rem}
+.chip-list{display:flex;flex-wrap:wrap;gap:.35rem}
+.chip{font-size:.72rem;font-weight:600;background:#ecfeff;color:var(--primary-dark);border:1px solid #a5f3fc;padding:.28rem .55rem;border-radius:50px}
+.hist-item{font-size:.8rem;color:#475569;padding:.4rem 0;border-bottom:1px solid #f1f5f9}
+.bar-row{display:grid;grid-template-columns:72px 1fr 22px;gap:.35rem;align-items:center;margin-bottom:.4rem;font-size:.72rem;color:#475569}
+.bar{height:7px;background:#e2e8f0;border-radius:50px;overflow:hidden}
+.bar i{display:block;height:100%;background:linear-gradient(90deg,var(--primary),var(--accent));border-radius:50px}
+.chat-wrap{display:flex;flex-direction:column;min-height:0;height:100%;background:rgba(255,255,255,.45)}
+@media(min-width:920px){.chat-wrap{border-left:1px solid #e2e8f0}}
+.mobile-perfil{display:block;margin:.85rem 1rem 0}
+@media(min-width:920px){.mobile-perfil{display:none}}
+.messages{flex:1;overflow-y:auto;padding:1.15rem 1rem .5rem;display:flex;flex-direction:column;gap:.9rem}
+.msg{max-width:min(560px,94%);padding:.95rem 1.1rem;border-radius:18px;font-size:.93rem;line-height:1.6}
+.msg.bot{background:#fff;border:1px solid #e2e8f0;align-self:flex-start;border-bottom-left-radius:5px;box-shadow:0 8px 20px rgba(14,116,144,.06)}
+.msg.user{background:linear-gradient(135deg,#0e7490,#0a2e38);color:#fff;align-self:flex-end;border-bottom-right-radius:5px}
+.msg.bot strong{color:var(--primary-dark)}
+.msg a{color:var(--primary);font-weight:700;text-decoration:underline}
+.msg.user a{color:#fde68a}
+.sugestoes{display:flex;flex-wrap:wrap;gap:.45rem;padding:.5rem 1rem .65rem}
+.sugestoes button{border:1px solid #bae6fd;background:#fff;color:var(--primary);font-family:inherit;font-size:.78rem;font-weight:600;padding:.48rem .8rem;border-radius:50px;cursor:pointer}
+.composer{border-top:1px solid #e2e8f0;background:rgba(255,255,255,.95);padding:.8rem 1rem 1.05rem;display:flex;gap:.55rem}
+.composer input{flex:1;border:1.5px solid #e2e8f0;border-radius:50px;padding:.85rem 1.15rem;font-family:inherit;font-size:.92rem;background:#f8fafc}
+.composer input:focus{outline:none;border-color:var(--accent);background:#fff}
+.composer button{border:none;background:var(--accent);color:var(--text);font-weight:800;font-family:inherit;padding:0 1.25rem;border-radius:50px;cursor:pointer}
+</style>
 </head>
 <body>
-    <header class="topbar">
-        <a href="/" class="brand">
-            <img src="LOGO-05.png" alt="TOURMIX" onerror="this.style.display='none'">
-            <span><span class="t">Tour</span><span class="mix">MIX</span> Assistente</span>
-        </a>
-        <div class="top-links">
-            <a href="/descubra-perfil">Quiz</a>
-            <a href="/excursoes">Excursões</a>
-            <a href="/">Site</a>
-            <button type="button" id="btnLimpar">Limpar chat</button>
-        </div>
-    </header>
-
-    <div class="layout">
-        <aside class="sidebar">
-            <h2>Perfil dinâmico</h2>
-            <div class="perfil-box">
-                <div class="emoji" id="perfilEmoji">🧳</div>
-                <strong id="perfilTitulo">Montando seu perfil…</strong>
-                <p id="perfilDesc">Navegue pelos pacotes ou faça o quiz para eu te conhecer melhor.</p>
-                <div class="fonte" id="perfilFonte"></div>
-                <a href="/descubra-perfil">Fazer / refazer quiz →</a>
-            </div>
-            <h2>Afinidade</h2>
-            <div id="barras"></div>
-            <h2>Interesses</h2>
-            <div class="chip-list" id="interesses"></div>
-            <h2>Visto recentemente</h2>
-            <div id="historico"></div>
-        </aside>
-
-        <div class="chat-wrap">
-            <div class="mobile-perfil">
-                <div class="perfil-box">
-                    <div class="emoji" id="perfilEmojiM">🧳</div>
-                    <strong id="perfilTituloM">Montando seu perfil…</strong>
-                    <p id="perfilDescM">Navegue ou faça o quiz.</p>
-                </div>
-            </div>
-            <div class="messages" id="messages" aria-live="polite"></div>
-            <div class="sugestoes" id="sugestoes">
-                <button type="button" data-q="Me indique com base no meu perfil">Indicar para mim</button>
-                <button type="button" data-q="Quais pacotes vocês têm?">Pacotes</button>
-                <button type="button" data-q="Quanto custa Holambra?">Holambra</button>
-                <button type="button" data-q="Quero natureza">Natureza</button>
-                <button type="button" data-q="Quero praia">Praia</button>
-                <button type="button" data-q="O que está incluso em Gramado?">Inclusos Gramado</button>
-            </div>
-            <form class="composer" id="form">
-                <input type="text" id="input" placeholder="Pergunte valores, inclusos, datas, indicações..." autocomplete="off" required>
-                <button type="submit">Enviar</button>
-            </form>
-        </div>
-    </div>
-
-    <script>
-    (function () {
-        var PERFIL_KEY = 'tourmix_perfil_quiz';
-        var SCORES_KEY = 'tourmix_perfil_scores';
-        var INTERESSES_KEY = 'tourmix_interesses';
-        var HISTORICO_KEY = 'tourmix_historico_nav';
-
-        var PERFIS = {
-            natureza: { emoji: '🌿', titulo: 'Explorador da Natureza', desc: 'Você se atrai por rios, trilhas e paisagens.', destinos: ['bonito', 'foz'] },
-            praia: { emoji: '🏖️', titulo: 'Praiano Urbano', desc: 'Sol, orla e cidade animada estão no seu radar.', destinos: ['camboriu', 'foz'] },
-            romantico: { emoji: '🌷', titulo: 'Romântico Fotogênico', desc: 'Você busca cenários lindos, flores e momentos especiais.', destinos: ['holambra', 'gramado'] },
-            relax: { emoji: '♨️', titulo: 'Mestre do Descanso', desc: 'Prioridade é desligar: termas, conforto e ritmo leve.', destinos: ['caldas', 'gramado'] },
-            cultural: { emoji: '🏛️', titulo: 'Viajante Cultural', desc: 'Gosta de charme, gastronomia e experiências locais.', destinos: ['gramado', 'foz'] }
-        };
-
-        var CATALOGO = [
-            { id: 'holambra', nome: 'Holambra', tipo: 'Excursão 1 dia', tags: ['flores', 'romantico', 'foto', 'holambra', 'excursao'], resumo: 'Um dia na Cidade das Flores: Portal, Moinho, Rua dos Guarda-Chuvas, Deck do Amor e Parque Van Gogh.', data: '25 de outubro (domingo)', preco: 'R$ 159,90 à vista ou 2x de R$ 80 no PIX · cartão em até 12x · reserva 30%', inclui: 'Micro-ônibus executivo, guia credenciado, seguro Hero, kit Tourmix e sorteios', naoInclui: 'Passeios opcionais pagos no local, refeições e gastos pessoais', embarque: 'Itaquaquecetuba 6h20 · Barra Funda 7h30', link: '/holambra' },
-            { id: 'foz', nome: 'Foz do Iguaçu', tipo: 'Pacote 4 noites', tags: ['natureza', 'cataratas', 'foz', 'iguacu'], resumo: 'Cataratas e cidade com aéreo saindo de São Paulo.', data: 'Saídas em OUT/NOV/DEZ', preco: 'A partir de 12x de R$ 115 · 3% off à vista', inclui: 'Aéreo SP, Hotel San Juan (café), transfer e seguro', naoInclui: 'Taxas de embarque e gastos pessoais', link: '/foz-iguacu' },
-            { id: 'camboriu', nome: 'Balneário Camboriú', tipo: 'Pacote 4 noites', tags: ['praia', 'mar', 'camboriu', 'litoral'], resumo: 'Orla famosa, praia e estrutura completa de cidade.', data: 'Saídas em OUT/NOV/DEZ', preco: 'A partir de 12x de R$ 115 · 3% off à vista', inclui: 'Aéreo SP, Hotel Rosenbrock (café), transfer e seguro', naoInclui: 'Taxas de embarque e gastos pessoais', link: '/balneario-camboriu' },
-            { id: 'gramado', nome: 'Gramado', tipo: 'Pacote 4 noites', tags: ['serra', 'gramado', 'romantico', 'cultural'], resumo: 'Serra Gaúcha com charme, gastronomia e clima de cinema.', data: 'Saídas em SET/OUT/NOV/DEZ', preco: 'A partir de 12x de R$ 115 · 3% off à vista', inclui: 'Aéreo SP, Life Hotel Infinity (café), transfer e seguro', naoInclui: 'Taxas de embarque e gastos pessoais', link: '/gramado' },
-            { id: 'bonito', nome: 'Bonito', tipo: 'Pacote 5 noites', tags: ['natureza', 'bonito', 'rio', 'aventura'], resumo: 'Águas cristalinas e ecoturismo em Mato Grosso do Sul.', data: 'Saídas em NOV/DEZ', preco: 'A partir de 12x de R$ 167 · 3% off à vista', inclui: 'Aéreo SP, Bonito Ecotel (café), transfer e seguro', naoInclui: 'Taxas de embarque e gastos pessoais', link: '/bonito' },
-            { id: 'caldas', nome: 'Caldas Novas', tipo: 'Pacote 5 noites', tags: ['termas', 'relax', 'caldas', 'resort'], resumo: 'Resort com águas termais, café e jantar inclusos.', data: 'Saídas em OUT/NOV', preco: 'A partir de 12x de R$ 145 · 3% off à vista', inclui: 'Aéreo SP, Resort Encontro das Águas (café e jantar), transfer e seguro', naoInclui: 'Taxas de embarque e gastos pessoais', link: '/caldas-novas' }
-        ];
-
-        var NOME_PATH = { '/holambra': 'Holambra', '/holambra.html': 'Holambra', '/gramado': 'Gramado', '/gramado.html': 'Gramado', '/bonito': 'Bonito', '/bonito.html': 'Bonito', '/foz-iguacu': 'Foz do Iguaçu', '/foz-iguacu.html': 'Foz do Iguaçu', '/balneario-camboriu': 'Balneário Camboriú', '/balneario-camboriu.html': 'Balneário Camboriú', '/caldas-novas': 'Caldas Novas', '/caldas-novas.html': 'Caldas Novas', '/excursoes': 'Excursões', '/excursoes.html': 'Excursões', '/descubra-perfil': 'Quiz de perfil', '/descubra-perfil.html': 'Quiz de perfil' };
-
-        function loadJSON(key, fb) { try { return JSON.parse(localStorage.getItem(key) || JSON.stringify(fb)); } catch (e) { return fb; } }
-        function getScores() { return loadJSON(SCORES_KEY, {}); }
-        function getPerfilKey() {
-            var scores = getScores(), best = null, max = 0;
-            Object.keys(scores).forEach(function (k) { if (scores[k] > max) { max = scores[k]; best = k; } });
-            if (best) return best;
-            return loadJSON(PERFIL_KEY, null);
-        }
-        function addScoreFromChat(tags) {
-            var scores = getScores();
-            var map = { natureza: 'natureza', praia: 'praia', mar: 'praia', flores: 'romantico', romantico: 'romantico', termas: 'relax', relax: 'relax', serra: 'cultural', cultural: 'cultural', aventura: 'natureza', bonito: 'natureza', foz: 'natureza' };
-            (tags || []).forEach(function (t) { var p = map[t]; if (p) scores[p] = (scores[p] || 0) + 1; });
-            localStorage.setItem(SCORES_KEY, JSON.stringify(scores));
-            var best = getPerfilKey();
-            if (best) localStorage.setItem(PERFIL_KEY, JSON.stringify(best));
-        }
-        function addInteresses(tags) {
-            var list = loadJSON(INTERESSES_KEY, []);
-            (tags || []).forEach(function (t) { if (list.indexOf(t) === -1) list.push(t); });
-            if (list.length > 16) list = list.slice(-16);
-            localStorage.setItem(INTERESSES_KEY, JSON.stringify(list));
-        }
-        function renderSidebar() {
-            var key = getPerfilKey(), scores = getScores(), interesses = loadJSON(INTERESSES_KEY, []), hist = loadJSON(HISTORICO_KEY, []);
-            var emoji = '🧳', titulo = 'Perfil em construção', desc = 'Veja pacotes ou faça o quiz — eu vou aprendendo com você.';
-            if (key && PERFIS[key]) { emoji = PERFIS[key].emoji; titulo = PERFIS[key].titulo; desc = PERFIS[key].desc; }
-            document.getElementById('perfilEmoji').textContent = emoji;
-            document.getElementById('perfilTitulo').textContent = titulo;
-            document.getElementById('perfilDesc').textContent = desc;
-            document.getElementById('perfilEmojiM').textContent = emoji;
-            document.getElementById('perfilTituloM').textContent = titulo;
-            document.getElementById('perfilDescM').textContent = desc;
-            var total = 0; Object.keys(scores).forEach(function (k) { total += scores[k]; });
-            document.getElementById('perfilFonte').textContent = total ? 'Atualizado pela sua navegação e conversas' : 'Ainda sem sinais suficientes';
-            var barras = document.getElementById('barras'); barras.innerHTML = '';
-            var labels = { natureza: 'Natureza', praia: 'Praia', romantico: 'Romântico', relax: 'Relax', cultural: 'Cultural' };
-            var max = 1; Object.keys(labels).forEach(function (k) { if ((scores[k] || 0) > max) max = scores[k]; });
-            Object.keys(labels).forEach(function (k) {
-                var v = scores[k] || 0, pct = Math.round((v / max) * 100);
-                var row = document.createElement('div'); row.className = 'bar-row';
-                row.innerHTML = '<span>' + labels[k] + '</span><div class="bar"><i style="width:' + pct + '%"></i></div><span>' + v + '</span>';
-                barras.appendChild(row);
-            });
-            var box = document.getElementById('interesses'); box.innerHTML = '';
-            if (!interesses.length) box.innerHTML = '<span class="chip">Nenhum ainda</span>';
-            else interesses.slice().reverse().forEach(function (i) { var s = document.createElement('span'); s.className = 'chip'; s.textContent = i; box.appendChild(s); });
-            var hbox = document.getElementById('historico'); hbox.innerHTML = ''; var seen = [];
-            hist.slice().reverse().forEach(function (h) {
-                var nome = NOME_PATH[h.path]; if (!nome || seen.indexOf(nome) !== -1) return; seen.push(nome); if (seen.length > 6) return;
-                var d = document.createElement('div'); d.className = 'hist-item'; d.textContent = '• ' + nome; hbox.appendChild(d);
-            });
-            if (!seen.length) hbox.innerHTML = '<div class="hist-item">Nenhuma página de destino ainda</div>';
-        }
-
-        var messages = document.getElementById('messages');
-        function addMsg(html, who) { var div = document.createElement('div'); div.className = 'msg ' + who; div.innerHTML = html; messages.appendChild(div); messages.scrollTop = messages.scrollHeight; }
-        function formatPacote(p) {
-            return '<strong>' + p.nome + '</strong> · ' + p.tipo + '<br>' + p.resumo + '<br>💰 ' + p.preco + '<br>' +
-                (p.data ? '📅 ' + p.data + '<br>' : '') + (p.inclui ? '✅ Incluso: ' + p.inclui + '<br>' : '') +
-                (p.embarque ? '🚌 ' + p.embarque + '<br>' : '') + (p.naoInclui ? '❌ Não incluso: ' + p.naoInclui + '<br>' : '') +
-                '<a href="' + p.link + '">Abrir página →</a>';
-        }
-        function norm(s) { return (s || '').toLowerCase().normalize('NFD').replace(/\p{Diacritic}/gu, ''); }
-        function buscar(texto) {
-            var t = norm(texto), hits = [];
-            CATALOGO.forEach(function (p) {
-                var score = 0; if (t.indexOf(norm(p.nome)) !== -1) score += 6;
-                p.tags.forEach(function (tag) { if (t.indexOf(norm(tag)) !== -1) score += 2; });
-                if (score) hits.push({ p: p, score: score });
-            });
-            hits.sort(function (a, b) { return b.score - a.score; });
-            return hits.map(function (h) { return h.p; });
-        }
-        function recomendar() {
-            var key = getPerfilKey();
-            var ids = (key && PERFIS[key]) ? PERFIS[key].destinos : ['holambra', 'gramado', 'bonito'];
-            var list = CATALOGO.filter(function (c) { return ids.indexOf(c.id) !== -1; });
-            var hist = loadJSON(HISTORICO_KEY, []);
-            hist.slice(-8).forEach(function (h) {
-                var nome = NOME_PATH[h.path]; if (!nome) return;
-                CATALOGO.forEach(function (c) { if (norm(c.nome) === norm(nome) && list.indexOf(c) === -1) list.unshift(c); });
-            });
-            return list.slice(0, 3);
-        }
-        function responder(texto) {
-            var t = norm(texto);
-            ['praia', 'natureza', 'flores', 'termas', 'serra', 'aventura', 'relax', 'foto'].forEach(function (k) { if (t.indexOf(k) !== -1) addInteresses([k]); });
-            addScoreFromChat(['natureza', 'praia', 'mar', 'flores', 'romantico', 'termas', 'relax', 'serra', 'aventura', 'bonito', 'foz'].filter(function (k) { return t.indexOf(k) !== -1; }));
-            renderSidebar();
-            if (/perfil|meu estilo/.test(t)) {
-                var key = getPerfilKey();
-                if (key && PERFIS[key]) return 'Hoje eu te vejo como <strong>' + PERFIS[key].titulo + '</strong> ' + PERFIS[key].emoji + '<br>' + PERFIS[key].desc + '<br><br>Isso muda quando você visita destinos ou conversa comigo.';
-                return 'Ainda estou te conhecendo. Veja páginas de destino ou faça o <a href="/descubra-perfil">quiz</a>.';
-            }
-            if (/indique|sugira|recomend|para mim/.test(t)) {
-                var lista = recomendar(), html = 'Com base no seu perfil e no que você andou vendo:<br><br>';
-                lista.forEach(function (p) { html += formatPacote(p) + '<br><br>'; });
-                return html + 'Quer detalhar algum valor ou data?';
-            }
-            if (/pacotes|catalogo|catálogo|opcoes|opções/.test(t)) {
-                var html = '<strong>Catálogo TOURMIX:</strong><br><br>';
-                CATALOGO.forEach(function (p) { html += '• <strong>' + p.nome + '</strong> (' + p.tipo + ') — ' + p.preco + ' · <a href="' + p.link + '">ver</a><br>'; });
-                return html;
-            }
-            if (/whatsapp|contato|atendente/.test(t)) return 'Atendimento: <a href="https://wa.me/5511914841404" target="_blank">(11) 91484-1404</a>.';
-            if (/cadastur|cnpj|pix/.test(t)) return 'CNPJ / Cadastur: <strong>65.063.425/0001-95</strong>.';
-            var hits = buscar(texto);
-            if (hits.length) {
-                var html = 'Aqui está:<br><br>';
-                hits.slice(0, 3).forEach(function (p) { html += formatPacote(p) + '<br><br>'; addInteresses(p.tags.slice(0, 4)); });
-                renderSidebar();
-                return html + 'Valores de referência; confirme no WhatsApp para fechar.';
-            }
-            if (/pre[cç]o|valor|quanto|incluso|inclui/.test(t)) return 'Me diga o destino (Holambra, Gramado, Bonito, Foz, Camboriú ou Caldas).';
-            if (/oi|ola|olá|bom dia|ajuda/.test(t) && t.length < 30) {
-                var key = getPerfilKey();
-                var extra = (key && PERFIS[key]) ? ' Seu perfil: <strong>' + PERFIS[key].titulo + '</strong>.' : ' Estou montando seu perfil conforme você navega.';
-                return 'Olá! Sou o assistente da TOURMIX.' + extra;
-            }
-            return 'Destinos: <strong>Holambra, Foz, Camboriú, Gramado, Bonito, Caldas</strong>. Peça indicação pelo perfil ou fale no WhatsApp.';
-        }
-
-        document.getElementById('form').addEventListener('submit', function (e) {
-            e.preventDefault();
-            var text = document.getElementById('input').value.trim();
-            if (!text) return;
-            addMsg(text.replace(/</g, '&lt;'), 'user');
-            document.getElementById('input').value = '';
-            setTimeout(function () { addMsg(responder(text), 'bot'); }, 250);
-        });
-        document.getElementById('sugestoes').addEventListener('click', function (e) {
-            var btn = e.target.closest('button[data-q]');
-            if (!btn) return;
-            document.getElementById('input').value = btn.getAttribute('data-q');
-            document.getElementById('form').dispatchEvent(new Event('submit', { bubbles: true, cancelable: true }));
-        });
-        document.getElementById('btnLimpar').addEventListener('click', function () {
-            messages.innerHTML = '';
-            addMsg('Chat limpo. Seu perfil dinâmico continua salvo neste navegador.', 'bot');
-        });
-
-        renderSidebar();
-        var key = getPerfilKey();
-        var intro = 'Olá! Sou o <strong>Assistente TOURMIX</strong>.<br>';
-        if (key && PERFIS[key]) intro += 'Já te reconheço como <strong>' + PERFIS[key].titulo + '</strong> ' + PERFIS[key].emoji + ' (quiz + páginas visitadas).<br>';
-        else intro += 'Vou montando seu perfil enquanto você visita pacotes e conversa comigo.<br>';
-        intro += 'Pergunte valores, inclusos ou peça uma indicação.';
-        addMsg(intro, 'bot');
-    })();
-    </script>
+<header class="topbar">
+<a href="/" class="brand"><img src="LOGO-05.png" alt="TOURMIX" onerror="this.style.display='none'"><span><span class="t">Tour</span><span class="mix">MIX</span><small>seu copiloto de viagem</small></span></a>
+<div class="top-links"><a href="/descubra-perfil">Quiz</a><a href="/excursoes">Excursões</a><a href="/">Site</a><button type="button" id="btnLimpar">Limpar</button></div>
+</header>
+<div class="layout">
+<aside class="sidebar">
+<div class="perfil-card">
+<div class="badge" id="perfilBadge">SEU PERFIL</div>
+<div class="emoji" id="perfilEmoji">✨</div>
+<strong id="perfilTitulo">Vamos te conhecer?</strong>
+<p id="perfilDesc">Faz o quiz ou dá uma olhada nos destinos — eu vou montando seu estilo de viajante.</p>
+<div class="fonte" id="perfilFonte"></div>
+<a href="/descubra-perfil" id="perfilLink">Descobrir meu perfil →</a>
+</div>
+<div class="side-block"><h2>Afinidade</h2><div id="barras"></div></div>
+<div class="side-block"><h2>Interesses</h2><div class="chip-list" id="interesses"></div></div>
+<div class="side-block"><h2>Visto por aí</h2><div id="historico"></div></div>
+</aside>
+<div class="chat-wrap">
+<div class="mobile-perfil">
+<div class="perfil-card">
+<div class="badge" id="perfilBadgeM">SEU PERFIL</div>
+<div class="emoji" id="perfilEmojiM">✨</div>
+<strong id="perfilTituloM">Vamos te conhecer?</strong>
+<p id="perfilDescM">Quiz ou navegação — eu me ajusto a você.</p>
+<a href="/descubra-perfil">Descobrir meu perfil →</a>
+</div>
+</div>
+<div class="messages" id="messages" aria-live="polite"></div>
+<div class="sugestoes" id="sugestoes">
+<button type="button" data-q="Me indica algo no meu estilo">Me indica algo</button>
+<button type="button" data-q="Quais pacotes vocês têm?">Ver pacotes</button>
+<button type="button" data-q="Quanto custa Holambra?">Holambra</button>
+<button type="button" data-q="Tô afim de natureza">Natureza</button>
+<button type="button" data-q="Quero praia">Praia</button>
+<button type="button" data-q="Qual meu perfil?">Meu perfil</button>
+</div>
+<form class="composer" id="form">
+<input type="text" id="input" placeholder="Manda sua dúvida… valores, destinos, dicas" autocomplete="off" required>
+<button type="submit">Enviar</button>
+</form>
+</div>
+</div>
+<script>
+(function(){
+var PERFIL_KEY='tourmix_perfil_quiz',SCORES_KEY='tourmix_perfil_scores',INTERESSES_KEY='tourmix_interesses',HISTORICO_KEY='tourmix_historico_nav';
+var PERFIS={
+natureza:{emoji:'🌿',titulo:'Explorador da Natureza',desc:'Trilha, rio cristalino e vento no rosto. Cidade grande até cansa você rapidinho.',destinos:['bonito','foz'],badge:'PERFIL NATUREZA'},
+praia:{emoji:'🏖️',titulo:'Praiano Urbano',desc:'Sol, orla e energia de cidade que não para. Chinelo sempre na mala.',destinos:['camboriu','foz'],badge:'PERFIL SOLZÃO'},
+romantico:{emoji:'🌷',titulo:'Romântico Fotogênico',desc:'Você viaja pra colecionar momentos (e umas 200 fotos). Flores e ruas charmosas te conquistam fácil.',destinos:['holambra','gramado'],badge:'PERFIL CHARME'},
+relax:{emoji:'♨️',titulo:'Mestre do Descanso',desc:'Modo avião ligado. Termas, piscina e zero culpa por não fazer nada.',destinos:['caldas','gramado'],badge:'PERFIL ZEN'},
+cultural:{emoji:'🏛️',titulo:'Viajante Cultural',desc:'Você quer sentir o lugar: comida boa, história e aquele café com cara de filme.',destinos:['gramado','foz'],badge:'PERFIL CURIOUS'}
+};
+var CATALOGO=[
+{id:'holambra',nome:'Holambra',tipo:'Excursão 1 dia',tags:['flores','romantico','foto','holambra'],resumo:'Um dia na Cidade das Flores — Portal, Moinho, Guarda-Chuvas e Parque Van Gogh.',data:'25 de outubro (domingo)',preco:'R$ 159,90 à vista ou 2x de R$ 80 no PIX',inclui:'Micro-ônibus, guia, seguro, kit Tourmix e sorteios',embarque:'Itaquaquecetuba 6h20 · Barra Funda 7h30',link:'/holambra'},
+{id:'foz',nome:'Foz do Iguaçu',tipo:'Pacote 4 noites',tags:['natureza','cataratas','foz'],resumo:'Cataratas poderosas + cidade, com aéreo saindo de SP.',data:'Várias saídas OUT/NOV/DEZ',preco:'A partir de 12x de R$ 115',inclui:'Aéreo, Hotel San Juan (café), transfer e seguro',link:'/foz-iguacu'},
+{id:'camboriu',nome:'Balneário Camboriú',tipo:'Pacote 4 noites',tags:['praia','mar','camboriu'],resumo:'Orla famosa, praia e cidade completa pra curtir.',data:'Várias saídas',preco:'A partir de 12x de R$ 115',inclui:'Aéreo, Hotel Rosenbrock (café), transfer e seguro',link:'/balneario-camboriu'},
+{id:'gramado',nome:'Gramado',tipo:'Pacote 4 noites',tags:['serra','gramado','romantico','cultural'],resumo:'Serra com charme, chocolate e clima de cinema.',data:'Várias saídas',preco:'A partir de 12x de R$ 115',inclui:'Aéreo, Life Hotel Infinity (café), transfer e seguro',link:'/gramado'},
+{id:'bonito',nome:'Bonito',tipo:'Pacote 5 noites',tags:['natureza','bonito','aventura'],resumo:'Água cristalina e natureza de tirar o fôlego no MS.',data:'Várias saídas',preco:'A partir de 12x de R$ 167',inclui:'Aéreo, Bonito Ecotel (café), transfer e seguro',link:'/bonito'},
+{id:'caldas',nome:'Caldas Novas',tipo:'Pacote 5 noites',tags:['termas','relax','caldas'],resumo:'Resort com águas quentinhas, café e jantar inclusos.',data:'Várias saídas',preco:'A partir de 12x de R$ 145',inclui:'Aéreo, resort (café e jantar), transfer e seguro',link:'/caldas-novas'}
+];
+var NOME_PATH={'/holambra':'Holambra','/holambra.html':'Holambra','/gramado':'Gramado','/gramado.html':'Gramado','/bonito':'Bonito','/bonito.html':'Bonito','/foz-iguacu':'Foz do Iguaçu','/foz-iguacu.html':'Foz do Iguaçu','/balneario-camboriu':'Balneário Camboriú','/balneario-camboriu.html':'Balneário Camboriú','/caldas-novas':'Caldas Novas','/caldas-novas.html':'Caldas Novas','/excursoes':'Excursões','/excursoes.html':'Excursões','/descubra-perfil':'Quiz','/descubra-perfil.html':'Quiz'};
+function loadJSON(key,fb){try{return JSON.parse(localStorage.getItem(key)||JSON.stringify(fb));}catch(e){return fb;}}
+function getScores(){return loadJSON(SCORES_KEY,{});}
+function getPerfilKey(){var scores=getScores(),best=null,max=0;Object.keys(scores).forEach(function(k){if(scores[k]>max){max=scores[k];best=k;}});if(best)return best;return loadJSON(PERFIL_KEY,null);}
+function addScoreFromChat(tags){var scores=getScores();var map={natureza:'natureza',praia:'praia',mar:'praia',flores:'romantico',romantico:'romantico',termas:'relax',relax:'relax',serra:'cultural',cultural:'cultural',aventura:'natureza',bonito:'natureza',foz:'natureza'};(tags||[]).forEach(function(t){var p=map[t];if(p)scores[p]=(scores[p]||0)+1;});localStorage.setItem(SCORES_KEY,JSON.stringify(scores));var best=getPerfilKey();if(best)localStorage.setItem(PERFIL_KEY,JSON.stringify(best));}
+function addInteresses(tags){var list=loadJSON(INTERESSES_KEY,[]);(tags||[]).forEach(function(t){if(list.indexOf(t)===-1)list.push(t);});if(list.length>16)list=list.slice(-16);localStorage.setItem(INTERESSES_KEY,JSON.stringify(list));}
+function renderSidebar(){
+var key=getPerfilKey(),scores=getScores(),interesses=loadJSON(INTERESSES_KEY,[]),hist=loadJSON(HISTORICO_KEY,[]),has=key&&PERFIS[key];
+var emoji=has?PERFIS[key].emoji:'✨',titulo=has?PERFIS[key].titulo:'Vamos te conhecer?',desc=has?PERFIS[key].desc:'Faz o quiz ou dá uma olhada nos destinos — eu vou montando seu estilo de viajante.',badge=has?(PERFIS[key].badge||'SEU PERFIL'):'AINDA EM ABERTO';
+['','M'].forEach(function(suf){var e=document.getElementById('perfilEmoji'+suf),t=document.getElementById('perfilTitulo'+suf),d=document.getElementById('perfilDesc'+suf),b=document.getElementById('perfilBadge'+suf);if(e)e.textContent=emoji;if(t)t.textContent=titulo;if(d)d.textContent=desc;if(b)b.textContent=badge;});
+var total=0;Object.keys(scores).forEach(function(k){total+=scores[k];});
+var fonte=document.getElementById('perfilFonte');if(fonte)fonte.textContent=has?(total?'Quiz + o que você andou vendo no site':'Veio do seu quiz de perfil'):'Sem perfil ainda — o quiz resolve em 2 min';
+var link=document.getElementById('perfilLink');if(link)link.textContent=has?'Refazer o quiz →':'Descobrir meu perfil →';
+var barras=document.getElementById('barras');barras.innerHTML='';
+var labels={natureza:'Natureza',praia:'Praia',romantico:'Romântico',relax:'Relax',cultural:'Cultural'};var max=1;
+Object.keys(labels).forEach(function(k){if((scores[k]||0)>max)max=scores[k];});
+Object.keys(labels).forEach(function(k){var v=scores[k]||0,pct=Math.round((v/max)*100);var row=document.createElement('div');row.className='bar-row';row.innerHTML='<span>'+labels[k]+'</span><div class="bar"><i style="width:'+pct+'%"></i></div><span>'+v+'</span>';barras.appendChild(row);});
+var box=document.getElementById('interesses');box.innerHTML='';if(!interesses.length)box.innerHTML='<span class="chip">nada ainda</span>';else interesses.slice().reverse().forEach(function(i){var s=document.createElement('span');s.className='chip';s.textContent=i;box.appendChild(s);});
+var hbox=document.getElementById('historico');hbox.innerHTML='';var seen=[];
+hist.slice().reverse().forEach(function(h){var nome=NOME_PATH[h.path];if(!nome||seen.indexOf(nome)!==-1)return;seen.push(nome);if(seen.length>6)return;var d=document.createElement('div');d.className='hist-item';d.textContent='• '+nome;hbox.appendChild(d);});
+if(!seen.length)hbox.innerHTML='<div class="hist-item">Ainda não abriu nenhum destino</div>';
+}
+var messages=document.getElementById('messages');
+function addMsg(html,who){var div=document.createElement('div');div.className='msg '+who;div.innerHTML=html;messages.appendChild(div);messages.scrollTop=messages.scrollHeight;}
+function formatPacote(p){return '<strong>'+p.nome+'</strong> · '+p.tipo+'<br>'+p.resumo+'<br>💰 '+p.preco+'<br>'+(p.data?'📅 '+p.data+'<br>':'')+(p.inclui?'✅ '+p.inclui+'<br>':'')+(p.embarque?'🚌 '+p.embarque+'<br>':'')+'<a href="'+p.link+'">Ver página completa →</a>';}
+function norm(s){return (s||'').toLowerCase().normalize('NFD').replace(/\p{Diacritic}/gu,'');}
+function buscar(texto){var t=norm(texto),hits=[];CATALOGO.forEach(function(p){var score=0;if(t.indexOf(norm(p.nome))!==-1)score+=6;p.tags.forEach(function(tag){if(t.indexOf(norm(tag))!==-1)score+=2;});if(score)hits.push({p:p,score:score});});hits.sort(function(a,b){return b.score-a.score;});return hits.map(function(h){return h.p;});}
+function recomendar(){var key=getPerfilKey();var ids=(key&&PERFIS[key])?PERFIS[key].destinos:['holambra','gramado','bonito'];var list=CATALOGO.filter(function(c){return ids.indexOf(c.id)!==-1;});var hist=loadJSON(HISTORICO_KEY,[]);hist.slice(-8).forEach(function(h){var nome=NOME_PATH[h.path];if(!nome)return;CATALOGO.forEach(function(c){if(norm(c.nome)===norm(nome)&&list.indexOf(c)===-1)list.unshift(c);});});return list.slice(0,3);}
+function responder(texto){var t=norm(texto);
+['praia','natureza','flores','termas','serra','aventura','relax','foto'].forEach(function(k){if(t.indexOf(k)!==-1)addInteresses([k]);});
+addScoreFromChat(['natureza','praia','mar','flores','romantico','termas','relax','serra','aventura','bonito','foz'].filter(function(k){return t.indexOf(k)!==-1;}));
+renderSidebar();
+if(/perfil|meu estilo|quem sou|como me ve/.test(t)){var key=getPerfilKey();if(key&&PERFIS[key])return 'Olha o que eu já descobri sobre você 👀<br><br>'+PERFIS[key].emoji+' <strong>'+PERFIS[key].titulo+'</strong><br>'+PERFIS[key].desc+'<br><br>Isso muda quando você navega e conversa comigo. Quer que eu indique um destino nesse estilo?';return 'Ainda tô te conhecendo 😄<br>Faz o <a href="/descubra-perfil">quiz rapidinho</a> ou abre uns destinos no site — eu monto seu perfil sozinho.';}
+if(/indique|sugira|recomend|para mim|no meu estilo|indica/.test(t)){var lista=recomendar();var key=getPerfilKey();var intro=(key&&PERFIS[key])?'Fechei contigo, estilo <strong>'+PERFIS[key].titulo+'</strong>! Olha o que combina:<br><br>':'Separei umas pedidas boas do catálogo:<br><br>';lista.forEach(function(p){intro+=formatPacote(p)+'<br><br>';});return intro+'Curtiu algum? Posso detalhar valor ou te passar o WhatsApp 💬';}
+if(/pacotes|catalogo|catálogo|opcoes|opções|o que tem/.test(t)){var html='Bora lá, o que a gente tem agora:<br><br>';CATALOGO.forEach(function(p){html+='• <strong>'+p.nome+'</strong> — '+p.preco+' · <a href="'+p.link+'">ver</a><br>';});return html+'<br>Manda o nome do destino que eu abro os detalhes.';}
+if(/whatsapp|contato|atendente|humano/.test(t))return 'Claro! Time de gente de verdade: <a href="https://wa.me/5511914841404" target="_blank">(11) 91484-1404</a> 🙌';
+if(/cadastur|cnpj|pix/.test(t))return 'CNPJ / Cadastur: <strong>65.063.425/0001-95</strong><br>PIX nesse CNPJ. Na dúvida, confirma no WhatsApp antes de pagar.';
+var hits=buscar(texto);if(hits.length){var html=hits.length===1?'Achei! Olha só 👇<br><br>':'Olha o que encontrei pra você:<br><br>';hits.slice(0,3).forEach(function(p){html+=formatPacote(p)+'<br><br>';addInteresses(p.tags.slice(0,3));});renderSidebar();return html+'Valores de referência, viu? Data e vaga a gente confirma no WhatsApp.';}
+if(/pre[cç]o|valor|quanto|investimento|incluso|inclui/.test(t))return 'Me fala o destino (Holambra, Gramado, Bonito, Foz, Camboriú ou Caldas) que eu te passo o valor e o que entra no pacote 💰';
+if(/oi|ola|olá|eai|e aí|bom dia|boa tarde|boa noite|ajuda|help/.test(t)&&t.length<36){var key=getPerfilKey();if(key&&PERFIS[key])return 'E aí! Já te conheço como <strong>'+PERFIS[key].titulo+'</strong> '+PERFIS[key].emoji+'<br>Quer uma indicação nesse estilo ou prefere caçar por destino?';return 'Opa! Bora achar sua próxima viagem? ✈️<br>Pode perguntar valor, destino ou pedir uma indicação.';}
+return 'Hmm, não achei isso no catálogo 😅<br>Destinos: <strong>Holambra, Foz, Camboriú, Gramado, Bonito e Caldas</strong>.<br>Ou manda um “me indica algo no meu estilo”!';}
+document.getElementById('form').addEventListener('submit',function(e){e.preventDefault();var text=document.getElementById('input').value.trim();if(!text)return;addMsg(text.replace(/</g,'&lt;'),'user');document.getElementById('input').value='';setTimeout(function(){addMsg(responder(text),'bot');},280);});
+document.getElementById('sugestoes').addEventListener('click',function(e){var btn=e.target.closest('button[data-q]');if(!btn)return;document.getElementById('input').value=btn.getAttribute('data-q');document.getElementById('form').dispatchEvent(new Event('submit',{bubbles:true,cancelable:true}));});
+document.getElementById('btnLimpar').addEventListener('click',function(){messages.innerHTML='';addMsg('Chat zerado! Seu perfil continua salvo por aqui 😉','bot');});
+renderSidebar();
+var key=getPerfilKey();
+if(key&&PERFIS[key])addMsg('E aí! Que bom te ver ✨<br>Eu já te leio como <strong>'+PERFIS[key].titulo+'</strong> '+PERFIS[key].emoji+'.<br>Pode perguntar valor, o que está incluso ou pedir: “me indica algo no meu estilo”.','bot');
+else addMsg('Opa! Bora achar sua próxima viagem? ✈️<br><br>Se fizer o <a href="/descubra-perfil">quiz</a>, eu personalizo tudo. Se não quiser, é só ir abrindo destinos no site que eu vou aprendendo.','bot');
+})();
+</script>
 </body>
 </html>
