@@ -88,6 +88,7 @@ a{color:inherit;text-decoration:none}
 </div>
 <div class="messages" id="messages" aria-live="polite"></div>
 <div class="sugestoes" id="sugestoes">
+<button type="button" data-q="Me mostra um destino em promoção">Em promoção</button>
 <button type="button" data-q="Me indica algo no meu estilo">Me indica algo</button>
 <button type="button" data-q="Quais pacotes vocês têm?">Ver pacotes</button>
 <button type="button" data-q="Quanto custa Holambra?">Holambra</button>
@@ -241,6 +242,20 @@ if(/^(sim|pode|quero|bora|vamos|manda|isso|pode ser|claro|yes)[\s!?.]*$/i.test(t
 }
 
 // INDICAÇÃO
+
+// PROMOÇÃO / OFERTA
+if(/promoc|promoç|oferta|desconto|mais barato|barat|imperdivel|imperdível|peca|pechincha/.test(t)){
+  lastBotIntent='promo';
+  var promos=CATALOGO.slice().sort(function(a,b){
+    function n(p){var m=(''+p.preco).match(/(\d+)/);return m?parseInt(m[1],10):9999;}
+    return n(a)-n(b);
+  }).slice(0,3);
+  var html='Separei destinos em <strong>condição promocional</strong> agora 🔥<br><br>';
+  promos.forEach(function(p,i){html+=(i===0?'🌟 ':'• ')+formatPacote(p)+'<br><br>';});
+  html+='Quer que eu detalhe algum ou prefere no estilo do seu perfil?';
+  return html;
+}
+
 if(querIndicacao(t)){
   lastBotIntent='indicacao';
   var lista=recomendar();
@@ -306,7 +321,64 @@ return pick([
 ]);
 }
 
-document.getElementById('form').addEventListener('submit',function(e){e.preventDefault();var text=document.getElementById('input').value.trim();if(!text)return;addMsg(text.replace(/</g,'&lt;'),'user');document.getElementById('input').value='';setTimeout(function(){addMsg(responder(text),'bot');},280);});
+
+var chatHistory=[];
+function perfilLabel(){
+  var key=getPerfilKey();
+  if(key&&PERFIS[key]) return PERFIS[key].titulo+' — '+PERFIS[key].desc;
+  return 'ainda não definido';
+}
+function textToHtml(t){
+  return String(t||'')
+    .replace(/&/g,'&amp;')
+    .replace(/</g,'&lt;')
+    .replace(/>/g,'&gt;')
+    .replace(/\n/g,'<br>')
+    .replace(/(https?:\/\/[^\s<]+)/g,'<a href="$1" target="_blank" rel="noopener">$1<\/a>')
+    .replace(/(\/(holambra|foz-iguacu|balneario-camboriu|gramado|bonito|caldas-novas|excursoes|descubra-perfil))/g,'<a href="$1">$1<\/a>');
+}
+async function perguntarIA(message){
+  var r=await fetch('/api/chat',{
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({message:message,perfil:perfilLabel(),history:chatHistory})
+  });
+  var data=await r.json().catch(function(){return {};});
+  if(!r.ok||data.fallback||!data.reply){
+    var err=new Error((data&&data.error)||'IA indisponível');
+    err.fallback=true;
+    throw err;
+  }
+  return data.reply;
+}
+
+document.getElementById('form').addEventListener('submit',async function(e){
+e.preventDefault();
+var text=document.getElementById('input').value.trim();
+if(!text)return;
+addMsg(text.replace(/</g,'&lt;'),'user');
+document.getElementById('input').value='';
+chatHistory.push({role:'user',text:text});
+var typing=document.createElement('div');
+typing.className='msg bot';
+typing.id='tourmix-typing';
+typing.textContent='Digitando…';
+messages.appendChild(typing);
+messages.scrollTop=messages.scrollHeight;
+try{
+  var reply=await perguntarIA(text);
+  var el=document.getElementById('tourmix-typing');
+  if(el)el.remove();
+  addMsg(textToHtml(reply),'bot');
+  chatHistory.push({role:'model',text:reply});
+  if(chatHistory.length>16) chatHistory=chatHistory.slice(-16);
+}catch(err){
+  var el=document.getElementById('tourmix-typing');
+  if(el)el.remove();
+  // fallback local inteligente
+  addMsg(responder(text),'bot');
+}
+});
 document.getElementById('sugestoes').addEventListener('click',function(e){var btn=e.target.closest('button[data-q]');if(!btn)return;document.getElementById('input').value=btn.getAttribute('data-q');document.getElementById('form').dispatchEvent(new Event('submit',{bubbles:true,cancelable:true}));});
 document.getElementById('btnLimpar').addEventListener('click',function(){messages.innerHTML='';addMsg('Chat zerado! Seu perfil continua salvo por aqui 😉','bot');});
 renderSidebar();
