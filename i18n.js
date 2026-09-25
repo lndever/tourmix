@@ -1,6 +1,6 @@
 /**
  * TOURMIX — tradução completa PT / EN / ES
- * Mobile: botão globo compacto | Desktop: PT EN ES
+ * Preços, 12x, R$ e números de valor NÃO são traduzidos.
  * <script src="i18n.js"></script> antes de </body>
  */
 (function () {
@@ -15,14 +15,43 @@
   } catch (e) {}
 
   function setCookie(name, value) {
-    var host = window.location.hostname;
     document.cookie = name + '=' + value + '; path=/; max-age=31536000';
-    document.cookie = name + '=' + value + '; path=/; domain=' + host + '; max-age=31536000';
   }
   function clearCookie(name) {
-    var host = window.location.hostname;
     document.cookie = name + '=; path=/; max-age=0';
-    document.cookie = name + '=; path=/; domain=' + host + '; max-age=0';
+  }
+
+  /** Marca preços / 12x / R$ para o Google NÃO traduzir */
+  function protectPrices() {
+    var selectors = [
+      '.price', '.package-price', '.pacote-footer', '.pacote-footer strong',
+      '.preco', '.valor', '[class*="price"]', '[class*="preco"]'
+    ];
+    selectors.forEach(function (sel) {
+      document.querySelectorAll(sel).forEach(function (el) {
+        el.classList.add('notranslate');
+        el.setAttribute('translate', 'no');
+      });
+    });
+
+    // qualquer texto com 12x, R$, ou padrão de parcelas
+    var re = /(\d+\s*x\b|\bR\$\s*\d|\b12x\b|\b10x\b|\b6x\b|\b4x\b|\b3x\b|\b2x\b|installments?\s+of|cuotas?\s+de)/i;
+    var walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, null);
+    var node;
+    var toProtect = [];
+    while ((node = walker.nextNode())) {
+      var t = node.nodeValue || '';
+      if (re.test(t)) {
+        var el = node.parentElement;
+        if (el && el.closest && !el.closest('script,style')) {
+          toProtect.push(el);
+        }
+      }
+    }
+    toProtect.forEach(function (el) {
+      el.classList.add('notranslate');
+      el.setAttribute('translate', 'no');
+    });
   }
 
   function applyLang(next) {
@@ -49,7 +78,6 @@
       'body{top:0!important;}',
       '#google_translate_element{display:none!important;}',
 
-      /* ===== MOBILE: só o globo, canto inferior esquerdo (acima do tema) ===== */
       '#lang-switcher{position:fixed;z-index:9998;left:16px;bottom:76px;}',
       '#lang-toggle{width:46px;height:46px;border-radius:50%;border:none;',
       'background:#0e7490;color:#fff;font-size:1.2rem;cursor:pointer;',
@@ -65,7 +93,6 @@
       '#lang-menu button.active{background:#eab308;color:#0f172a;}',
       '#lang-menu button:hover:not(.active){background:rgba(255,255,255,.1);}',
 
-      /* ===== DESKTOP: barra PT EN ES no topo ===== */
       '@media(min-width:900px){',
       '#lang-switcher{left:auto;right:72px;bottom:auto;top:16px;}',
       '#lang-toggle{display:none;}',
@@ -92,7 +119,6 @@
 
     var menu = document.createElement('div');
     menu.id = 'lang-menu';
-
     var labels = { pt: 'Português', en: 'English', es: 'Español' };
     ['pt', 'en', 'es'].forEach(function (code) {
       var b = document.createElement('button');
@@ -157,8 +183,12 @@
   }
 
   function boot() {
+    protectPrices(); // ANTES do Google carregar
     injectUI();
     loadGoogle();
+    // reforça depois que o DOM assentar
+    setTimeout(protectPrices, 500);
+    setTimeout(protectPrices, 1500);
   }
 
   if (document.readyState === 'loading') {
