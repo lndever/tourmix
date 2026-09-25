@@ -83,13 +83,20 @@
       '[data-theme="dark"] .price-box,[data-theme="dark"] .timeline-item,[data-theme="dark"] .roteiro-item,',
       '[data-theme="dark"] .day-card,[data-theme="dark"] .day-item,[data-theme="dark"] .step-card{',
       'background-color:#1e293b!important;color:#f1f5f9!important;border-color:#334155!important;}',
-      /* cards de pacote: só texto/borda — NÃO cobrir foto (bg-image ou img) */
+      /* cards: fundo escuro no bloco de texto; foto intacta */
       '[data-theme="dark"] .package-card,[data-theme="dark"] .destino-card,[data-theme="dark"] .excursao-card,',
-      '[data-theme="dark"] .card{color:#f1f5f9!important;border-color:#334155!important;}',
-      '[data-theme="dark"] .package-card .card-body,[data-theme="dark"] .package-card .content,',
-      '[data-theme="dark"] .destino-card .card-body,[data-theme="dark"] .excursao-card .card-body,',
-      '[data-theme="dark"] .card-body,[data-theme="dark"] .card-content{',
+      '[data-theme="dark"] .card{background-color:#1e293b!important;color:#f1f5f9!important;border-color:#334155!important;}',
+      '[data-theme="dark"] .package-card > div,[data-theme="dark"] .destino-card > div,',
+      '[data-theme="dark"] .excursao-card > div,[data-theme="dark"] .card > div{',
       'background-color:#1e293b!important;color:#f1f5f9!important;}',
+      '[data-theme="dark"] .package-card h3,[data-theme="dark"] .package-card h2,',
+      '[data-theme="dark"] .package-card h4,[data-theme="dark"] .destino-card h3,',
+      '[data-theme="dark"] .excursao-card h3,[data-theme="dark"] .card h3{color:#f8fafc!important;}',
+      '[data-theme="dark"] .package-card p,[data-theme="dark"] .destino-card p,',
+      '[data-theme="dark"] .excursao-card p,[data-theme="dark"] .card p{color:#e2e8f0!important;}',
+      '[data-theme="dark"] .package-card img,[data-theme="dark"] .destino-card img,',
+      '[data-theme="dark"] .excursao-card img,[data-theme="dark"] .card img{',
+      'background:transparent!important;filter:none!important;opacity:1!important;}',
 
       '[data-theme="dark"] section,[data-theme="dark"] main{background-color:#0b1220!important;}',
       '[data-theme="dark"] footer,[data-theme="dark"] .footer{background-color:#070b14!important;color:#e2e8f0!important;}',
@@ -131,8 +138,9 @@
     document.querySelectorAll('div, article, section, li, form').forEach(function (el) {
       if (el.id === 'theme-toggle') return;
       if (hasMedia(el)) return;
-      if (el.closest && el.closest('img,picture,video,.card-image,.package-image,.thumb,.cover,.package-card,.destino-card,.excursao-card')) return;
-      if (el.classList && (el.classList.contains('package-card') || el.classList.contains('destino-card') || el.classList.contains('excursao-card'))) return;
+      if (el.closest && el.closest('img,picture,video,.card-image,.package-image,.thumb,.cover')) return;
+      // não pintar o elemento que TEM a foto de fundo
+      if (hasMedia(el)) return;
 
       var st = window.getComputedStyle(el);
       var bg = st.backgroundColor || '';
