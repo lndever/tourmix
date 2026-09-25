@@ -101,6 +101,18 @@
       '[data-theme="dark"] .footer, [data-theme="dark"] footer{background-color:#070b14!important;color:#e2e8f0!important;}',
       '[data-theme="dark"] .footer a{color:#f1f5f9!important;}',
 
+      /* ROTEIRO dentro do pacote */
+      '[data-theme="dark"] .roteiro-dia{background-color:#1e293b!important;border-left-color:#22d3ee!important;color:#f1f5f9!important;}',
+      '[data-theme="dark"] .roteiro-dia h4{color:#67e8f9!important;}',
+      '[data-theme="dark"] .roteiro-dia p{color:#e2e8f0!important;}',
+
+      /* DEPOIMENTOS */
+      '[data-theme="dark"] .depoimentos{background-color:#0b1220!important;}',
+      '[data-theme="dark"] .depoimento{background-color:#1e293b!important;color:#f1f5f9!important;border-left-color:#eab308!important;}',
+      '[data-theme="dark"] .depoimento p{color:#e2e8f0!important;}',
+      '[data-theme="dark"] .depoimento footer strong{color:#67e8f9!important;}',
+      '[data-theme="dark"] .depoimento footer span{color:#94a3b8!important;}',
+
       /* preços */
       '[data-theme="dark"] .pacote-footer strong,[data-theme="dark"] .price{color:#fbbf24!important;}'
     ].join('');
