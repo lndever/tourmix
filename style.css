@@ -1097,6 +1097,84 @@ PORTIFOLIO
 }
 
 .footer-links a.footer-icon-link span,
+/* ===== TEMA CLARO / ESCURO ===== */
+:root,
+[data-theme="light"] {
+  --bg-page: #f0f9ff;
+  --bg-card: #ffffff;
+  --text-main: #0f172a;
+  --text-muted: #64748b;
+  --border-soft: #e2e8f0;
+  --header-bg: rgba(255, 255, 255, 0.95);
+  --primary: #0e7490;
+  --accent: #eab308;
+}
+
+[data-theme="dark"] {
+  --bg-page: #0b1220;
+  --bg-card: #111827;
+  --text-main: #e5e7eb;
+  --text-muted: #94a3b8;
+  --border-soft: #1f2937;
+  --header-bg: rgba(15, 23, 42, 0.92);
+  --primary: #22d3ee;
+  --accent: #fbbf24;
+}
+
+html, body {
+  background: var(--bg-page) !important;
+  color: var(--text-main) !important;
+}
+
+.header,
+.topbar {
+  background: var(--header-bg) !important;
+  border-color: var(--border-soft) !important;
+}
+
+.card,
+.excursao-card,
+.info-box,
+.side-block,
+.msg.bot {
+  background: var(--bg-card) !important;
+  color: var(--text-main) !important;
+  border-color: var(--border-soft) !important;
+}
+
+p, .lead, .sub, .footer-cnpj {
+  color: var(--text-muted);
+}
+
+/* Botão do tema */
+.theme-toggle {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid var(--border-soft);
+  background: var(--bg-card);
+  color: var(--text-main);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.05rem;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.08);
+  transition: transform 0.15s ease, background 0.15s ease;
+  margin-left: 0.5rem;
+}
+.theme-toggle:hover {
+  transform: scale(1.06);
+}
+
+/* Se o header não encaixar o botão, fica fixo */
+body > .theme-toggle,
+.theme-toggle.fixed-fallback {
+  position: fixed;
+  top: 14px;
+  right: 14px;
+  z-index: 10000;
+}
 .footer-links p.footer-icon-link span {
     display: inline !important;
 }
