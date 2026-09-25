@@ -56,6 +56,10 @@
       'box-shadow:0 8px 22px rgba(0,0,0,.28)!important;}',
       '@media(min-width:900px){#theme-toggle{top:18px!important;bottom:auto!important;left:auto!important;right:18px!important;}}',
       '[data-theme="dark"] #theme-toggle{background:#eab308!important;color:#0f172a!important;}',
+      /* tema CLARO: menu preto legível */
+      'html:not([data-theme="dark"]) .nav a{color:#0f172a!important;}',
+      'html:not([data-theme="dark"]) .header .nav a{color:#0f172a!important;}',
+      'html:not([data-theme="dark"]) .header.scrolled .nav a{color:#0f172a!important;}',
 
       /* base */
       '[data-theme="dark"] body{background-color:#0b1220!important;color:#f1f5f9!important;}',
