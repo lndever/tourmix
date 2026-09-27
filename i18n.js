@@ -1,6 +1,7 @@
 /**
  * TOURMIX — tradução completa PT / EN / ES
- * Preços, 12x, R$ e números de valor NÃO são traduzidos.
+ * Preços (12x, R$) não traduzem.
+ * Volta para PT limpa cookies do Google e recarrega a página original.
  * <script src="i18n.js"></script> antes de </body>
  */
 (function () {
@@ -14,14 +15,46 @@
     if (s === 'pt' || s === 'en' || s === 'es') lang = s;
   } catch (e) {}
 
-  function setCookie(name, value) {
-    document.cookie = name + '=' + value + '; path=/; max-age=31536000';
-  }
-  function clearCookie(name) {
-    document.cookie = name + '=; path=/; max-age=0';
+  /** Limpa TODAS as variações do cookie googtrans (causa do bug de não voltar ao PT) */
+  function clearGoogTransCookies() {
+    var host = window.location.hostname;
+    var parts = host.split('.');
+    var domains = ['', host];
+    // .tourmix.vercel.app / .vercel.app etc.
+    if (parts.length >= 2) {
+      domains.push('.' + parts.slice(-2).join('.'));
+    }
+    if (parts.length >= 3) {
+      domains.push('.' + parts.slice(-3).join('.'));
+    }
+    domains.push('.' + host);
+
+    var names = ['googtrans', 'googtrans'.toUpperCase()];
+    names.forEach(function (name) {
+      domains.forEach(function (domain) {
+        var base = name + '=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/; max-age=0';
+        document.cookie = base;
+        if (domain) {
+          document.cookie = base + '; domain=' + domain;
+        }
+      });
+      // valores “vazios” que alguns browsers ainda leem
+      document.cookie = name + '=/pt/pt; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/; max-age=0';
+      document.cookie = name + '=; path=/; max-age=0';
+    });
   }
 
-  /** Marca preços / 12x / R$ para o Google NÃO traduzir */
+  function setGoogTrans(value) {
+    // value ex: /pt/en
+    document.cookie = 'googtrans=' + value + '; path=/; max-age=31536000';
+    var host = window.location.hostname;
+    document.cookie = 'googtrans=' + value + '; path=/; domain=' + host + '; max-age=31536000';
+    var parts = host.split('.');
+    if (parts.length >= 2) {
+      document.cookie = 'googtrans=' + value + '; path=/; domain=.' + parts.slice(-2).join('.') + '; max-age=31536000';
+    }
+  }
+
   function protectPrices() {
     var selectors = [
       '.price', '.package-price', '.pacote-footer', '.pacote-footer strong',
@@ -34,8 +67,7 @@
       });
     });
 
-    // qualquer texto com 12x, R$, ou padrão de parcelas
-    var re = /(\d+\s*x\b|\bR\$\s*\d|\b12x\b|\b10x\b|\b6x\b|\b4x\b|\b3x\b|\b2x\b|installments?\s+of|cuotas?\s+de)/i;
+    var re = /(\d+\s*x\b|\bR\$\s*\d|\b12x\b|\b10x\b|\b6x\b|\b4x\b|\b3x\b|\b2x\b)/i;
     var walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, null);
     var node;
     var toProtect = [];
@@ -43,9 +75,7 @@
       var t = node.nodeValue || '';
       if (re.test(t)) {
         var el = node.parentElement;
-        if (el && el.closest && !el.closest('script,style')) {
-          toProtect.push(el);
-        }
+        if (el && el.closest && !el.closest('script,style')) toProtect.push(el);
       }
     }
     toProtect.forEach(function (el) {
@@ -54,16 +84,39 @@
     });
   }
 
+  /** Remove resíduos visuais do Google Translate */
+  function stripGoogleUi() {
+    try {
+      document.documentElement.classList.remove('translated-ltr', 'translated-rtl');
+      document.body.style.top = '0';
+      document.body.classList.remove('translated-ltr', 'translated-rtl');
+      var banner = document.querySelector('.goog-te-banner-frame');
+      if (banner && banner.parentNode) banner.parentNode.removeChild(banner);
+      document.querySelectorAll('iframe.skiptranslate, .goog-te-spinner-pos').forEach(function (el) {
+        if (el.parentNode) el.parentNode.removeChild(el);
+      });
+    } catch (e) {}
+  }
+
   function applyLang(next) {
-    if (next === lang) return;
+    if (next !== 'pt' && next !== 'en' && next !== 'es') return;
+
+    try { localStorage.setItem(KEY, next); } catch (e) {}
     lang = next;
-    try { localStorage.setItem(KEY, lang); } catch (e) {}
-    if (lang === 'pt') {
-      clearCookie('googtrans');
-      setCookie('googtrans', '/pt/pt');
-    } else {
-      setCookie('googtrans', '/pt/' + lang);
+
+    if (next === 'pt') {
+      // reset total → página original em português
+      clearGoogTransCookies();
+      stripGoogleUi();
+      // recarrega URL limpa (sem hash do translate)
+      var url = window.location.pathname + window.location.search;
+      window.location.replace(url || '/');
+      return;
     }
+
+    // EN ou ES
+    clearGoogTransCookies();
+    setGoogTrans('/pt/' + next);
     window.location.reload();
   }
 
@@ -85,7 +138,7 @@
       'box-shadow:0 8px 22px rgba(0,0,0,.28);}',
       '#lang-menu{display:none;position:absolute;bottom:54px;left:0;',
       'background:rgba(15,23,42,.95);border-radius:14px;padding:6px;',
-      'box-shadow:0 10px 28px rgba(0,0,0,.35);min-width:120px;}',
+      'box-shadow:0 10px 28px rgba(0,0,0,.35);min-width:130px;}',
       '#lang-switcher.open #lang-menu{display:block;}',
       '#lang-menu button{display:block;width:100%;border:none;background:transparent;',
       'color:#e2e8f0;font-family:Montserrat,system-ui,sans-serif;font-size:0.8rem;',
@@ -149,25 +202,28 @@
   }
 
   window.googleTranslateElementInit = function () {
+    // Só inicializa se NÃO estiver em português
+    if (lang === 'pt') return;
     try {
       new google.translate.TranslateElement({
         pageLanguage: 'pt',
-        includedLanguages: 'pt,en,es',
+        includedLanguages: 'en,es',
         autoDisplay: false
       }, 'google_translate_element');
     } catch (e) {}
-    if (lang !== 'pt') {
-      setTimeout(function () {
-        var sel = document.querySelector('select.goog-te-combo');
-        if (sel) {
-          sel.value = lang;
-          sel.dispatchEvent(new Event('change'));
-        }
-      }, 800);
-    }
+
+    setTimeout(function () {
+      var sel = document.querySelector('select.goog-te-combo');
+      if (sel) {
+        sel.value = lang;
+        sel.dispatchEvent(new Event('change'));
+      }
+    }, 600);
   };
 
   function loadGoogle() {
+    // Em PT não carrega o Google → evita conflito e garante original
+    if (lang === 'pt') return;
     if (document.getElementById('tourmix-gt-script')) return;
     var s = document.createElement('script');
     s.id = 'tourmix-gt-script';
@@ -176,19 +232,19 @@
     document.body.appendChild(s);
   }
 
-  if (lang === 'pt') {
-    clearCookie('googtrans');
-  } else {
-    setCookie('googtrans', '/pt/' + lang);
-  }
-
   function boot() {
-    protectPrices(); // ANTES do Google carregar
+    // Se o usuário escolheu PT, limpa qualquer cookie antigo residual
+    if (lang === 'pt') {
+      clearGoogTransCookies();
+      stripGoogleUi();
+    } else {
+      setGoogTrans('/pt/' + lang);
+    }
+
+    protectPrices();
     injectUI();
     loadGoogle();
-    // reforça depois que o DOM assentar
     setTimeout(protectPrices, 500);
-    setTimeout(protectPrices, 1500);
   }
 
   if (document.readyState === 'loading') {
