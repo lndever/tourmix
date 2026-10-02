@@ -78,7 +78,7 @@
       '[data-theme="dark"] .roteiro-dia{background-color:#1e293b!important;}',
       '[data-theme="dark"] .roteiro-dia h4{color:#67e8f9!important;}',
       '[data-theme="dark"] .roteiro-dia p{color:#e2e8f0!important;}',
-      '[data-theme="dark"] .depoimento,[data-theme="dark"] .dif-card{background-color:transparent!important;background:transparent!important;color:#f1f5f9!important;box-shadow:none!important;border-color:transparent!important;}',
+      '[data-theme="dark"] .depoimento,[data-theme="dark"] .dif-card{background-color:#1e293b!important;color:#f1f5f9!important;}',
       '[data-theme="dark"] .depoimento p{color:#e2e8f0!important;}',
 
       '[data-theme="dark"] form{background-color:#1e293b!important;}',
