@@ -83,7 +83,10 @@
 
       '[data-theme="dark"] form{background-color:#1e293b!important;}',
       '[data-theme="dark"] input,[data-theme="dark"] textarea,[data-theme="dark"] select{background-color:#0f172a!important;color:#f8fafc!important;}',
-      '[data-theme="dark"] .footer,[data-theme="dark"] footer{background-color:#070b14!important;color:#e2e8f0!important;}',
+      '[data-theme="dark"] .footer, [data-theme="dark"] body > footer{background-color:#070b14!important;color:#e2e8f0!important;}',
+      '[data-theme="dark"] .depoimento footer, [data-theme="dark"] .depoimento footer strong,[data-theme="dark"] .depoimento footer span{background:transparent!important;background-color:transparent!important;}',
+      '[data-theme="dark"] .depoimento footer strong{color:#67e8f9!important;}',
+      '[data-theme="dark"] .depoimento footer span{color:#94a3b8!important;}',
       '[data-theme="dark"] .pacote-footer strong{color:#fbbf24!important;}',
       /* Assistente */
       '[data-theme="dark"] .topbar{background:rgba(15,23,42,.96)!important;border-color:#1f2937!important;}',
