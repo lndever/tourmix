@@ -42,11 +42,19 @@
             z-index: 20;
         }
         .logo {
-            font-weight: 800;
-            font-size: 1.25rem;
+            display: flex;
+            align-items: center;
+            line-height: 0;
         }
-        .logo .t { color: var(--primary); }
-        .logo .mix { color: var(--accent); }
+        .logo-img {
+            height: 42px;
+            width: auto;
+            display: block;
+            object-fit: contain;
+        }
+        @media (min-width: 768px) {
+            .logo-img { height: 48px; }
+        }
         .topbar a.back {
             font-size: 0.88rem;
             font-weight: 600;
@@ -436,7 +444,7 @@
 </head>
 <body>
     <div class="topbar">
-        <a href="/" class="logo"><span class="t">Tour</span><span class="mix">MIX</span></a>
+        <a href="/" class="logo" aria-label="TOURMIX"><img src="LOGO-05.png" alt="TOURMIX" class="logo-img"></a>
         <a href="/" class="back">← Site</a>
     </div>
 
