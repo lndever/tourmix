@@ -84,7 +84,20 @@
       '[data-theme="dark"] form{background-color:#1e293b!important;}',
       '[data-theme="dark"] input,[data-theme="dark"] textarea,[data-theme="dark"] select{background-color:#0f172a!important;color:#f8fafc!important;}',
       '[data-theme="dark"] .footer,[data-theme="dark"] footer{background-color:#070b14!important;color:#e2e8f0!important;}',
-      '[data-theme="dark"] .pacote-footer strong{color:#fbbf24!important;}'
+      '[data-theme="dark"] .pacote-footer strong{color:#fbbf24!important;}',
+      /* Assistente */
+      '[data-theme="dark"] .topbar{background:rgba(15,23,42,.96)!important;border-color:#1f2937!important;}',
+      '[data-theme="dark"] .side-block{background-color:#1e293b!important;border-color:#334155!important;color:#e2e8f0!important;}',
+      '[data-theme="dark"] .side-block h2{color:#94a3b8!important;}',
+      '[data-theme="dark"] .chat-wrap{background:rgba(15,23,42,.55)!important;border-color:#1f2937!important;}',
+      '[data-theme="dark"] .msg.bot{background-color:#1e293b!important;border-color:#334155!important;color:#f1f5f9!important;}',
+      '[data-theme="dark"] .msg.bot strong{color:#fde68a!important;}',
+      '[data-theme="dark"] .msg.bot a{color:#67e8f9!important;}',
+      '[data-theme="dark"] .sugestoes button{background-color:#1e293b!important;border-color:#334155!important;color:#67e8f9!important;}',
+      '[data-theme="dark"] .composer{background-color:rgba(15,23,42,.98)!important;border-color:#1f2937!important;}',
+      '[data-theme="dark"] .composer input{background-color:#0f172a!important;border-color:#334155!important;color:#f1f5f9!important;}',
+      '[data-theme="dark"] .chip{background-color:#0f172a!important;border-color:#334155!important;color:#e2e8f0!important;}',
+      '[data-theme="dark"] .top-links a,[data-theme="dark"] .top-links button{background-color:#1e293b!important;border-color:#334155!important;color:#67e8f9!important;}'
     ].join('');
     document.head.appendChild(style);
   }
