@@ -42,7 +42,7 @@
       'background:#0e7490!important;color:#fff!important;font-size:1.2rem!important;cursor:pointer!important;',
       'display:flex!important;align-items:center!important;justify-content:center!important;',
       'box-shadow:0 8px 22px rgba(0,0,0,.28)!important;}',
-      '@media(min-width:900px){#theme-toggle{top:18px!important;bottom:auto!important;left:auto!important;right:18px!important;}}',
+      '@media(min-width:900px){#theme-toggle{left:16px!important;right:auto!important;bottom:20px!important;top:auto!important;}}',
       '[data-theme="dark"] #theme-toggle{background:#eab308!important;color:#0f172a!important;}',
 
       /* menu claro */

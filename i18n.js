@@ -146,12 +146,12 @@
       '#lang-menu button.active{background:#eab308;color:#0f172a;}',
       '#lang-menu button:hover:not(.active){background:rgba(255,255,255,.1);}',
 
+      /* sempre canto inferior esquerdo — não cobre menu nem WhatsApp */
+      '#lang-switcher{left:16px!important;bottom:76px!important;right:auto!important;top:auto!important;}',
+      '#lang-toggle{display:flex!important;}',
       '@media(min-width:900px){',
-      '#lang-switcher{left:auto;right:72px;bottom:auto;top:16px;}',
-      '#lang-toggle{display:none;}',
-      '#lang-menu{display:flex!important;position:static;background:rgba(15,23,42,.9);',
-      'border-radius:50px;padding:4px;min-width:0;box-shadow:0 8px 24px rgba(0,0,0,.25);}',
-      '#lang-menu button{width:auto;text-align:center;padding:0.38rem 0.7rem;border-radius:50px;font-size:0.72rem;}',
+      '#lang-switcher{left:16px!important;bottom:76px!important;right:auto!important;top:auto!important;}',
+      '#lang-menu{left:0;right:auto;}',
       '}'
     ].join('');
     document.head.appendChild(style);
