@@ -168,7 +168,7 @@
     <div id="conteudo">
         <header>
             <div class="header-inner">
-                <a href="/" class="logo"><span class="t">Tour</span><span class="mix">MIX</span></a>
+                <a href="/" class="logo" aria-label="TOURMIX"><img src="LOGO-05.png" alt="TOURMIX" style="height:42px;width:auto;display:block;"></a>
                 <div class="header-actions">
                     <span>Olá, <strong id="nomeUser">—</strong></span>
                     <button type="button" class="btn btn-sair" id="btnSair">Sair</button>
@@ -217,7 +217,7 @@
     <script src="auth.js"></script>
     <script>
         (async function () {
-            var user = await TourmixAuth.requireAuth('login.html');
+            var user = await TourmixAuth.requireAuth('/login');
             if (!user) return;
 
             document.getElementById('loading').style.display = 'none';
@@ -231,10 +231,11 @@
 
             document.getElementById('btnSair').addEventListener('click', async function () {
                 await TourmixAuth.signOut();
-                window.location.href = 'login.html';
+                window.location.href = '/login';
             });
         })();
     </script>
+    <script src="theme.js"></script>
     <script src="i18n.js"></script>
 </body>
 </html>
