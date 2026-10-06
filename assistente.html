@@ -199,13 +199,19 @@ relax:{emoji:'♨️',titulo:'Mestre do Descanso',desc:'Modo avião ligado. Term
 cultural:{emoji:'🏛️',titulo:'Viajante Cultural',desc:'Você quer sentir o lugar: comida boa, história e aquele café com cara de filme.',destinos:['gramado','foz'],badge:'PERFIL CURIOUS'}
 };
 var CATALOGO=[
-{id:'holambra',nome:'Holambra',tipo:'Excursão 1 dia',tags:['flores','romantico','foto','holambra'],resumo:'Um dia na Cidade das Flores — Portal, Moinho, Guarda-Chuvas e Parque Van Gogh.',data:'25 de outubro (domingo)',preco:'R$ 159,90 à vista ou 2x de R$ 80 no PIX',inclui:'Micro-ônibus, guia, seguro, kit Tourmix e sorteios',embarque:'Itaquaquecetuba 6h20 · Barra Funda 7h30',link:'/holambra'},
-{id:'foz',nome:'Foz do Iguaçu',tipo:'Pacote 4 noites',tags:['natureza','cataratas','foz'],resumo:'Cataratas poderosas + cidade, com aéreo saindo de SP.',data:'Várias saídas OUT/NOV/DEZ',preco:'A partir de 12x de R$ 115',inclui:'Aéreo, Hotel San Juan (café), transfer e seguro',link:'/foz-iguacu'},
-{id:'camboriu',nome:'Balneário Camboriú',tipo:'Pacote 4 noites',tags:['praia','mar','camboriu'],resumo:'Orla famosa, praia e cidade completa pra curtir.',data:'Várias saídas',preco:'A partir de 12x de R$ 115',inclui:'Aéreo, Hotel Rosenbrock (café), transfer e seguro',link:'/balneario-camboriu'},
-{id:'gramado',nome:'Gramado',tipo:'Pacote 4 noites',tags:['serra','gramado','romantico','cultural'],resumo:'Serra com charme, chocolate e clima de cinema.',data:'Várias saídas',preco:'A partir de 12x de R$ 115',inclui:'Aéreo, Life Hotel Infinity (café), transfer e seguro',link:'/gramado'},
-{id:'bonito',nome:'Bonito',tipo:'Pacote 5 noites',tags:['natureza','bonito','aventura'],resumo:'Água cristalina e natureza de tirar o fôlego no MS.',data:'Várias saídas',preco:'A partir de 12x de R$ 167',inclui:'Aéreo, Bonito Ecotel (café), transfer e seguro',link:'/bonito'},
-{id:'caldas',nome:'Caldas Novas',tipo:'Pacote 5 noites',tags:['termas','relax','caldas'],resumo:'Resort com águas quentinhas, café e jantar inclusos.',data:'Várias saídas',preco:'A partir de 12x de R$ 145',inclui:'Aéreo, resort (café e jantar), transfer e seguro',link:'/caldas-novas'}
+{id:'holambra',nome:'Holambra',tipo:'Excursão 1 dia',tags:['flores','romantico','foto','holambra','promocao','barato','excursao'],resumo:'Um dia na Cidade das Flores — Portal, Moinho, Guarda-Chuvas, Deck do Amor e Parque Van Gogh.',data:'25 de outubro (domingo)',preco:'R$ 159,90 à vista ou 2x de R$ 80 no PIX (reserva 30%)',inclui:'Micro-ônibus executivo, guia credenciado, seguro Hero, kit Tourmix e sorteios',embarque:'Itaquaquecetuba 6h20 · Barra Funda 7h30',link:'/holambra'},
+{id:'foz',nome:'Foz do Iguaçu',tipo:'Pacote 4 noites',tags:['natureza','cataratas','foz','promocao','barato','familia'],resumo:'Cataratas + cidade. Hotel San Juan com café. Aéreo saindo de SP.',data:'Saídas OUT/NOV/DEZ (ex.: 03 e 17/OUT)',preco:'A partir de 12x de R$ 115 · 3% off à vista',inclui:'Aéreo SP, Hotel San Juan (café), transfer e seguro · taxas de embarque não inclusas',link:'/foz-iguacu'},
+{id:'camboriu',nome:'Balneário Camboriú',tipo:'Pacote 4 noites',tags:['praia','mar','camboriu','promocao','sol'],resumo:'Orla famosa, praia e cidade completa. Hotel Rosenbrock com café.',data:'Saídas OUT/NOV/DEZ',preco:'A partir de 12x de R$ 115 · 3% off à vista',inclui:'Aéreo SP, Hotel Rosenbrock (café), transfer e seguro · taxas de embarque não inclusas',link:'/balneario-camboriu'},
+{id:'gramado',nome:'Gramado',tipo:'Pacote 4 noites',tags:['serra','gramado','romantico','cultural','promocao','chocolate'],resumo:'Serra com charme, gastronomia e clima de cinema. Life Hotel Infinity com café.',data:'Saídas SET/OUT/NOV/DEZ',preco:'A partir de 12x de R$ 115 · 3% off à vista',inclui:'Aéreo SP, Life Hotel Infinity (café), transfer e seguro · taxas de embarque não inclusas',link:'/gramado'},
+{id:'bonito',nome:'Bonito',tipo:'Pacote 5 noites',tags:['natureza','bonito','aventura','rio','promocao'],resumo:'Águas cristalinas e ecoturismo no MS. Hotel Bonito Ecotel com café.',data:'Saídas NOV/DEZ',preco:'A partir de 12x de R$ 167 · 3% off à vista',inclui:'Aéreo SP, Bonito Ecotel (café), transfer e seguro · taxas de embarque não inclusas',link:'/bonito'},
+{id:'caldas',nome:'Caldas Novas',tipo:'Pacote 5 noites',tags:['termas','relax','caldas','resort','familia','promocao'],resumo:'Resort Encontro das Águas com café e jantar. Ideal pra desligar.',data:'Saídas OUT/NOV',preco:'A partir de 12x de R$ 145 · 3% off à vista',inclui:'Aéreo SP, resort (café e jantar), transfer e seguro · taxas de embarque não inclusas',link:'/caldas-novas'}
 ];
+var FAQ_EXTRA={
+whatsapp:'WhatsApp oficial: (11) 91484-1404 — https://wa.me/5511914841404',
+pix:'PIX (CNPJ): 65.063.425/0001-95',
+horario:'Atendimento: seg a sex, 9h às 18h',
+empresa:'TOURMIX / Tourmix Br — CNPJ/CADASTUR 65.063.425/0001-95'
+};
 var NOME_PATH={'/holambra':'Holambra','/holambra.html':'Holambra','/gramado':'Gramado','/gramado.html':'Gramado','/bonito':'Bonito','/bonito.html':'Bonito','/foz-iguacu':'Foz do Iguaçu','/foz-iguacu.html':'Foz do Iguaçu','/balneario-camboriu':'Balneário Camboriú','/balneario-camboriu.html':'Balneário Camboriú','/caldas-novas':'Caldas Novas','/caldas-novas.html':'Caldas Novas','/excursoes':'Excursões','/excursoes.html':'Excursões','/descubra-perfil':'Quiz','/descubra-perfil.html':'Quiz'};
 var lastBotIntent='';
 var turn=0;
@@ -293,6 +299,18 @@ if(isTudoBem(t)){
   ]);
 }
 
+if(/whatsapp|telefone|contato|falar com (voces|vocês|alguem|alguém)/.test(t)){
+  return 'Pode falar com a gente no WhatsApp: <strong>(11) 91484-1404</strong><br><a href="https://wa.me/5511914841404" target="_blank">Abrir WhatsApp</a><br>Horário de referência: seg a sex, 9h às 18h.';
+}
+if(/\bpix\b|chave pix|forma de pagamento|parcel|cartao|cartão/.test(t)){
+  return 'Formas de pagamento TOURMIX:<br>• <strong>PIX</strong> (CNPJ): 65.063.425/0001-95<br>• Cartão em até 12x (taxas da operadora quando houver)<br>• Nos pacotes aéreos promocionais: referência em 12x e 3% off à vista<br><br>Pra fechar: WhatsApp (11) 91484-1404.';
+}
+if(/cadastur|cnpj|empresa|voces sao|vocês são|confiavel|confiável/.test(t)){
+  return 'Somos a <strong>Tourmix Br</strong> — viagens e experiências.<br>CNPJ / CADASTUR: <strong>65.063.425/0001-95</strong><br>Atendimento humano no WhatsApp (11) 91484-1404.';
+}
+if(/mais barato|mais barata|promocao|promoção|oferta|desconto/.test(t)){
+  return 'Hoje os destaques de preço são:<br>• <strong>Holambra</strong> (1 dia) — R$ 159,90 à vista ou 2x R$ 80 no PIX<br>• <strong>Foz, Camboriú e Gramado</strong> — a partir de 12x de R$ 115<br>• <strong>Caldas Novas</strong> — 12x de R$ 145 · <strong>Bonito</strong> — 12x de R$ 167<br><br>Quer que eu detalhe um deles?';
+}
 if(isDespedida(t) || /obrigad|valeu|vlw|thanks/.test(t)){
   lastBotIntent='despedida';
   return pick([
