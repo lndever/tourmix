@@ -210,11 +210,26 @@
       });
     }
 
+    function resolveClient() {
+      if (window.TourmixAuth && typeof window.TourmixAuth.getClient === 'function') {
+        var c = window.TourmixAuth.getClient();
+        if (c) return c;
+      }
+      var cfg = window.TOURMIX_AUTH || {};
+      if (window.supabase && cfg.supabaseUrl && cfg.supabaseAnonKey) {
+        return window.supabase.createClient(cfg.supabaseUrl, cfg.supabaseAnonKey, {
+          auth: { persistSession: true, autoRefreshToken: true, storage: window.localStorage }
+        });
+      }
+      return null;
+    }
+
     async function load() {
       var err = document.getElementById('erro');
       err.classList.add('hidden');
       try {
-        var client = window.TourmixAuth.getClient();
+        var client = resolveClient();
+        if (!client) throw new Error('Cliente Supabase não disponível. Confira auth-config.js e se o script do Supabase carregou.');
         var res = await client
           .from('perfis_viajante')
           .select('*')

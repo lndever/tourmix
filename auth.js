@@ -94,6 +94,7 @@
 
     window.TourmixAuth = {
         configOk: configOk,
+        getClient: getClient,
         signUp: signUp,
         signIn: signIn,
         signOut: signOut,
