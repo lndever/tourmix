@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Painel · Perfis de viajante | TOURMIX</title>
+  <link rel="icon" type="image/png" href="LOGO-05.png">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:Montserrat,system-ui,sans-serif;background:#0b1220;color:#f1f5f9;min-height:100vh}
+    a{color:#67e8f9;text-decoration:none}
+    .top{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:1rem 1.25rem;border-bottom:1px solid #1f2937;background:#0f172a;position:sticky;top:0;z-index:10}
+    .top img{height:36px}
+    .top h1{font-size:1rem;font-weight:700}
+    .wrap{width:min(1100px,94%);margin:0 auto;padding:1.5rem 0 3rem}
+    .gate,.card{background:#1e293b;border:1px solid #334155;border-radius:16px;padding:1.25rem}
+    .gate{max-width:420px;margin:3rem auto;text-align:center}
+    .gate p{color:#94a3b8;font-size:.9rem;margin:.75rem 0 1.25rem;line-height:1.5}
+    .btn{display:inline-flex;padding:.7rem 1.2rem;border-radius:50px;font-weight:700;font-size:.88rem;border:none;cursor:pointer;font-family:inherit}
+    .btn-primary{background:#eab308;color:#0f172a}
+    .stats{display:grid;grid-template-columns:repeat(2,1fr);gap:.75rem;margin-bottom:1.25rem}
+    @media(min-width:720px){.stats{grid-template-columns:repeat(5,1fr)}}
+    .stat{background:#1e293b;border:1px solid #334155;border-radius:14px;padding:1rem;text-align:center}
+    .stat strong{display:block;font-size:1.4rem;color:#fbbf24}
+    .stat span{font-size:.72rem;color:#94a3b8;text-transform:uppercase;letter-spacing:.04em}
+    .toolbar{display:flex;flex-wrap:wrap;gap:.6rem;margin-bottom:1rem;align-items:center}
+    .toolbar input,.toolbar select{background:#0f172a;border:1px solid #334155;color:#f1f5f9;border-radius:10px;padding:.55rem .75rem;font-family:inherit;font-size:.85rem}
+    table{width:100%;border-collapse:collapse;font-size:.85rem}
+    th,td{padding:.7rem .6rem;text-align:left;border-bottom:1px solid #334155;vertical-align:top}
+    th{color:#94a3b8;font-size:.72rem;text-transform:uppercase;letter-spacing:.04em}
+    tr:hover td{background:rgba(255,255,255,.03)}
+    .badge{display:inline-block;padding:.2rem .55rem;border-radius:50px;font-size:.72rem;font-weight:700;background:#0e7490;color:#fff}
+    .scores{font-size:.72rem;color:#94a3b8;line-height:1.4}
+    .msg{color:#94a3b8;padding:1rem 0}
+    .err{color:#fca5a5;background:#450a0a;border:1px solid #7f1d1d;padding:.75rem 1rem;border-radius:10px;margin-bottom:1rem}
+    .hidden{display:none!important}
+    .mobile-cards{display:none}
+    @media(max-width:700px){
+      table{display:none}
+      .mobile-cards{display:flex;flex-direction:column;gap:.75rem}
+      .mcard{background:#0f172a;border:1px solid #334155;border-radius:12px;padding:1rem}
+      .mcard h3{font-size:.95rem;margin-bottom:.25rem}
+      .mcard p{font-size:.8rem;color:#94a3b8}
+    }
+  </style>
+</head>
+<body>
+  <div class="top">
+    <div style="display:flex;align-items:center;gap:.75rem">
+      <a href="/"><img src="LOGO-05.png" alt="TOURMIX" onerror="this.style.display='none'"></a>
+      <h1>Painel · Perfis de viajante</h1>
+    </div>
+    <a href="/">← Site</a>
+  </div>
+
+  <div class="wrap">
+    <div id="gate" class="gate">
+      <h2>Área restrita</h2>
+      <p>Faça login com uma conta de administrador para ver os resultados do quiz e os perfis dos viajantes.</p>
+      <a class="btn btn-primary" href="/login">Entrar</a>
+    </div>
+
+    <div id="denied" class="gate hidden">
+      <h2>Sem permissão</h2>
+      <p>Esta conta está logada, mas não está na lista de administradores. Peça ao dono do site para liberar seu e-mail no painel.</p>
+      <a class="btn btn-primary" href="/">Voltar ao site</a>
+    </div>
+
+    <div id="painel" class="hidden">
+      <div id="erro" class="err hidden"></div>
+
+      <div class="stats" id="stats"></div>
+
+      <div class="toolbar">
+        <input type="search" id="busca" placeholder="Buscar nome ou e-mail..." style="flex:1;min-width:180px">
+        <select id="filtroPerfil">
+          <option value="">Todos os perfis</option>
+          <option value="natureza">Explorador da Natureza</option>
+          <option value="praia">Praiano Urbano</option>
+          <option value="romantico">Romântico Fotogênico</option>
+          <option value="relax">Mestre do Descanso</option>
+          <option value="cultural">Viajante Cultural</option>
+        </select>
+        <button type="button" class="btn btn-primary" id="btnRefresh">Atualizar</button>
+      </div>
+
+      <div class="card">
+        <div id="vazio" class="msg hidden">Nenhum resultado de quiz ainda. Quando alguém concluir o teste, aparece aqui.</div>
+        <div style="overflow-x:auto">
+          <table>
+            <thead>
+              <tr>
+                <th>Data</th>
+                <th>Nome</th>
+                <th>E-mail</th>
+                <th>Perfil</th>
+                <th>Votos (pontuação)</th>
+              </tr>
+            </thead>
+            <tbody id="tbody"></tbody>
+          </table>
+        </div>
+        <div class="mobile-cards" id="cards"></div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="auth-config.js"></script>
+  <script src="auth.js"></script>
+  <script>
+  (function () {
+    /**
+     * COLOQUE AQUI OS E-MAILS QUE PODEM VER O PAINEL
+     * (em minúsculas)
+     */
+    var ADMIN_EMAILS = [
+      'embacado12300@gmail.com'
+      // , 'outro@email.com'
+    ];
+
+    var LABELS = {
+      natureza: 'Natureza',
+      praia: 'Praia',
+      romantico: 'Romântico',
+      relax: 'Relax',
+      cultural: 'Cultural'
+    };
+
+    var allRows = [];
+
+    function isAdmin(email) {
+      if (!email) return false;
+      email = String(email).toLowerCase().trim();
+      return ADMIN_EMAILS.indexOf(email) !== -1;
+    }
+
+    function fmtDate(iso) {
+      try {
+        var d = new Date(iso);
+        return d.toLocaleString('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' });
+      } catch (e) { return iso || '—'; }
+    }
+
+    function scoresText(scores) {
+      if (!scores || typeof scores !== 'object') return '—';
+      return Object.keys(LABELS).map(function (k) {
+        return LABELS[k] + ': ' + (scores[k] || 0);
+      }).join(' · ');
+    }
+
+    function renderStats(rows) {
+      var counts = { natureza: 0, praia: 0, romantico: 0, relax: 0, cultural: 0 };
+      rows.forEach(function (r) {
+        if (counts[r.perfil_key] !== undefined) counts[r.perfil_key]++;
+      });
+      var el = document.getElementById('stats');
+      el.innerHTML =
+        '<div class="stat"><strong>' + rows.length + '</strong><span>Total</span></div>' +
+        '<div class="stat"><strong>' + counts.natureza + '</strong><span>Natureza</span></div>' +
+        '<div class="stat"><strong>' + counts.praia + '</strong><span>Praia</span></div>' +
+        '<div class="stat"><strong>' + counts.romantico + '</strong><span>Romântico</span></div>' +
+        '<div class="stat"><strong>' + counts.relax + '</strong><span>Relax</span></div>';
+    }
+
+    function filtered() {
+      var q = (document.getElementById('busca').value || '').toLowerCase().trim();
+      var f = document.getElementById('filtroPerfil').value;
+      return allRows.filter(function (r) {
+        if (f && r.perfil_key !== f) return false;
+        if (!q) return true;
+        var nome = (r.nome || '').toLowerCase();
+        var email = (r.email || '').toLowerCase();
+        return nome.indexOf(q) !== -1 || email.indexOf(q) !== -1;
+      });
+    }
+
+    function renderTable() {
+      var rows = filtered();
+      renderStats(allRows);
+      var tbody = document.getElementById('tbody');
+      var cards = document.getElementById('cards');
+      var vazio = document.getElementById('vazio');
+      tbody.innerHTML = '';
+      cards.innerHTML = '';
+      if (!rows.length) {
+        vazio.classList.remove('hidden');
+        return;
+      }
+      vazio.classList.add('hidden');
+      rows.forEach(function (r) {
+        var tr = document.createElement('tr');
+        tr.innerHTML =
+          '<td>' + fmtDate(r.created_at) + '</td>' +
+          '<td>' + (r.nome || '—') + '</td>' +
+          '<td>' + (r.email || '—') + '</td>' +
+          '<td><span class="badge">' + (r.perfil_titulo || r.perfil_key) + '</span></td>' +
+          '<td class="scores">' + scoresText(r.scores) + '</td>';
+        tbody.appendChild(tr);
+
+        var card = document.createElement('div');
+        card.className = 'mcard';
+        card.innerHTML =
+          '<h3>' + (r.nome || 'Sem nome') + ' · <span class="badge">' + (r.perfil_titulo || r.perfil_key) + '</span></h3>' +
+          '<p>' + (r.email || 'Sem e-mail') + '</p>' +
+          '<p>' + fmtDate(r.created_at) + '</p>' +
+          '<p class="scores">' + scoresText(r.scores) + '</p>';
+        cards.appendChild(card);
+      });
+    }
+
+    async function load() {
+      var err = document.getElementById('erro');
+      err.classList.add('hidden');
+      try {
+        var client = window.TourmixAuth.getClient();
+        var res = await client
+          .from('perfis_viajante')
+          .select('*')
+          .order('created_at', { ascending: false })
+          .limit(500);
+        if (res.error) throw res.error;
+        allRows = res.data || [];
+        renderTable();
+      } catch (e) {
+        err.textContent = 'Erro ao carregar: ' + ((e && e.message) || e) +
+          '. Confira se a tabela perfis_viajante existe e se as políticas RLS foram criadas.';
+        err.classList.remove('hidden');
+      }
+    }
+
+    document.getElementById('busca').addEventListener('input', renderTable);
+    document.getElementById('filtroPerfil').addEventListener('change', renderTable);
+    document.getElementById('btnRefresh').addEventListener('click', load);
+
+    (async function boot() {
+      if (!window.TourmixAuth || !window.TourmixAuth.configOk || !window.TourmixAuth.configOk()) {
+        document.getElementById('gate').classList.remove('hidden');
+        return;
+      }
+      var user = await window.TourmixAuth.getUser();
+      if (!user) {
+        document.getElementById('gate').classList.remove('hidden');
+        return;
+      }
+      document.getElementById('gate').classList.add('hidden');
+      if (!isAdmin(user.email)) {
+        document.getElementById('denied').classList.remove('hidden');
+        return;
+      }
+      document.getElementById('painel').classList.remove('hidden');
+      load();
+    })();
+  })();
+  </script>
+</body>
+</html>
