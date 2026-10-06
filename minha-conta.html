@@ -335,7 +335,7 @@
                     <strong>Excursões</strong>
                     <span>Passeios de um dia</span>
                 </a>
-                <a class="atalho" href="/descubra-perfil">
+                <a class="atalho" href="/meu-perfil">
                     <div class="ico">✨</div>
                     <strong>Meu perfil</strong>
                     <span>Quiz de viajante</span>
@@ -351,7 +351,7 @@
             <p class="section-sub">Selecionamos opções para você explorar com a TOURMIX.</p>
             <div class="pacotes">
                 <article class="pacote">
-                    <img src="https://images.pexels.com/photos/2583852/pexels-photo-2583852.jpeg?auto=compress&cs=tinysrgb&w=1600" alt="Foz do Iguaçu">
+                    <img src="https://images.unsplash.com/photo-1710162014471-586b9f8c84b8?auto=format&fit=crop&w=800&q=80" alt="Foz do Iguaçu">
                     <div class="pacote-body">
                         <p class="meta">4 noites · Brasil</p>
                         <h3>Foz do Iguaçu</h3>
@@ -438,7 +438,8 @@
                     if (info) {
                         document.getElementById('perfilTitulo').textContent = info.t;
                         document.getElementById('perfilDesc').textContent = info.d;
-                        document.getElementById('perfilBtn').textContent = 'Ver ou refazer o quiz';
+                        document.getElementById('perfilBtn').textContent = 'Ver meu perfil';
+                        document.getElementById('perfilBtn').href = '/meu-perfil';
                     }
                 }
             } catch (e) {}

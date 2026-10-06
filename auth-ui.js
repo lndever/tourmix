@@ -152,7 +152,7 @@
         '<div class="auth-menu" role="menu" id="auth-menu">' +
           '<div class="auth-email">' + email.replace(/</g, '&lt;') + '</div>' +
           '<a href="/minha-conta" role="menuitem" class="auth-link">Minha conta</a>' +
-          '<a href="/descubra-perfil" role="menuitem" class="auth-link">Meu perfil de viajante</a>' +
+          '<a href="/meu-perfil" role="menuitem" class="auth-link">Meu perfil de viajante</a>' +
           '<a href="/assistente" role="menuitem" class="auth-link">Assistente</a>' +
           '<a href="/#pacotes" role="menuitem" class="auth-link">Ver pacotes</a>' +
           '<button type="button" class="auth-sair" id="auth-sair" role="menuitem">Sair</button>' +

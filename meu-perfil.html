@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meu perfil de viajante | TOURMIX</title>
+    <link rel="icon" type="image/png" href="LOGO-05.png">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{font-family:Montserrat,system-ui,sans-serif;background:#f0f9ff;color:#0f172a;min-height:100vh}
+        a{text-decoration:none;color:inherit}
+        .topbar{background:rgba(255,255,255,.96);border-bottom:1px solid #e2e8f0;padding:.85rem 1.25rem;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:20}
+        .logo img{height:40px;width:auto;display:block}
+        .topbar-links{display:flex;gap:.5rem;align-items:center;flex-wrap:wrap}
+        .topbar-links a{font-size:.8rem;font-weight:600;color:#0e7490;padding:.4rem .75rem;border-radius:50px;background:#f0f9ff;border:1px solid #bae6fd}
+        .wrap{width:min(960px,92%);margin:0 auto;padding:1.75rem 0 3.5rem}
+        .empty,.hero,.card{background:#fff;border:1px solid #e2e8f0;border-radius:18px;box-shadow:0 10px 28px rgba(14,116,144,.06)}
+        .empty{text-align:center;padding:2.5rem 1.5rem}
+        .empty .big{font-size:2.5rem;margin-bottom:.75rem}
+        .empty h1{font-size:1.35rem;margin-bottom:.5rem}
+        .empty p{color:#64748b;font-size:.92rem;line-height:1.55;max-width:420px;margin:0 auto 1.25rem}
+        .btn{display:inline-flex;align-items:center;justify-content:center;gap:.4rem;padding:.85rem 1.4rem;border-radius:50px;font-family:inherit;font-weight:700;font-size:.9rem;border:none;cursor:pointer}
+        .btn-primary{background:#eab308;color:#0f172a}
+        .btn-primary:hover{background:#ca8a04}
+        .btn-outline{background:transparent;border:1.5px solid #0e7490;color:#0e7490}
+        .btn-wa{background:#25d366;color:#fff}
+        .hero{padding:1.75rem 1.5rem;margin-bottom:1.25rem;background:linear-gradient(145deg,#0e7490 0%,#0a2e38 100%);color:#fff;border:none}
+        .hero .tag{display:inline-block;background:#eab308;color:#0f172a;font-size:.7rem;font-weight:800;padding:.25rem .65rem;border-radius:50px;margin-bottom:.75rem}
+        .hero .emoji{font-size:2.8rem;line-height:1;margin-bottom:.4rem}
+        .hero h1{font-size:1.5rem;margin-bottom:.45rem}
+        .hero p{opacity:.92;font-size:.92rem;line-height:1.55;max-width:520px}
+        .grid{display:grid;gap:1rem}
+        @media(min-width:720px){.grid-2{grid-template-columns:1.1fr .9fr}}
+        .card{padding:1.25rem 1.2rem}
+        .card h2{font-size:.72rem;text-transform:uppercase;letter-spacing:.06em;color:#64748b;margin-bottom:.75rem}
+        .card h3{font-size:1.05rem;margin-bottom:.4rem}
+        .card p,.card li{font-size:.88rem;color:#475569;line-height:1.55}
+        .card ul{list-style:none;display:flex;flex-direction:column;gap:.55rem}
+        .card li{padding-left:1.2rem;position:relative}
+        .card li::before{content:"✓";position:absolute;left:0;color:#0e7490;font-weight:800}
+        .bars{display:flex;flex-direction:column;gap:.65rem}
+        .bar-row{display:grid;grid-template-columns:90px 1fr 28px;gap:.5rem;align-items:center;font-size:.78rem;font-weight:600;color:#334155}
+        .bar{height:8px;background:#e2e8f0;border-radius:50px;overflow:hidden}
+        .bar > span{display:block;height:100%;border-radius:50px;background:linear-gradient(90deg,#0e7490,#eab308)}
+        .section-title{font-size:1.1rem;font-weight:800;margin:1.75rem 0 .85rem}
+        .section-sub{font-size:.88rem;color:#64748b;margin:-.4rem 0 1rem}
+        .pacotes{display:grid;gap:1rem}
+        @media(min-width:720px){.pacotes{grid-template-columns:repeat(3,1fr)}}
+        .pacote{background:#fff;border:1px solid #e2e8f0;border-radius:16px;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 6px 18px rgba(14,116,144,.06);transition:.2s}
+        .pacote:hover{transform:translateY(-3px)}
+        .pacote img{width:100%;height:140px;object-fit:cover;display:block}
+        .pacote-body{padding:1rem 1.05rem 1.15rem;flex:1;display:flex;flex-direction:column}
+        .pacote-body .meta{font-size:.75rem;color:#64748b;margin-bottom:.2rem}
+        .pacote-body h3{font-size:1.02rem;margin-bottom:.3rem}
+        .pacote-body p{font-size:.84rem;color:#64748b;line-height:1.45;flex:1}
+        .pacote-body .preco{margin:.7rem 0 .8rem;font-weight:800;color:#0e7490;font-size:.95rem}
+        .pacote-body .btn{width:100%;background:#eab308;color:#0f172a;padding:.55rem;font-size:.82rem}
+        .acoes{display:flex;flex-wrap:wrap;gap:.6rem;margin-top:1.5rem}
+        .hidden{display:none!important}
+
+        [data-theme="dark"] body{background:#0b1220!important;color:#f1f5f9!important}
+        [data-theme="dark"] .topbar{background:rgba(15,23,42,.96)!important;border-color:#1f2937!important}
+        [data-theme="dark"] .topbar-links a{background:#1e293b!important;border-color:#334155!important;color:#67e8f9!important}
+        [data-theme="dark"] .empty,[data-theme="dark"] .card,[data-theme="dark"] .pacote{background:#1e293b!important;border-color:#334155!important;color:#f1f5f9!important}
+        [data-theme="dark"] .empty p,[data-theme="dark"] .card p,[data-theme="dark"] .card li,[data-theme="dark"] .section-sub,[data-theme="dark"] .pacote-body p,[data-theme="dark"] .pacote-body .meta,[data-theme="dark"] .card h2{color:#94a3b8!important}
+        [data-theme="dark"] .bar{background:#334155!important}
+        [data-theme="dark"] .bar-row{color:#cbd5e1!important}
+        [data-theme="dark"] .pacote-body .preco{color:#fbbf24!important}
+        [data-theme="dark"] .section-title,[data-theme="dark"] .empty h1,[data-theme="dark"] .pacote-body h3,[data-theme="dark"] .card h3{color:#f8fafc!important}
+    </style>
+</head>
+<body>
+    <div class="topbar">
+        <a href="/" class="logo" aria-label="TOURMIX"><img src="LOGO-05.png" alt="TOURMIX" onerror="this.onerror=null;this.src='LOGO-01.png'"></a>
+        <div class="topbar-links">
+            <a href="/minha-conta">Minha conta</a>
+            <a href="/">Site</a>
+        </div>
+    </div>
+
+    <div class="wrap">
+        <!-- SEM QUIZ -->
+        <div id="semPerfil" class="empty hidden">
+            <div class="big">✨</div>
+            <h1>Você ainda não tem um perfil de viajante</h1>
+            <p>Faça o quiz rápido da TOURMIX e descubra seu estilo — com descrição, dicas e pacotes combinando com você.</p>
+            <a class="btn btn-primary" href="/descubra-perfil">Fazer o quiz agora</a>
+        </div>
+
+        <!-- COM PERFIL -->
+        <div id="comPerfil" class="hidden">
+            <div class="hero">
+                <span class="tag">SEU PERFIL TOURMIX</span>
+                <div class="emoji" id="pEmoji">🌿</div>
+                <h1 id="pTitulo">—</h1>
+                <p id="pDesc">—</p>
+            </div>
+
+            <div class="grid grid-2">
+                <div class="card">
+                    <h2>Sobre o seu estilo</h2>
+                    <h3>Como você viaja</h3>
+                    <p id="pSobre">—</p>
+                    <ul id="pDicas" style="margin-top:1rem"></ul>
+                </div>
+                <div class="card">
+                    <h2>Afinidade</h2>
+                    <div class="bars" id="pBarras"></div>
+                    <p style="margin-top:1rem;font-size:.8rem;color:#64748b">Baseado nas respostas do quiz. Pode mudar se você refizer o teste.</p>
+                </div>
+            </div>
+
+            <h2 class="section-title">Pacotes para o seu perfil</h2>
+            <p class="section-sub">Sugestões TOURMIX alinhadas ao seu estilo de viagem.</p>
+            <div class="pacotes" id="pPacotes"></div>
+
+            <div class="acoes">
+                <a class="btn btn-wa" id="btnWhats" href="https://wa.me/5511914841404" target="_blank" rel="noopener">Falar no WhatsApp</a>
+                <a class="btn btn-outline" href="/descubra-perfil">Refazer o quiz</a>
+                <a class="btn btn-outline" href="/assistente">Abrir assistente</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+    (function () {
+        var PERFIS = {
+            natureza: {
+                emoji: '🌿',
+                titulo: 'Explorador da Natureza',
+                desc: 'Você se recarrega longe do concreto. Prefere águas claras, trilhas e paisagens que tiram o fôlego.',
+                sobre: 'Seu estilo combina ecoturismo, natureza preservada e roteiros com boa dose de exploração — sem abrir mão de estrutura e segurança.',
+                dicas: [
+                    'Priorize destinos com ecoturismo e boa estrutura de passeios',
+                    'Leve roupa leve, tênis e capa de chuva',
+                    'Reserve com antecedência atrações que esgotam rápido',
+                    'Combine aventura com um dia mais leve no meio do roteiro'
+                ],
+                pacotes: [
+                    { nome: 'Bonito', meta: '5 noites · Brasil', preco: '12x de R$ 167', href: '/bonito', img: 'https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=800&q=80', texto: 'Rios cristalinos, flutuação e natureza de tirar o fôlego.' },
+                    { nome: 'Foz do Iguaçu', meta: '4 noites · Brasil', preco: '12x de R$ 115', href: '/foz-iguacu', img: 'https://images.unsplash.com/photo-1710162014471-586b9f8c84b8?auto=format&fit=crop&w=800&q=80', texto: 'Cataratas imponentes e contato direto com a natureza.' },
+                    { nome: 'Gramado', meta: '4 noites · Brasil', preco: '12x de R$ 115', href: '/gramado', img: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=800&q=80', texto: 'Serra, trilhas leves e paisagens de cinema.' }
+                ],
+                whats: 'Olá! Meu perfil TOURMIX é Explorador da Natureza. Quero montar uma viagem nesse estilo!'
+            },
+            praia: {
+                emoji: '🏖️',
+                titulo: 'Praiano Urbano',
+                desc: 'Sol, orla e energia de cidade que não para. Chinelo sempre na mala.',
+                sobre: 'Você gosta de misturar praia, gastronomia e programação urbana. Destinos costeiros com boa estrutura combinam muito com você.',
+                dicas: [
+                    'Escolha hotéis perto da praia ou do centro',
+                    'Misture praia de dia e programação na cidade à noite',
+                    'Fique de olho na previsão do tempo da costa',
+                    'Reserve transfers para aproveitar mais o tempo'
+                ],
+                pacotes: [
+                    { nome: 'Balneário Camboriú', meta: '4 noites · Brasil', preco: '12x de R$ 115', href: '/balneario-camboriu', img: 'https://images.unsplash.com/photo-1555881400-74d7acaacd8b?auto=format&fit=crop&w=800&q=80', texto: 'Orla famosa, cidade completa e clima de férias.' },
+                    { nome: 'Foz do Iguaçu', meta: '4 noites · Brasil', preco: '12x de R$ 115', href: '/foz-iguacu', img: 'https://images.unsplash.com/photo-1710162014471-586b9f8c84b8?auto=format&fit=crop&w=800&q=80', texto: 'Para variar: natureza + cidade animada.' },
+                    { nome: 'Caldas Novas', meta: '5 noites · Brasil', preco: '12x de R$ 145', href: '/caldas-novas', img: 'https://images.unsplash.com/photo-1571896349842-33c89424de2d?auto=format&fit=crop&w=800&q=80', texto: 'Águas quentes e resort para curtir sem pressa.' }
+                ],
+                whats: 'Olá! Meu perfil TOURMIX é Praiano Urbano. Quero dicas de pacote nesse estilo!'
+            },
+            romantico: {
+                emoji: '🌷',
+                titulo: 'Romântico Fotogênico',
+                desc: 'Você viaja para criar memórias bonitas. Flores, ruas charmosas e cenários de cinema.',
+                sobre: 'Roteiros com charme, boa luz para fotos e experiências a dois (ou em clima especial) são a sua prioridade.',
+                dicas: [
+                    'Programe horários com luz boa para fotos',
+                    'Inclua cafés, mirantes e passeios a pé',
+                    'Reserve restaurantes especiais com antecedência',
+                    'Combine um dia mais calmo com outro de roteiro cheio'
+                ],
+                pacotes: [
+                    { nome: 'Holambra', meta: 'Excursão · 1 dia', preco: 'A partir de R$ 159,90', href: '/holambra', img: 'https://images.unsplash.com/photo-1490750967868-88aa4486c946?auto=format&fit=crop&w=800&q=80', texto: 'Cidade das Flores — perfeita para fotos e um dia especial.' },
+                    { nome: 'Gramado', meta: '4 noites · Brasil', preco: '12x de R$ 115', href: '/gramado', img: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=800&q=80', texto: 'Serra, charme europeu e cenários inesquecíveis.' },
+                    { nome: 'Caldas Novas', meta: '5 noites · Brasil', preco: '12x de R$ 145', href: '/caldas-novas', img: 'https://images.unsplash.com/photo-1571896349842-33c89424de2d?auto=format&fit=crop&w=800&q=80', texto: 'Resort e águas termais para um clima aconchegante.' }
+                ],
+                whats: 'Olá! Meu perfil TOURMIX é Romântico Fotogênico. Quero montar essa viagem!'
+            },
+            relax: {
+                emoji: '♨️',
+                titulo: 'Mestre do Descanso',
+                desc: 'Sua viagem ideal é desligar o modo corrida. Águas quentes, conforto e zero pressão.',
+                sobre: 'Você prioriza conforto, bem-estar e agenda leve. Resorts e destinos de descanso são a escolha certa.',
+                dicas: [
+                    'Prefira resorts ou hotéis com estrutura completa',
+                    'Deixe folgas entre um passeio e outro',
+                    'Invista em experiências de bem-estar',
+                    'Viajar em baixa temporada costuma ser mais tranquilo'
+                ],
+                pacotes: [
+                    { nome: 'Caldas Novas', meta: '5 noites · Brasil', preco: '12x de R$ 145', href: '/caldas-novas', img: 'https://images.unsplash.com/photo-1571896349842-33c89424de2d?auto=format&fit=crop&w=800&q=80', texto: 'Resort com café e jantar — ideal para relaxar de verdade.' },
+                    { nome: 'Gramado', meta: '4 noites · Brasil', preco: '12x de R$ 115', href: '/gramado', img: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=800&q=80', texto: 'Aconchego na serra, no ritmo que você escolher.' },
+                    { nome: 'Balneário Camboriú', meta: '4 noites · Brasil', preco: '12x de R$ 115', href: '/balneario-camboriu', img: 'https://images.unsplash.com/photo-1555881400-74d7acaacd8b?auto=format&fit=crop&w=800&q=80', texto: 'Praia e cidade, com dias leves se quiser.' }
+                ],
+                whats: 'Olá! Meu perfil TOURMIX é Mestre do Descanso. Quero um roteiro leve!'
+            },
+            cultural: {
+                emoji: '🏛️',
+                titulo: 'Viajante Cultural',
+                desc: 'História, gastronomia regional e entender o lugar além do cartão-postal.',
+                sobre: 'Você curte experiências locais, boa comida e roteiros com conteúdo — sem abrir mão de um passeio ao ar livre.',
+                dicas: [
+                    'Inclua atrativos históricos e experiências locais',
+                    'Pesquise pratos típicos da região',
+                    'Reserve um dia livre para se perder nas ruas',
+                    'Combine cultura com um passeio ao ar livre'
+                ],
+                pacotes: [
+                    { nome: 'Gramado', meta: '4 noites · Brasil', preco: '12x de R$ 115', href: '/gramado', img: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=800&q=80', texto: 'Cultura, gastronomia e serra gaúcha.' },
+                    { nome: 'Foz do Iguaçu', meta: '4 noites · Brasil', preco: '12x de R$ 115', href: '/foz-iguacu', img: 'https://images.unsplash.com/photo-1710162014471-586b9f8c84b8?auto=format&fit=crop&w=800&q=80', texto: 'Natureza + experiências únicas na tríplice fronteira.' },
+                    { nome: 'Holambra', meta: 'Excursão · 1 dia', preco: 'A partir de R$ 159,90', href: '/holambra', img: 'https://images.unsplash.com/photo-1490750967868-88aa4486c946?auto=format&fit=crop&w=800&q=80', texto: 'Cultura holandesa, flores e um dia diferente.' }
+                ],
+                whats: 'Olá! Meu perfil TOURMIX é Viajante Cultural. Quero sugestões de roteiro!'
+            }
+        };
+
+        var LABELS = {
+            natureza: 'Natureza',
+            praia: 'Praia',
+            romantico: 'Romântico',
+            relax: 'Relax',
+            cultural: 'Cultural'
+        };
+
+        function getKey() {
+            try {
+                var raw = localStorage.getItem('tourmix_perfil_quiz');
+                if (!raw) return null;
+                var k = JSON.parse(raw);
+                if (typeof k === 'string' && PERFIS[k]) return k;
+                return null;
+            } catch (e) { return null; }
+        }
+
+        function getScores() {
+            try {
+                var raw = localStorage.getItem('tourmix_perfil_scores');
+                return raw ? JSON.parse(raw) : null;
+            } catch (e) { return null; }
+        }
+
+        var key = getKey();
+        var sem = document.getElementById('semPerfil');
+        var com = document.getElementById('comPerfil');
+
+        if (!key) {
+            sem.classList.remove('hidden');
+            return;
+        }
+
+        com.classList.remove('hidden');
+        var p = PERFIS[key];
+        document.getElementById('pEmoji').textContent = p.emoji;
+        document.getElementById('pTitulo').textContent = p.titulo;
+        document.getElementById('pDesc').textContent = p.desc;
+        document.getElementById('pSobre').textContent = p.sobre;
+
+        var ul = document.getElementById('pDicas');
+        p.dicas.forEach(function (d) {
+            var li = document.createElement('li');
+            li.textContent = d;
+            ul.appendChild(li);
+        });
+
+        var scores = getScores() || {};
+        var max = 1;
+        Object.keys(LABELS).forEach(function (k) {
+            if ((scores[k] || 0) > max) max = scores[k];
+        });
+        var bars = document.getElementById('pBarras');
+        Object.keys(LABELS).forEach(function (k) {
+            var v = scores[k] || 0;
+            var pct = Math.round((v / max) * 100);
+            var row = document.createElement('div');
+            row.className = 'bar-row';
+            row.innerHTML = '<span>' + LABELS[k] + '</span><div class="bar"><span style="width:' + pct + '%"></span></div><span>' + v + '</span>';
+            bars.appendChild(row);
+        });
+
+        var pack = document.getElementById('pPacotes');
+        p.pacotes.forEach(function (item) {
+            var art = document.createElement('article');
+            art.className = 'pacote';
+            art.innerHTML =
+                '<img src="' + item.img + '" alt="' + item.nome + '">' +
+                '<div class="pacote-body">' +
+                    '<p class="meta">' + item.meta + '</p>' +
+                    '<h3>' + item.nome + '</h3>' +
+                    '<p>' + item.texto + '</p>' +
+                    '<div class="preco notranslate" translate="no">' + item.preco + '</div>' +
+                    '<a class="btn" href="' + item.href + '">Ver detalhes</a>' +
+                '</div>';
+            pack.appendChild(art);
+        });
+
+        document.getElementById('btnWhats').href =
+            'https://wa.me/5511914841404?text=' + encodeURIComponent(p.whats);
+    })();
+    </script>
+    <script src="theme.js"></script>
+    <script src="i18n.js"></script>
+</body>
+</html>
