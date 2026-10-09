@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buenos Aires | TOURMIX</title>
+    <link rel="icon" type="image/png" href="LOGO-05.png">
+    <link rel="apple-touch-icon" href="LOGO-05.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .header.scrolled .logo-tour, .logo-tour { color: #0e7490 !important; }
+        body { font-family: 'Montserrat', system-ui, sans-serif; }
+        h1, h2, h3 { font-family: 'Montserrat', system-ui, sans-serif; font-weight: 700; }
+        .pacote-hero {
+            height: 55vh;
+            background: url('https://images.unsplash.com/photo-1589909202802-8f4aadce1849?auto=format&fit=crop&w=1600&q=80') center/cover no-repeat;
+            position: relative;
+            display: flex;
+            align-items: flex-end;
+            color: white;
+        }
+        .pacote-hero-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.75), rgba(0,0,0,0.2));
+        }
+        .pacote-hero-content {
+            position: relative;
+            z-index: 2;
+            padding: 2.5rem 0;
+            width: 100%;
+        }
+        .pacote-detalhes { padding: 4rem 0; }
+        .pacote-grid {
+            display: grid;
+            grid-template-columns: 1.6fr 1fr;
+            gap: 3rem;
+            align-items: start;
+        }
+        .info-box {
+            background: white;
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            position: sticky;
+            top: 100px;
+        }
+        .info-box .preco {
+            font-size: 1.8rem;
+            color: #0e7490;
+            font-weight: 700;
+            margin: 0.5rem 0 1.5rem;
+        }
+        .info-box .preco small { font-size: 1rem; color: #64748b; font-weight: 500; }
+        .info-lista { list-style: none; margin: 1.5rem 0; padding: 0; }
+        .info-lista li {
+            padding: 0.55rem 0;
+            padding-left: 1.8rem;
+            position: relative;
+            border-bottom: 1px solid #f1f5f9;
+            color: #334155;
+        }
+        .info-lista li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #eab308;
+            font-weight: 700;
+        }
+        .roteiro-dia {
+            background: #f8fafc;
+            border-radius: 12px;
+            padding: 1.3rem 1.5rem;
+            margin-bottom: 1rem;
+            border-left: 4px solid #0e7490;
+        }
+        .roteiro-dia h4 { color: #0e7490; margin-bottom: 0.4rem; }
+        .roteiro-dia p { color: #475569; font-size: 0.95rem; }
+        .voltar {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 2rem;
+            padding: 0.55rem 1.3rem;
+            background: rgba(255, 255, 255, 0.9);
+            color: #0e7490;
+            font-weight: 600;
+            font-size: 0.9rem;
+            border-radius: 50px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+        .voltar:hover {
+            background: white;
+            transform: translateY(-2px);
+        }
+        .obs {
+            font-size: 0.82rem;
+            color: #64748b;
+            line-height: 1.6;
+            margin-top: 1.2rem;
+            padding-top: 1rem;
+            border-top: 1px solid #e2e8f0;
+        }
+        .badge-promo {
+            display: inline-block;
+            background: #eab308;
+            color: #0f172a;
+            font-size: 0.75rem;
+            font-weight: 700;
+            padding: 0.3rem 0.85rem;
+            border-radius: 50px;
+            margin-bottom: 0.8rem;
+        }
+        .badge-reveillon {
+            display: inline-block;
+            background: #e11d48;
+            color: #fff;
+            font-size: 0.75rem;
+            font-weight: 700;
+            padding: 0.3rem 0.85rem;
+            border-radius: 50px;
+            margin-bottom: 0.8rem;
+            margin-right: 0.4rem;
+        }
+        @media (max-width: 900px) {
+            .pacote-grid { grid-template-columns: 1fr; }
+            .info-box { position: static; }
+            .pacote-hero { height: 45vh; }
+        }
+        [data-theme="dark"] .info-box { background: #1e293b; color: #f1f5f9; }
+        [data-theme="dark"] .info-lista li { color: #cbd5e1; border-color: #334155; }
+        [data-theme="dark"] .roteiro-dia { background: #0f172a; }
+        [data-theme="dark"] .roteiro-dia p { color: #94a3b8; }
+        [data-theme="dark"] .obs { color: #94a3b8; border-color: #334155; }
+</style>
+</head>
+<body>
+    <header class="header scrolled" id="header">
+        <div class="container header-inner">
+            <a href="/" class="logo">
+                <img src="LOGO-05.png" alt="TOURMIX" class="logo-img" onerror="this.onerror=null;this.src='LOGO-01.png'">
+            </a>
+            <nav class="nav" id="nav">
+                <a href="/">Início</a>
+                <a href="/#destinos">Destinos</a>
+                <a href="/#pacotes">Pacotes</a>
+                <a href="/excursoes">Excursões</a>
+                <a href="/#contato" class="btn-nav">Fale Conosco</a>
+            </nav>
+        </div>
+    </header>
+
+    <section class="pacote-hero">
+        <div class="pacote-hero-overlay"></div>
+        <div class="pacote-hero-content container">
+            <a href="/#pacotes" class="voltar">← Voltar para pacotes</a>
+            <p class="eyebrow" style="color: #eab308;">Argentina · América do Sul</p>
+            <h1 style="font-size: 2.6rem; margin-bottom: 0.5rem;">Buenos Aires</h1>
+            <p style="opacity: 0.9; font-size: 1.1rem;">Réveillon 2026/2027 · 4 noites</p>
+        </div>
+    </section>
+
+    <section class="pacote-detalhes">
+        <div class="container pacote-grid">
+            <div>
+                <span class="badge-reveillon">Réveillon 2026/2027</span>
+                <span class="badge-promo">Em até 10x</span>
+                <h2 style="color: #0e7490; margin: 1rem 0 1.5rem;">Sobre o pacote</h2>
+                <p style="color: #475569; margin-bottom: 1.5rem; line-height: 1.7;">
+                    Celebre o Réveillon em Buenos Aires com a TOURMIX. Quatro noites na capital argentina, hotel com café da manhã, city tour pelos ícones da cidade, transfer e seguro viagem — saída de São Paulo em 30 de dezembro.
+                </p>
+
+                <h3 style="color: #0e7490; margin-bottom: 1rem;">Roteiro sugerido</h3>
+                
+                <div class="roteiro-dia">
+                    <h4>Dia 1 — Chegada em Buenos Aires</h4>
+                    <p>Recepção, transfer ao hotel e primeiras impressões da capital argentina.</p>
+                </div>
+                <div class="roteiro-dia">
+                    <h4>Dia 2 — City Tour</h4>
+                    <p>City Tour clássico: Obelisco, 9 de Julio, Casa Rosada, San Telmo e o charme portenho.</p>
+                </div>
+                <div class="roteiro-dia">
+                    <h4>Dia 3 — Livre / Réveillon</h4>
+                    <p>Dia livre para Palermo, Caminito ou compras. À noite, celebre o Réveillon em Buenos Aires.</p>
+                </div>
+                <div class="roteiro-dia">
+                    <h4>Dia 4 — Aproveite a cidade</h4>
+                    <p>Manhã livre para cafés, livrarias e última volta pela cidade antes do retorno.</p>
+                </div>
+                <div class="roteiro-dia">
+                    <h4>Dia 5 — Retorno</h4>
+                    <p>Transfer ao aeroporto e voo de volta a São Paulo.</p>
+                </div>
+
+
+                <h3 style="color: #0e7490; margin: 2rem 0 1rem;">Informações importantes</h3>
+                <div class="roteiro-dia">
+                    <h4>Saída</h4>
+                    <p><strong>30 de dezembro</strong> · saindo de São Paulo</p>
+                </div>
+                <div class="roteiro-dia">
+                    <h4>Hotel</h4>
+                    <p><strong>Hotel El Conquistador</strong> · café da manhã incluso</p>
+                </div>
+                <div class="roteiro-dia">
+                    <h4>Incluso no pacote</h4>
+                    <p>Aéreo saindo de São Paulo · Transfer · City Tour · Seguro viagem · Café da manhã no hotel</p>
+                </div>
+            </div>
+
+            <div class="info-box">
+                <p style="font-size: 0.9rem; color: #64748b;">A partir de</p>
+                <div class="preco notranslate" translate="no">10x de R$ 374 <small>/ pessoa</small></div>
+                <p style="font-size: 0.9rem; color: #0e7490; font-weight: 600; margin-bottom: 1rem;">3% de desconto à vista</p>
+
+                <p><strong>Duração:</strong> 4 noites</p>
+                <p><strong>Hotel:</strong> Hotel El Conquistador</p>
+                <p><strong>Regime:</strong> Café da manhã</p>
+                <p><strong>Saída:</strong> 30/DEZ · São Paulo</p>
+                <p><strong>Temporada:</strong> Réveillon 2026/2027</p>
+
+                <h4 style="margin: 1.5rem 0 0.8rem; color: #0e7490;">O que está incluso</h4>
+                <ul class="info-lista">
+                    <li>Aéreo saindo de São Paulo</li>
+                    <li>Hotel El Conquistador (café da manhã)</li>
+                    <li>Transfer</li>
+                    <li>City Tour</li>
+                    <li>Seguro viagem</li>
+                </ul>
+
+                <a href="https://wa.me/5511914841404?text=Ol%C3%A1%21%20Tenho%20interesse%20no%20pacote%20Buenos%20Aires%20%E2%80%94%20R%C3%A9veillon%202026/2027%20%284%20noites%2C%20sa%C3%ADda%2030/DEZ%29" target="_blank" class="btn btn-primary" style="display:block;text-align:center;margin-top:1rem;padding:0.9rem;border-radius:50px;font-weight:700;background:#eab308;color:#0f172a;text-decoration:none;">
+                    Quero este pacote
+                </a>
+
+                <p class="obs">
+                    Valor calculado com base no câmbio do dia 24/09 por pessoa em apartamento duplo.
+                    Sujeito a reajuste e disponibilidade sem prévio aviso. Taxas de embarque não incluídas.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container footer-bottom">
+            <p class="notranslate" translate="no" style="font-size:0.85rem;opacity:0.85;margin-bottom:0.35rem;">CADASTUR / CNPJ 65.063.425/0001-95</p>
+            <p>© 2026 Tourmix Br. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+
+    <a href="https://wa.me/5511914841404" target="_blank" class="whatsapp-float" aria-label="WhatsApp">
+        <svg viewBox="0 0 32 32" width="28" height="28"><path fill="white" d="M16.004 0C7.174 0 0 7.176 0 16.004c0 2.824.74 5.566 2.146 7.99L0 32l8.202-2.15A15.92 15.92 0 0 0 16.004 32C24.83 32 32 24.824 32 16.004 32 7.176 24.83 0 16.004 0zm0 29.24a13.18 13.18 0 0 1-6.72-1.846l-.482-.286-4.868 1.276 1.3-4.748-.314-.498A13.18 13.18 0 0 1 2.76 16.004c0-7.3 5.94-13.24 13.244-13.24 7.3 0 13.24 5.94 13.24 13.24 0 7.304-5.94 13.236-13.24 13.236z"/></svg>
+    </a>
+    <script src="script.js"></script>
+    <script src="theme.js"></script>
+    <script src="i18n.js"></script>
+    <script src="assistente-widget.js"></script>
+</body>
+</html>
