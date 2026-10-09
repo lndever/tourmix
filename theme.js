@@ -78,7 +78,7 @@
       '[data-theme="dark"] .roteiro-dia{background-color:#1e293b!important;}',
       '[data-theme="dark"] .roteiro-dia h4{color:#67e8f9!important;}',
       '[data-theme="dark"] .roteiro-dia p{color:#e2e8f0!important;}',
-      '[data-theme="dark"] .depoimento,[data-theme="dark"] .dif-card{background-color:#1e293b!important;color:#f1f5f9!important;}',
+      '[data-theme="dark"] .dif-card{background-color:transparent!important;background:transparent!important;color:#f1f5f9!important;box-shadow:none!important;border-color:transparent!important;}[data-theme="dark"] .depoimento{background:#1e293b!important;border:1px solid #334155!important;color:#f1f5f9!important;box-shadow:0 8px 24px rgba(0,0,0,.25)!important;}',
       '[data-theme="dark"] .depoimento p{color:#e2e8f0!important;}',
 
       '[data-theme="dark"] form{background-color:#1e293b!important;}',
@@ -86,7 +86,7 @@
       '[data-theme="dark"] .footer, [data-theme="dark"] body > footer{background-color:#070b14!important;color:#e2e8f0!important;}',
       '[data-theme="dark"] .depoimento footer, [data-theme="dark"] .depoimento footer strong,[data-theme="dark"] .depoimento footer span{background:transparent!important;background-color:transparent!important;}',
       '[data-theme="dark"] .depoimento footer strong{color:#67e8f9!important;}',
-      '[data-theme="dark"] .depoimento footer span{color:#94a3b8!important;}',
+      '[data-theme="dark"] .depoimento footer span{color:#94a3b8!important;}[data-theme="dark"] .depoimento{background:#1e293b!important;border:1px solid #334155!important;box-shadow:0 8px 24px rgba(0,0,0,.25)!important;color:#f1f5f9!important;}[data-theme="dark"] .depoimento-texto,[data-theme="dark"] .depoimento p{color:#cbd5e1!important;}[data-theme="dark"] .depoimento-autor{border-color:#334155!important;}[data-theme="dark"] .depoimento-meta strong,[data-theme="dark"] .depoimento footer strong{color:#67e8f9!important;}[data-theme="dark"] .depoimento-meta span{color:#94a3b8!important;}[data-theme="dark"] .depoimento-avatar{background:linear-gradient(145deg,#0e7490,#164e63)!important;color:#fff!important;}[data-theme="dark"] .depoimentos{background:#0b1220!important;}[data-theme="dark"] .stars{color:#eab308!important;}',
       '[data-theme="dark"] .pacote-footer strong{color:#fbbf24!important;}',
       /* Assistente */
       '[data-theme="dark"] .topbar{background:rgba(15,23,42,.96)!important;border-color:#1f2937!important;}',
