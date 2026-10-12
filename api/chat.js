@@ -3,18 +3,35 @@
 // Chave: https://console.groq.com/keys
 
 const CATALOGO = `
-DADOS TOURMIX:
-WhatsApp (11) 91484-1404 | PIX/CNPJ 65.063.425/0001-95 | @tourmixbr
-Pacotes: Holambra 1 dia R$159,90; Foz/Camboriú/Gramado 12x R$115; Bonito 12x R$167; Caldas 12x R$145;
-Santiago Réveillon 10x R$397; Buenos Aires Réveillon 10x R$374.
-Não invente preço/data/hotel da TOURMIX. Confirme no WhatsApp se faltar detalhe.
+CATÁLOGO OFICIAL TOURMIX (use estes dados para preço/data/hotel — NÃO invente):
+
+EMPRESA
+- WhatsApp: (11) 91484-1404 — https://wa.me/5511914841404
+- Instagram: @tourmixbr
+- CNPJ/CADASTUR / PIX: 65.063.425/0001-95
+- Atendimento: seg–sex 9h–18h
+
+PACOTES E EXCURSÕES
+1) Holambra — Excursão 1 dia — 25/out (domingo) — R$ 159,90 à vista ou 2x R$ 80 PIX (reserva 30%) — micro-ônibus, guia, seguro, kit — /holambra
+2) Foz do Iguaçu — 4 noites — a partir de 12x R$ 115 · 3% off à vista — Hotel San Juan (café), aéreo SP, transfer, seguro — taxas de embarque não inclusas — /foz-iguacu
+3) Balneário Camboriú — 4 noites — a partir de 12x R$ 115 · 3% off à vista — Hotel Rosenbrock (café), aéreo SP, transfer, seguro — /balneario-camboriu
+4) Gramado — 4 noites — a partir de 12x R$ 115 · 3% off à vista — Life Hotel Infinity (café), aéreo SP, transfer, seguro — /gramado
+5) Bonito — 5 noites — a partir de 12x R$ 167 · 3% off à vista — Bonito Ecotel (café), aéreo SP, transfer, seguro — /bonito
+6) Caldas Novas — 5 noites — a partir de 12x R$ 145 · 3% off à vista — Resort (café e jantar), aéreo SP, transfer, seguro — /caldas-novas
+7) Santiago do Chile — RÉVEILLON 2026/2027 — 4 noites — saída 30/DEZ de São Paulo — a partir de 10x R$ 397 /pessoa · 3% off à vista — Hotel Panamericano (café da manhã), aéreo SP, transfer, city tour, seguro viagem — taxas de embarque não inclusas — página /santiago-chile
+8) Buenos Aires — RÉVEILLON 2026/2027 — 4 noites — saída 30/DEZ de São Paulo — a partir de 10x R$ 374 /pessoa · 3% off à vista — Hotel El Conquistador (café da manhã), aéreo SP, transfer, city tour, seguro viagem — taxas de embarque não inclusas — página /buenos-aires
+
+Quando falarem de Chile, Santiago, Réveillon no Chile → ofereça o pacote Santiago do Chile com link /santiago-chile.
+Quando falarem de Argentina, Buenos Aires, Réveillon na Argentina → ofereça Buenos Aires com link /buenos-aires.
+Quando falarem de Réveillon / Ano Novo / 31 de dezembro no exterior → mencione OS DOIS (Santiago e Buenos Aires) com preços.
 `;
 
 function systemPrompt(perfil) {
   return `Você é o assistente da TOURMIX (Tourmix Br), agência de viagens brasileira.
 Fale em português do Brasil, natural e simpático (3 a 12 linhas).
-Pode responder QUALQUER pergunta: viagem, dicas, curiosidades, conversa casual.
+Pode responder QUALQUER pergunta: viagem, dicas, curiosidades, conversa.
 Para PREÇO, DATA, HOTEL ou inclusões da TOURMIX use APENAS o catálogo. Não invente.
+Se pedirem Santiago, Chile, Buenos Aires, Argentina ou Réveillon, use os pacotes 7 e 8 do catálogo (eles EXISTEM no site).
 Se faltar detalhe, indique WhatsApp (11) 91484-1404.
 Perfil do usuário: ${perfil || "não definido"}
 ${CATALOGO}`;
@@ -56,7 +73,6 @@ export default async function handler(req, res) {
     });
     messages.push({ role: "user", content: message });
 
-    // tenta vários modelos (free tier varia por conta)
     const models = [
       "llama-3.1-8b-instant",
       "openai/gpt-oss-20b",
