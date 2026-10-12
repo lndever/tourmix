@@ -1,4 +1,6 @@
-// api/chat.js — TOURMIX Assistente (Gemini 3.8, resposta rápida)
+// api/chat.js — TOURMIX Assistente via Groq
+// Vercel → Environment Variables → GROQ_API_KEY
+// Chave em: https://console.groq.com/keys
 
 const CATALOGO = `
 DADOS TOURMIX:
@@ -8,14 +10,14 @@ Santiago Réveillon 10x R$397; Buenos Aires Réveillon 10x R$374.
 Não invente preço/data/hotel da TOURMIX. Confirme no WhatsApp se faltar detalhe.
 `;
 
-function buildPrompt(perfil, message) {
-  return `Você é o assistente da TOURMIX. Português do Brasil, natural e simpático.
-Responda de forma direta (3 a 12 linhas). Pode falar de qualquer assunto.
-Para preço/data/hotel TOURMIX use só o catálogo. Não invente valores da agência.
-Perfil: ${perfil || "não definido"}
-${CATALOGO}
-
-Pergunta: ${message}`;
+function systemPrompt(perfil) {
+  return `Você é o assistente da TOURMIX (Tourmix Br), agência de viagens brasileira.
+Fale em português do Brasil, de forma natural, simpática e objetiva (3 a 12 linhas).
+Pode responder QUALQUER pergunta: viagem, dicas, curiosidades, conversa casual, etc.
+Para PREÇO, DATA, HOTEL ou O QUE ESTÁ INCLUSO da TOURMIX, use APENAS o catálogo abaixo. Não invente.
+Se faltar detalhe oficial, diga para confirmar no WhatsApp (11) 91484-1404.
+Perfil do usuário: ${perfil || "não definido"}
+${CATALOGO}`;
 }
 
 export default async function handler(req, res) {
@@ -25,44 +27,57 @@ export default async function handler(req, res) {
 
   if (req.method === "OPTIONS") return res.status(200).end();
   if (req.method !== "POST") {
-    return res.status(200).json({ ok: true, msg: "API TOURMIX no ar. Use POST com { message }." });
+    return res.status(200).json({ ok: true, msg: "API TOURMIX (Groq) no ar. Use POST com { message }." });
   }
 
-  const key = process.env.GEMINI_API_KEY;
+  const key = process.env.GROQ_API_KEY;
   if (!key) {
-    return res.status(500).json({ error: "GEMINI_API_KEY ausente", fallback: true });
+    return res.status(500).json({
+      error: "GROQ_API_KEY ausente no Vercel. Crie em https://console.groq.com/keys",
+      fallback: true
+    });
   }
 
   try {
     const body = typeof req.body === "string" ? JSON.parse(req.body || "{}") : req.body || {};
-    const message = String(body.message || "").slice(0, 2000);
-    const perfil = String(body.perfil || "").slice(0, 400);
+    const message = String(body.message || "").slice(0, 3000);
+    const perfil = String(body.perfil || "").slice(0, 500);
+    const history = Array.isArray(body.history) ? body.history.slice(-12) : [];
+
     if (!message.trim()) return res.status(400).json({ error: "Mensagem vazia" });
 
-    const model = "gemini-3.8-flash";
-    const url =
-      "https://generativelanguage.googleapis.com/v1beta/models/" +
-      model +
-      ":generateContent?key=" +
-      encodeURIComponent(key);
+    const messages = [{ role: "system", content: systemPrompt(perfil) }];
+
+    history.forEach(function (h) {
+      if (!h || !h.text) return;
+      messages.push({
+        role: h.role === "user" ? "user" : "assistant",
+        content: String(h.text).slice(0, 2000)
+      });
+    });
+
+    messages.push({ role: "user", content: message });
+
+    // modelo rápido e com boa cota no free tier da Groq
+    const model = "llama-3.3-70b-versatile";
 
     const controller = new AbortController();
-    const timer = setTimeout(function () { controller.abort(); }, 20000);
+    const timer = setTimeout(function () { controller.abort(); }, 25000);
 
     let r;
     try {
-      r = await fetch(url, {
+      r = await fetch("https://api.groq.com/openai/v1/chat/completions", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + key
+        },
         signal: controller.signal,
         body: JSON.stringify({
-          contents: [{ role: "user", parts: [{ text: buildPrompt(perfil, message) }] }],
-          generationConfig: {
-            temperature: 0.8,
-            maxOutputTokens: 800,
-            // reduz "thinking" pesado que estoura timeout no Vercel Hobby
-            thinkingConfig: { thinkingBudget: 0 }
-          }
+          model: model,
+          messages: messages,
+          temperature: 0.8,
+          max_tokens: 900
         })
       });
     } finally {
@@ -72,30 +87,22 @@ export default async function handler(req, res) {
     const data = await r.json();
     if (!r.ok) {
       return res.status(500).json({
-        error: (data.error && data.error.message) || ("Erro " + r.status),
+        error: (data.error && data.error.message) || ("Erro Groq " + r.status),
         fallback: true
       });
     }
 
-    const parts =
-      data.candidates &&
-      data.candidates[0] &&
-      data.candidates[0].content &&
-      data.candidates[0].content.parts;
+    const text =
+      data.choices &&
+      data.choices[0] &&
+      data.choices[0].message &&
+      data.choices[0].message.content;
 
-    let text = "";
-    if (parts) {
-      text = parts
-        .filter(function (p) { return p.text; })
-        .map(function (p) { return p.text; })
-        .join("");
+    if (!text || !String(text).trim()) {
+      return res.status(500).json({ error: "Resposta vazia da Groq", fallback: true });
     }
 
-    if (!text.trim()) {
-      return res.status(500).json({ error: "Resposta vazia da IA", fallback: true });
-    }
-
-    return res.status(200).json({ reply: text.trim(), model: model });
+    return res.status(200).json({ reply: String(text).trim(), model: model });
   } catch (e) {
     const msg = e.name === "AbortError" ? "Timeout na IA" : (e.message || "Falha");
     return res.status(500).json({ error: msg, fallback: true });
