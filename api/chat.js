@@ -10,7 +10,7 @@ Não invente preço/data/hotel da TOURMIX. Confirme no WhatsApp se faltar detalh
 
 function systemPrompt(perfil) {
   return `Você é o assistente da TOURMIX. Português do Brasil, natural e simpático.
-Pode responder QUALQUER pergunta (viagem, dicas, conversa, geral).
+Pode responder QUALQUER pergunta (viagem, dicas, conversa, geral, curiosidades).
 Para preço/data/hotel TOURMIX use só o catálogo. Não invente valores da agência.
 Perfil do usuário: ${perfil || "não definido"}
 ${CATALOGO}`;
@@ -37,36 +37,57 @@ export default async function handler(req, res) {
     const perfil = String(body.perfil || "").slice(0, 500);
     if (!message.trim()) return res.status(400).json({ error: "Mensagem vazia" });
 
-    const url =
-      "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=" +
-      encodeURIComponent(key);
+    // modelos atuais (tenta em ordem se um falhar)
+    const models = [
+      "gemini-3.8-flash",
+      "gemini-2.5-flash",
+      "gemini-flash-latest",
+      "gemini-2.0-flash-001"
+    ];
 
-    const r = await fetch(url, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        system_instruction: { parts: [{ text: systemPrompt(perfil) }] },
-        contents: [{ role: "user", parts: [{ text: message }] }],
-        generationConfig: { temperature: 0.85, maxOutputTokens: 1200 },
-      }),
-    });
+    let lastError = null;
 
-    const data = await r.json();
-    if (!r.ok) {
-      return res.status(500).json({
-        error: (data.error && data.error.message) || "Erro Gemini",
-        fallback: true,
+    for (const model of models) {
+      const url =
+        "https://generativelanguage.googleapis.com/v1beta/models/" +
+        model +
+        ":generateContent?key=" +
+        encodeURIComponent(key);
+
+      const r = await fetch(url, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          system_instruction: { parts: [{ text: systemPrompt(perfil) }] },
+          contents: [{ role: "user", parts: [{ text: message }] }],
+          generationConfig: { temperature: 0.85, maxOutputTokens: 1200 }
+        })
       });
+
+      const data = await r.json();
+      if (!r.ok) {
+        lastError = (data.error && data.error.message) || ("Erro " + r.status + " em " + model);
+        continue;
+      }
+
+      const text =
+        (data.candidates &&
+          data.candidates[0] &&
+          data.candidates[0].content &&
+          data.candidates[0].content.parts &&
+          data.candidates[0].content.parts.map((p) => p.text || "").join("")) ||
+        "";
+
+      if (text.trim()) {
+        return res.status(200).json({ reply: text, model: model });
+      }
+      lastError = "Resposta vazia em " + model;
     }
 
-    const text =
-      data.candidates?.[0]?.content?.parts?.map((p) => p.text || "").join("") || "";
-
-    if (!text.trim()) {
-      return res.status(500).json({ error: "Resposta vazia", fallback: true });
-    }
-
-    return res.status(200).json({ reply: text });
+    return res.status(500).json({
+      error: lastError || "Falha na IA",
+      fallback: true
+    });
   } catch (e) {
     return res.status(500).json({ error: e.message || "Falha", fallback: true });
   }
