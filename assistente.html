@@ -588,34 +588,31 @@ function perfilLabel(){
 function textToHtml(t){
   var s = String(t || '');
 
-  // 1) escapar HTML
   s = s.replace(/&/g, '&amp;')
        .replace(/</g, '&lt;')
        .replace(/>/g, '&gt;');
 
-  // 2) links markdown: [texto](url)  →  <a>
+  // [texto](url)
   s = s.replace(/\[([^\]]+)\]\((https?:\/\/[^)\s]+)\)/g,
         '<a href="$2" target="_blank" rel="noopener">$1<\/a>');
   s = s.replace(/\[([^\]]+)\]\((\/[a-z0-9\-/.]+)\)/gi,
         '<a href="$2">$1<\/a>');
 
-  // 3) negrito **texto**
   s = s.replace(/\*\*([^*]+)\*\*/g, '<strong>$1<\/strong>');
-
-  // 4) itálico *texto*
   s = s.replace(/(^|[^*])\*([^*]+)\*(?!\*)/g, '$1<em>$2<\/em>');
 
-  // 5) URLs soltas (http...)
   s = s.replace(/(^|[^"'>])(https?:\/\/[^\s<]+)/g,
         '$1<a href="$2" target="_blank" rel="noopener">$2<\/a>');
 
-  // 6) caminhos do site ainda soltos (/pacote)
-  s = s.replace(/(^|[^"'>])(\/(holambra|foz-iguacu|balneario-camboriu|gramado|bonito|caldas-novas|santiago-chile|buenos-aires|excursoes|descubra-perfil)(?:\.html)?)/gi,
-        '$1<a href="$2">$2<\/a>');
+  // caminhos: linka, mas mostra SEM a barra
+  var paginas = 'holambra|foz-iguacu|balneario-camboriu|gramado|bonito|caldas-novas|santiago-chile|buenos-aires|excursoes|descubra-perfil';
+  s = s.replace(new RegExp('\\/?(' + paginas + ')(?:\\.html)?(?![\\w-])', 'gi'), function(m, nome){
+    var slug = nome.toLowerCase().replace(/\.html$/i, '');
+    var href = '/' + slug;
+    return '<a href="' + href + '">' + slug + '<\/a>';
+  });
 
-  // 7) quebras de linha
   s = s.replace(/\n/g, '<br>');
-
   return s;
 }
 async function perguntarIA(message){
