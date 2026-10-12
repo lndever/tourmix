@@ -590,9 +590,16 @@ function textToHtml(t){
     .replace(/&/g,'&amp;')
     .replace(/</g,'&lt;')
     .replace(/>/g,'&gt;')
+    // negrito **texto**
+    .replace(/\*\*([^*]+)\*\*/g,'<strong>$1<\/strong>')
+    // itálico *texto* (depois do negrito)
+    .replace(/(^|[^*])\*([^*]+)\*(?!\*)/g,'$1<em>$2<\/em>')
+    // quebra de linha
     .replace(/\n/g,'<br>')
+    // links externos
     .replace(/(https?:\/\/[^\s<]+)/g,'<a href="$1" target="_blank" rel="noopener">$1<\/a>')
-    .replace(/(\/(holambra|foz-iguacu|balneario-camboriu|gramado|bonito|caldas-novas|excursoes|descubra-perfil))/g,'<a href="$1">$1<\/a>');
+    // páginas do site
+    .replace(/(\/(holambra|foz-iguacu|balneario-camboriu|gramado|bonito|caldas-novas|santiago-chile|buenos-aires|excursoes|descubra-perfil))/g,'<a href="$1">$1<\/a>');
 }
 async function perguntarIA(message){
   var r=await fetch('/api/chat',{
