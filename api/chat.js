@@ -1,6 +1,6 @@
 // api/chat.js — TOURMIX Assistente via Groq
 // Vercel → Environment Variables → GROQ_API_KEY
-// Chave em: https://console.groq.com/keys
+// Chave: https://console.groq.com/keys
 
 const CATALOGO = `
 DADOS TOURMIX:
@@ -12,10 +12,10 @@ Não invente preço/data/hotel da TOURMIX. Confirme no WhatsApp se faltar detalh
 
 function systemPrompt(perfil) {
   return `Você é o assistente da TOURMIX (Tourmix Br), agência de viagens brasileira.
-Fale em português do Brasil, de forma natural, simpática e objetiva (3 a 12 linhas).
-Pode responder QUALQUER pergunta: viagem, dicas, curiosidades, conversa casual, etc.
-Para PREÇO, DATA, HOTEL ou O QUE ESTÁ INCLUSO da TOURMIX, use APENAS o catálogo abaixo. Não invente.
-Se faltar detalhe oficial, diga para confirmar no WhatsApp (11) 91484-1404.
+Fale em português do Brasil, natural e simpático (3 a 12 linhas).
+Pode responder QUALQUER pergunta: viagem, dicas, curiosidades, conversa casual.
+Para PREÇO, DATA, HOTEL ou inclusões da TOURMIX use APENAS o catálogo. Não invente.
+Se faltar detalhe, indique WhatsApp (11) 91484-1404.
 Perfil do usuário: ${perfil || "não definido"}
 ${CATALOGO}`;
 }
@@ -33,7 +33,7 @@ export default async function handler(req, res) {
   const key = process.env.GROQ_API_KEY;
   if (!key) {
     return res.status(500).json({
-      error: "GROQ_API_KEY ausente no Vercel. Crie em https://console.groq.com/keys",
+      error: "GROQ_API_KEY ausente no Vercel",
       fallback: true
     });
   }
@@ -47,7 +47,6 @@ export default async function handler(req, res) {
     if (!message.trim()) return res.status(400).json({ error: "Mensagem vazia" });
 
     const messages = [{ role: "system", content: systemPrompt(perfil) }];
-
     history.forEach(function (h) {
       if (!h || !h.text) return;
       messages.push({
@@ -55,56 +54,67 @@ export default async function handler(req, res) {
         content: String(h.text).slice(0, 2000)
       });
     });
-
     messages.push({ role: "user", content: message });
 
-    // modelo rápido e com boa cota no free tier da Groq
-    const model = "llama-3.3-70b-versatile";
+    // tenta vários modelos (free tier varia por conta)
+    const models = [
+      "llama-3.1-8b-instant",
+      "openai/gpt-oss-20b",
+      "llama-3.3-70b-versatile",
+      "meta-llama/llama-4-scout-17b-16e-instruct"
+    ];
 
-    const controller = new AbortController();
-    const timer = setTimeout(function () { controller.abort(); }, 25000);
+    let lastError = null;
 
-    let r;
-    try {
-      r = await fetch("https://api.groq.com/openai/v1/chat/completions", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: "Bearer " + key
-        },
-        signal: controller.signal,
-        body: JSON.stringify({
-          model: model,
-          messages: messages,
-          temperature: 0.8,
-          max_tokens: 900
-        })
-      });
-    } finally {
+    for (const model of models) {
+      const controller = new AbortController();
+      const timer = setTimeout(function () { controller.abort(); }, 20000);
+      let r;
+      try {
+        r = await fetch("https://api.groq.com/openai/v1/chat/completions", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + key
+          },
+          signal: controller.signal,
+          body: JSON.stringify({
+            model: model,
+            messages: messages,
+            temperature: 0.8,
+            max_tokens: 900
+          })
+        });
+      } catch (e) {
+        clearTimeout(timer);
+        lastError = e.name === "AbortError" ? "Timeout" : (e.message || "Falha de rede");
+        continue;
+      }
       clearTimeout(timer);
+
+      const data = await r.json();
+      if (!r.ok) {
+        lastError = (data.error && data.error.message) || ("Erro " + r.status + " em " + model);
+        continue;
+      }
+
+      const text =
+        data.choices &&
+        data.choices[0] &&
+        data.choices[0].message &&
+        data.choices[0].message.content;
+
+      if (text && String(text).trim()) {
+        return res.status(200).json({ reply: String(text).trim(), model: model });
+      }
+      lastError = "Resposta vazia em " + model;
     }
 
-    const data = await r.json();
-    if (!r.ok) {
-      return res.status(500).json({
-        error: (data.error && data.error.message) || ("Erro Groq " + r.status),
-        fallback: true
-      });
-    }
-
-    const text =
-      data.choices &&
-      data.choices[0] &&
-      data.choices[0].message &&
-      data.choices[0].message.content;
-
-    if (!text || !String(text).trim()) {
-      return res.status(500).json({ error: "Resposta vazia da Groq", fallback: true });
-    }
-
-    return res.status(200).json({ reply: String(text).trim(), model: model });
+    return res.status(500).json({
+      error: lastError || "Nenhum modelo Groq disponível",
+      fallback: true
+    });
   } catch (e) {
-    const msg = e.name === "AbortError" ? "Timeout na IA" : (e.message || "Falha");
-    return res.status(500).json({ error: msg, fallback: true });
+    return res.status(500).json({ error: e.message || "Falha", fallback: true });
   }
 }
