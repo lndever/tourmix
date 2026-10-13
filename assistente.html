@@ -592,25 +592,49 @@ function textToHtml(t){
        .replace(/</g, '&lt;')
        .replace(/>/g, '&gt;');
 
-  // [texto](url)
-  s = s.replace(/\[([^\]]+)\]\((https?:\/\/[^)\s]+)\)/g,
-        '<a href="$2" target="_blank" rel="noopener">$1<\/a>');
-  s = s.replace(/\[([^\]]+)\]\((\/[a-z0-9\-/.]+)\)/gi,
-        '<a href="$2">$1<\/a>');
-
+  // negrito / itálico
   s = s.replace(/\*\*([^*]+)\*\*/g, '<strong>$1<\/strong>');
   s = s.replace(/(^|[^*])\*([^*]+)\*(?!\*)/g, '$1<em>$2<\/em>');
 
-  s = s.replace(/(^|[^"'>])(https?:\/\/[^\s<]+)/g,
-        '$1<a href="$2" target="_blank" rel="noopener">$2<\/a>');
-
-  // caminhos: linka, mas mostra SEM a barra
-  var paginas = 'holambra|foz-iguacu|balneario-camboriu|gramado|bonito|caldas-novas|santiago-chile|buenos-aires|excursoes|descubra-perfil';
-  s = s.replace(new RegExp('\\/?(' + paginas + ')(?:\\.html)?(?![\\w-])', 'gi'), function(m, nome){
-    var slug = nome.toLowerCase().replace(/\.html$/i, '');
-    var href = '/' + slug;
-    return '<a href="' + href + '">' + slug + '<\/a>';
+  // nomes bonitos → link (sem mostrar /slug)
+  var pacotes = [
+    { nome: 'Balneário Camboriú', href: '/balneario-camboriu' },
+    { nome: 'Foz do Iguaçu', href: '/foz-iguacu' },
+    { nome: 'Santiago do Chile', href: '/santiago-chile' },
+    { nome: 'Buenos Aires', href: '/buenos-aires' },
+    { nome: 'Caldas Novas', href: '/caldas-novas' },
+    { nome: 'Holambra', href: '/holambra' },
+    { nome: 'Gramado', href: '/gramado' },
+    { nome: 'Bonito', href: '/bonito' }
+  ];
+  pacotes.forEach(function(p){
+    var re = new RegExp(p.nome.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'gi');
+    s = s.replace(re, function(m){
+      return '<a class="pkg-link" href="' + p.href + '">' + m + '<\/a>';
+    });
   });
+
+  // se a IA ainda mandar slug feio, troca pelo nome bonito + link
+  var slugs = {
+    'balneario-camboriu': { href: '/balneario-camboriu', nome: 'Balneário Camboriú' },
+    'foz-iguacu': { href: '/foz-iguacu', nome: 'Foz do Iguaçu' },
+    'santiago-chile': { href: '/santiago-chile', nome: 'Santiago do Chile' },
+    'buenos-aires': { href: '/buenos-aires', nome: 'Buenos Aires' },
+    'caldas-novas': { href: '/caldas-novas', nome: 'Caldas Novas' },
+    'holambra': { href: '/holambra', nome: 'Holambra' },
+    'gramado': { href: '/gramado', nome: 'Gramado' },
+    'bonito': { href: '/bonito', nome: 'Bonito' },
+    'excursoes': { href: '/excursoes', nome: 'Excursões' }
+  };
+  s = s.replace(/\/?(holambra|foz-iguacu|balneario-camboriu|gramado|bonito|caldas-novas|santiago-chile|buenos-aires|excursoes)(?:\.html)?/gi, function(m, slug){
+    var k = String(slug).toLowerCase();
+    var info = slugs[k];
+    if (!info) return m;
+    return '<a class="pkg-link" href="' + info.href + '">' + info.nome + '<\/a>';
+  });
+
+  // remove "Mais detalhes:" solto se sobrar
+  s = s.replace(/Mais detalhes:\s*/gi, '');
 
   s = s.replace(/\n/g, '<br>');
   return s;
