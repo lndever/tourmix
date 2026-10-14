@@ -699,13 +699,26 @@ try{
   var reply=await perguntarIA(text);
   var el=document.getElementById('tourmix-typing');
   if(el)el.remove();
-  addMsg(textToHtml(reply),'bot');
-  chatHistory.push({role:'model',text:reply});
+  // Se a API mandar resposta seca/curta, usa o fallback local (mais completo)
+  var limpa=(reply||'').replace(/\s+/g,' ').trim();
+  var curta = limpa.length < 220 || ((limpa.match(/\n/g)||[]).length < 3 && limpa.length < 400);
+  var pareceSoPreco = /^(•|\*|\-)?\s*.{0,40}\d+x\s*R\$/.test(limpa) || /Mais detalhes:\s*\//i.test(limpa);
+  if(curta || pareceSoPreco){
+    var local=responder(text);
+    if(local && local.replace(/<[^>]+>/g,' ').trim().length > limpa.length){
+      reply=local;
+      addMsg(reply,'bot');
+    }else{
+      addMsg(textToHtml(reply),'bot');
+    }
+  }else{
+    addMsg(textToHtml(reply),'bot');
+  }
+  chatHistory.push({role:'model',text:typeof reply==='string'?reply.replace(/<[^>]+>/g,' '):reply});
   if(chatHistory.length>16) chatHistory=chatHistory.slice(-16);
 }catch(err){
   var el=document.getElementById('tourmix-typing');
   if(el)el.remove();
-  // fallback local inteligente
   addMsg(responder(text),'bot');
 }
 });

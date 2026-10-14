@@ -203,7 +203,16 @@ export default async function handler(req, res) {
         data.choices[0].message.content;
 
       if (text && String(text).trim()) {
-        return res.status(200).json({ reply: String(text).trim(), model: model });
+        var out = String(text).trim();
+        // Resposta seca demais: tenta próximo modelo
+        var plain = out.replace(/\s+/g, " ");
+        var tooShort = plain.length < 200 || ((out.match(/\n/g) || []).length < 3 && plain.length < 380);
+        var onlyPrice = /Mais detalhes:\s*\//i.test(out) || /^[•\-\*].{0,50}R\$/.test(plain);
+        if ((tooShort || onlyPrice) && model !== models[models.length - 1]) {
+          lastError = "Resposta curta em " + model + ", tentando outro";
+          continue;
+        }
+        return res.status(200).json({ reply: out, model: model });
       }
       lastError = "Resposta vazia em " + model;
     }
