@@ -8,80 +8,94 @@
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-:root{--bg:#0b1220;--panel:#1e293b;--line:#334155;--text:#f1f5f9;--muted:#94a3b8;--yellow:#eab308;--cyan:#06b6d4}
-body{font-family:Montserrat,system-ui,sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
-a{color:#67e8f9;text-decoration:none}
-.top{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:0.9rem 1.25rem;border-bottom:1px solid var(--line);background:#0f172a;position:sticky;top:0;z-index:20;flex-wrap:wrap}
-.top-left{display:flex;align-items:center;gap:0.75rem}
-.top img{height:34px}
-.top h1{font-size:0.95rem;font-weight:700}
-.top-actions{display:flex;gap:0.5rem;flex-wrap:wrap}
-.btn{display:inline-flex;align-items:center;gap:0.35rem;padding:0.55rem 1rem;border-radius:50px;font-weight:700;font-size:0.8rem;border:none;cursor:pointer;font-family:inherit;text-decoration:none}
-.btn-primary{background:var(--yellow);color:#0f172a}
-.btn-ghost{background:transparent;border:1px solid var(--line);color:var(--text)}
-.btn-danger{background:rgba(239,68,68,.15);color:#fca5a5;border:1px solid rgba(239,68,68,.35)}
-.btn-cyan{background:rgba(6,182,212,.15);color:#67e8f9;border:1px solid rgba(6,182,212,.35)}
-.btn:disabled{opacity:.55;cursor:not-allowed}
-.wrap{width:min(1200px,94%);margin:0 auto;padding:1.25rem 0 3rem}
-.gate{max-width:440px;margin:3rem auto;text-align:center;background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:1.5rem}
-.gate p{color:var(--muted);font-size:0.9rem;margin:0.75rem 0 1.2rem;line-height:1.55}
-.gate input{width:100%;background:#0f172a;border:1px solid var(--line);color:var(--text);border-radius:10px;padding:0.7rem 0.85rem;font-family:inherit;margin-bottom:0.65rem}
+:root{
+  --bg:#070b14;--bg2:#0d1424;--panel:#121a2b;--panel2:#182234;
+  --line:rgba(148,163,184,.14);--text:#f1f5f9;--muted:#94a3b8;
+  --yellow:#eab308;--yellow2:#fbbf24;--cyan:#22d3ee;--green:#34d399;--red:#f87171;
+  --shadow:0 18px 50px rgba(0,0,0,.35);--radius:18px;
+}
+body{font-family:Montserrat,system-ui,sans-serif;background:radial-gradient(1200px 600px at 10% -10%,rgba(234,179,8,.08),transparent 50%),radial-gradient(900px 500px at 100% 0%,rgba(34,211,238,.06),transparent 45%),var(--bg);color:var(--text);min-height:100vh}
+a{color:var(--cyan);text-decoration:none}
+.top{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:0.85rem 1.25rem;border-bottom:1px solid var(--line);background:rgba(13,20,36,.85);backdrop-filter:blur(14px);position:sticky;top:0;z-index:30;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:.75rem}
+.brand img{height:34px}
+.brand h1{font-size:.92rem;font-weight:800;letter-spacing:.02em}
+.brand span{display:block;font-size:.68rem;color:var(--muted);font-weight:500}
+.top-actions{display:flex;gap:.45rem;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:.35rem;padding:.55rem 1rem;border-radius:999px;font-weight:700;font-size:.78rem;border:1px solid transparent;cursor:pointer;font-family:inherit;text-decoration:none;transition:.18s ease}
+.btn-primary{background:linear-gradient(135deg,#fbbf24,#eab308);color:#111827;box-shadow:0 8px 24px rgba(234,179,8,.25)}
+.btn-primary:hover{transform:translateY(-1px)}
+.btn-ghost{background:rgba(255,255,255,.03);border-color:var(--line);color:var(--text)}
+.btn-ghost:hover{border-color:rgba(255,255,255,.22);background:rgba(255,255,255,.06)}
+.btn-danger{background:rgba(248,113,113,.1);border-color:rgba(248,113,113,.28);color:#fecaca}
+.btn-cyan{background:rgba(34,211,238,.1);border-color:rgba(34,211,238,.25);color:#a5f3fc}
+.wrap{width:min(1180px,94%);margin:0 auto;padding:1.35rem 0 3.5rem}
+.gate{max-width:420px;margin:4rem auto;text-align:center;background:linear-gradient(180deg,rgba(255,255,255,.03),transparent),var(--panel);border:1px solid var(--line);border-radius:24px;padding:1.75rem 1.4rem;box-shadow:var(--shadow)}
+.gate h2{font-size:1.25rem;margin-bottom:.35rem}
+.gate p{color:var(--muted);font-size:.88rem;margin:.65rem 0 1.1rem;line-height:1.55}
+.gate input{width:100%;background:var(--bg2);border:1px solid var(--line);color:var(--text);border-radius:12px;padding:.75rem .9rem;font-family:inherit;margin-bottom:.6rem}
 .hidden{display:none!important}
-.tabs{display:flex;gap:0.4rem;flex-wrap:wrap;margin-bottom:1.1rem}
-.tab{padding:0.5rem 0.95rem;border-radius:50px;border:1px solid var(--line);background:#0f172a;color:var(--muted);font-weight:600;font-size:0.8rem;cursor:pointer;font-family:inherit}
-.tab.active{background:var(--yellow);color:#0f172a;border-color:var(--yellow)}
+.tabs{display:flex;gap:.4rem;flex-wrap:wrap;margin-bottom:1.15rem;padding:.35rem;background:rgba(255,255,255,.03);border:1px solid var(--line);border-radius:999px;width:fit-content;max-width:100%}
+.tab{padding:.48rem .95rem;border-radius:999px;border:none;background:transparent;color:var(--muted);font-weight:700;font-size:.78rem;cursor:pointer;font-family:inherit}
+.tab.active{background:var(--yellow);color:#111827}
 .panel{display:none}
-.panel.active{display:block}
-.stats{display:grid;grid-template-columns:repeat(2,1fr);gap:0.75rem;margin-bottom:1.25rem}
-@media(min-width:800px){.stats{grid-template-columns:repeat(5,1fr)}}
-.stat{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:1rem;text-align:center}
-.stat strong{display:block;font-size:1.45rem;color:#fbbf24}
-.stat span{font-size:0.7rem;color:var(--muted);text-transform:uppercase;letter-spacing:.04em}
+.panel.active{display:block;animation:fade .25s ease}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.stats{display:grid;grid-template-columns:repeat(2,1fr);gap:.75rem;margin-bottom:1.15rem}
+@media(min-width:860px){.stats{grid-template-columns:repeat(4,1fr)}}
+.stat{position:relative;overflow:hidden;background:linear-gradient(180deg,rgba(255,255,255,.04),transparent),var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:1.1rem 1rem;box-shadow:var(--shadow)}
+.stat::after{content:"";position:absolute;right:-20px;top:-20px;width:90px;height:90px;border-radius:50%;background:rgba(234,179,8,.08)}
+.stat strong{display:block;font-size:1.55rem;color:var(--yellow2);font-weight:800}
+.stat span{font-size:.68rem;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;font-weight:600}
 .grid-2{display:grid;gap:1rem}
-@media(min-width:900px){.grid-2{grid-template-columns:1.15fr 0.85fr}}
-.card{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:1.15rem;margin-bottom:1rem}
-.card h2{font-size:0.95rem;margin-bottom:0.85rem}
-.card h3{font-size:0.85rem;color:#fbbf24;margin:0.75rem 0 0.4rem}
-.toolbar{display:flex;flex-wrap:wrap;gap:0.55rem;margin-bottom:0.85rem;align-items:center}
-.toolbar input,.toolbar select,textarea,input[type=text],input[type=email],input[type=password],select{background:#0f172a;border:1px solid var(--line);color:var(--text);border-radius:10px;padding:0.55rem 0.75rem;font-family:inherit;font-size:0.85rem}
-textarea{width:100%;min-height:90px;resize:vertical}
-label.field{display:block;font-size:0.72rem;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;margin:0.65rem 0 0.3rem}
-table{width:100%;border-collapse:collapse;font-size:0.82rem}
-th,td{padding:0.65rem 0.5rem;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}
-th{color:var(--muted);font-size:0.7rem;text-transform:uppercase;letter-spacing:.04em}
-tr:hover td{background:rgba(255,255,255,.03)}
-.badge{display:inline-block;padding:0.18rem 0.5rem;border-radius:50px;font-size:0.7rem;font-weight:700;background:#0e7490;color:#fff}
-.badge-off{background:#7f1d1d}
-.muted{color:var(--muted);font-size:0.82rem;line-height:1.5}
-.ok{color:#86efac}
-.err{color:#fca5a5}
-.list-pkg{display:grid;gap:0.55rem}
-.pkg-row{display:grid;gap:0.35rem;padding:0.85rem;background:#0f172a;border:1px solid var(--line);border-radius:12px}
-.pkg-row header{display:flex;justify-content:space-between;gap:0.5rem;align-items:center;flex-wrap:wrap}
-.pkg-row strong{font-size:0.9rem}
-.pkg-row .meta{font-size:0.8rem;color:var(--muted)}
-.pkg-actions{display:flex;gap:0.4rem;flex-wrap:wrap}
-.quick{display:flex;flex-wrap:wrap;gap:0.45rem}
-.note-item{border-bottom:1px solid var(--line);padding:0.65rem 0;font-size:0.85rem}
-.note-item small{display:block;color:var(--muted);margin-top:0.25rem}
-.status-row{display:flex;justify-content:space-between;gap:0.5rem;padding:0.45rem 0;border-bottom:1px solid var(--line);font-size:0.84rem}
-.edit-box{display:none;margin-top:0.75rem;padding-top:0.75rem;border-top:1px solid var(--line)}
-.edit-box.open{display:block}
-.edit-box input,.edit-box textarea{width:100%}
-#toast{position:fixed;bottom:1.25rem;right:1.25rem;background:#14532d;color:#dcfce7;padding:0.75rem 1.1rem;border-radius:12px;font-size:0.85rem;font-weight:600;opacity:0;pointer-events:none;transition:opacity .25s;z-index:50}
+@media(min-width:920px){.grid-2{grid-template-columns:1.15fr .85fr}}
+.card{background:linear-gradient(180deg,rgba(255,255,255,.03),transparent),var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:1.15rem 1.2rem;margin-bottom:1rem;box-shadow:var(--shadow)}
+.card h2{font-size:.95rem;font-weight:800;margin-bottom:.85rem;display:flex;align-items:center;gap:.5rem}
+.card h2 i{font-style:normal;width:28px;height:28px;border-radius:9px;display:inline-flex;align-items:center;justify-content:center;background:rgba(234,179,8,.12);color:var(--yellow2);font-size:.85rem}
+.card h3{font-size:.82rem;color:var(--yellow2);margin:1rem 0 .45rem;font-weight:700}
+.toolbar{display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:.85rem;align-items:center}
+input[type=text],input[type=email],input[type=password],input[type=search],select,textarea{
+  background:var(--bg2);border:1px solid var(--line);color:var(--text);border-radius:12px;padding:.6rem .8rem;font-family:inherit;font-size:.84rem
+}
+textarea{width:100%;min-height:96px;resize:vertical}
+table{width:100%;border-collapse:collapse;font-size:.82rem}
+th,td{padding:.7rem .55rem;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}
+th{color:var(--muted);font-size:.68rem;text-transform:uppercase;letter-spacing:.05em}
+tr:hover td{background:rgba(255,255,255,.025)}
+.badge{display:inline-block;padding:.2rem .55rem;border-radius:999px;font-size:.7rem;font-weight:700;background:rgba(34,211,238,.15);color:#a5f3fc}
+.muted{color:var(--muted);font-size:.82rem;line-height:1.55}
+.ok{color:var(--green)}.err{color:var(--red)}
+.quick{display:flex;flex-wrap:wrap;gap:.45rem}
+.note-item{border-bottom:1px solid var(--line);padding:.7rem 0;font-size:.85rem}
+.note-item:last-child{border-bottom:none}
+.note-item small{display:block;color:var(--muted);margin-top:.28rem;font-size:.75rem}
+.status-row{display:flex;justify-content:space-between;gap:.5rem;padding:.55rem 0;border-bottom:1px solid var(--line);font-size:.84rem}
+.status-row:last-child{border-bottom:none}
+.link-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:.5rem}
+@media(min-width:700px){.link-grid{grid-template-columns:repeat(3,1fr)}}
+.link-card{display:flex;flex-direction:column;gap:.25rem;padding:.85rem .9rem;border-radius:14px;background:var(--panel2);border:1px solid var(--line);transition:.18s ease}
+.link-card:hover{border-color:rgba(234,179,8,.35);transform:translateY(-2px)}
+.link-card strong{color:var(--text);font-size:.84rem}
+.link-card span{color:var(--muted);font-size:.72rem}
+.empty{padding:1.2rem;text-align:center;color:var(--muted);font-size:.88rem;border:1px dashed var(--line);border-radius:14px}
+#toast{position:fixed;bottom:1.25rem;right:1.25rem;background:#14532d;color:#dcfce7;padding:.8rem 1.15rem;border-radius:14px;font-size:.84rem;font-weight:700;opacity:0;pointer-events:none;transition:opacity .25s;z-index:50;box-shadow:var(--shadow)}
 #toast.show{opacity:1}
-code{background:#0f172a;padding:0.1rem 0.35rem;border-radius:6px;font-size:0.8em}
+.chip{display:inline-flex;align-items:center;gap:.3rem;padding:.25rem .55rem;border-radius:999px;background:rgba(255,255,255,.05);border:1px solid var(--line);font-size:.72rem;color:var(--muted)}
 </style>
 </head>
 <body>
   <header class="top">
-    <div class="top-left">
+    <div class="brand">
       <a href="/"><img src="LOGO-05.png" alt="TOURMIX"></a>
-      <h1>Painel Admin</h1>
+      <div>
+        <h1>Painel Admin</h1>
+        <span>Gestão TOURMIX</span>
+      </div>
     </div>
     <div class="top-actions" id="topActions" style="display:none">
       <a class="btn btn-ghost" href="/" target="_blank">Site</a>
       <a class="btn btn-ghost" href="/assistente" target="_blank">Assistente</a>
+      <a class="btn btn-cyan" href="https://wa.me/5511914841404" target="_blank">WhatsApp</a>
       <button class="btn btn-danger" type="button" id="btnSair">Sair</button>
     </div>
   </header>
@@ -89,85 +103,57 @@ code{background:#0f172a;padding:0.1rem 0.35rem;border-radius:6px;font-size:0.8em
   <div class="wrap">
     <div id="gate" class="gate">
       <h2>Acesso restrito</h2>
-      <p>Entre com a conta admin da TOURMIX (Supabase).</p>
+      <p>Entre com a conta admin da TOURMIX.</p>
       <input type="email" id="gateEmail" placeholder="E-mail" autocomplete="username">
       <input type="password" id="gateSenha" placeholder="Senha" autocomplete="current-password">
       <p id="gateMsg" class="muted" style="min-height:1.2em"></p>
-      <button class="btn btn-primary" type="button" id="btnGateLogin" style="width:100%;justify-content:center">Entrar no painel</button>
-      <p class="muted" style="margin-top:1rem;font-size:0.78rem">Ou entre em <a href="/login">/login</a> e depois abra /admin</p>
+      <button class="btn btn-primary" type="button" id="btnGateLogin" style="width:100%">Entrar no painel</button>
+      <p class="muted" style="margin-top:1rem;font-size:.78rem">Ou use <a href="/login">/login</a> e depois abra /admin</p>
     </div>
 
     <div id="denied" class="gate hidden">
       <h2>Sem permissão</h2>
-      <p>Conta logada, mas não está na lista de administradores.</p>
+      <p>Esta conta está logada, mas não está autorizada no painel.</p>
       <button class="btn btn-danger" type="button" id="btnSair2">Sair</button>
     </div>
 
     <div id="painel" class="hidden">
       <div class="tabs" id="tabs">
         <button class="tab active" data-tab="dash">Dashboard</button>
-        <button class="tab" data-tab="editor">Editar pacotes</button>
-        <button class="tab" data-tab="perfis">Perfis viajante</button>
-        <button class="tab" data-tab="leads">Leads / Notas</button>
+        <button class="tab" data-tab="perfis">Perfis</button>
+        <button class="tab" data-tab="atendimento">Atendimento</button>
+        <button class="tab" data-tab="atalhos">Atalhos</button>
         <button class="tab" data-tab="sistema">Sistema</button>
       </div>
 
+      <!-- DASHBOARD -->
       <section class="panel active" id="tab-dash">
         <div class="stats" id="stats"></div>
         <div class="grid-2">
           <div class="card">
-            <h2>Últimos perfis</h2>
+            <h2><i>◎</i> Últimos perfis de viajante</h2>
             <div id="recentList" class="muted">Carregando…</div>
           </div>
           <div class="card">
-            <h2>Atalhos</h2>
-            <div class="quick">
-              <a class="btn btn-cyan" href="/#pacotes" target="_blank">Pacotes</a>
-              <a class="btn btn-cyan" href="/excursoes" target="_blank">Excursões</a>
-              <a class="btn btn-cyan" href="/holambra" target="_blank">Holambra</a>
-              <a class="btn btn-cyan" href="/santiago-chile" target="_blank">Santiago</a>
-              <a class="btn btn-cyan" href="/buenos-aires" target="_blank">Buenos Aires</a>
-              <a class="btn btn-primary" href="https://wa.me/5511914841404" target="_blank">WhatsApp</a>
-            </div>
-            <h3>Mensagem pronta</h3>
-            <textarea id="msgPronta" readonly></textarea>
-            <button class="btn btn-ghost" type="button" id="btnCopyMsg" style="margin-top:0.5rem">Copiar texto</button>
+            <h2><i>✓</i> Checklist do dia</h2>
+            <div id="checklist"></div>
+            <button class="btn btn-ghost" type="button" id="btnResetCheck" style="margin-top:.75rem">Limpar checklist</button>
+          </div>
+        </div>
+        <div class="card">
+          <h2><i>💬</i> Mensagem pronta (WhatsApp)</h2>
+          <textarea id="msgPronta" readonly></textarea>
+          <div class="toolbar" style="margin-top:.65rem">
+            <button class="btn btn-primary" type="button" id="btnCopyMsg">Copiar mensagem</button>
+            <a class="btn btn-cyan" id="btnWaMsg" href="https://wa.me/5511914841404" target="_blank">Abrir WhatsApp</a>
           </div>
         </div>
       </section>
 
-      <!-- EDITOR DE PACOTES -->
-      <section class="panel" id="tab-editor">
-        <div class="card">
-          <h2>Editar datas, preços e textos dos pacotes</h2>
-          <p class="muted" style="margin-bottom:0.85rem">
-            Alterações ficam no Supabase e aparecem no site onde houver
-            <code>data-pacote</code> + <code>catalogo-live.js</code>.
-            Ex.: mudar a data da Holambra aqui atualiza o site automaticamente.
-          </p>
-          <div class="toolbar">
-            <button class="btn btn-ghost" type="button" id="btnReloadPkg">Recarregar</button>
-            <button class="btn btn-primary" type="button" id="btnSeedPkg">Criar pacotes padrão (se vazio)</button>
-          </div>
-          <p id="pkgMsg" class="muted" style="margin-bottom:0.75rem"></p>
-          <div class="list-pkg" id="editorLista"></div>
-        </div>
-        <div class="card">
-          <h2>Como ligar no site</h2>
-          <p class="muted">No HTML do pacote (ex. <code>holambra.html</code>), use:</p>
-          <pre style="background:#0f172a;padding:0.85rem;border-radius:10px;overflow:auto;font-size:0.78rem;margin:0.6rem 0;line-height:1.5;color:#e2e8f0">&lt;span data-pacote="holambra" data-campo="data_texto"&gt;25 de outubro&lt;/span&gt;
-&lt;span data-pacote="holambra" data-campo="preco_texto"&gt;R$ 159,90&lt;/span&gt;
-
-&lt;script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"&gt;&lt;/script&gt;
-&lt;script src="auth-config.js"&gt;&lt;/script&gt;
-&lt;script src="catalogo-live.js"&gt;&lt;/script&gt;</pre>
-          <p class="muted">IDs: <code>holambra</code>, <code>foz</code>, <code>camboriu</code>, <code>gramado</code>, <code>bonito</code>, <code>caldas</code>, <code>santiago</code>, <code>buenosaires</code></p>
-        </div>
-      </section>
-
+      <!-- PERFIS -->
       <section class="panel" id="tab-perfis">
         <div class="card">
-          <h2>Perfis de viajante</h2>
+          <h2><i>👤</i> Perfis de viajante</h2>
           <div class="toolbar">
             <input type="search" id="busca" placeholder="Buscar nome ou e-mail…">
             <select id="filtroPerfil">
@@ -183,45 +169,69 @@ code{background:#0f172a;padding:0.1rem 0.35rem;border-radius:6px;font-size:0.8em
           </div>
           <div style="overflow:auto">
             <table>
-              <thead><tr><th>Data</th><th>Nome</th><th>E-mail</th><th>Perfil</th><th>Scores</th></tr></thead>
+              <thead>
+                <tr><th>Data</th><th>Nome</th><th>E-mail</th><th>Perfil</th><th>Scores</th></tr>
+              </thead>
               <tbody id="tbody"></tbody>
             </table>
           </div>
-          <p id="vazio" class="muted hidden" style="margin-top:0.75rem">Nenhum perfil encontrado.</p>
-          <p id="loadErr" class="err hidden" style="margin-top:0.75rem"></p>
+          <p id="vazio" class="empty hidden" style="margin-top:.85rem">Nenhum perfil encontrado.</p>
+          <p id="loadErr" class="err hidden" style="margin-top:.75rem"></p>
         </div>
       </section>
 
-      <section class="panel" id="tab-leads">
+      <!-- ATENDIMENTO -->
+      <section class="panel" id="tab-atendimento">
         <div class="grid-2">
           <div class="card">
-            <h2>Anotações internas</h2>
-            <p class="muted" style="margin-bottom:0.6rem">Salvas neste navegador.</p>
-            <textarea id="notaTexto" placeholder="Anotação…"></textarea>
-            <button class="btn btn-primary" type="button" id="btnAddNota" style="margin-top:0.5rem">Salvar nota</button>
+            <h2><i>📝</i> Anotações internas</h2>
+            <p class="muted" style="margin-bottom:.6rem">Salvas neste navegador. Ideal para follow-up rápido.</p>
+            <textarea id="notaTexto" placeholder="Ex.: Cliente pediu orçamento Santiago para 2 adultos…"></textarea>
+            <button class="btn btn-primary" type="button" id="btnAddNota" style="margin-top:.55rem">Salvar nota</button>
             <div id="listaNotas" style="margin-top:1rem"></div>
           </div>
           <div class="card">
-            <h2>Lead rápido</h2>
-            <input type="text" id="leadNome" placeholder="Nome" style="width:100%;margin-bottom:0.5rem">
-            <input type="text" id="leadContato" placeholder="WhatsApp ou e-mail" style="width:100%;margin-bottom:0.5rem">
-            <input type="text" id="leadInteresse" placeholder="Interesse" style="width:100%;margin-bottom:0.5rem">
+            <h2><i>📌</i> Leads</h2>
+            <input type="text" id="leadNome" placeholder="Nome" style="width:100%;margin-bottom:.45rem">
+            <input type="text" id="leadContato" placeholder="WhatsApp ou e-mail" style="width:100%;margin-bottom:.45rem">
+            <input type="text" id="leadInteresse" placeholder="Interesse (ex.: Réveillon Buenos Aires)" style="width:100%;margin-bottom:.45rem">
             <button class="btn btn-primary" type="button" id="btnAddLead">Registrar lead</button>
             <div id="listaLeads" style="margin-top:1rem"></div>
-            <button class="btn btn-ghost" type="button" id="btnExportLeads" style="margin-top:0.75rem">Exportar leads CSV</button>
+            <button class="btn btn-ghost" type="button" id="btnExportLeads" style="margin-top:.75rem">Exportar leads CSV</button>
           </div>
+        </div>
+        <div class="card">
+          <h2><i>⚡</i> Respostas rápidas</h2>
+          <p class="muted" style="margin-bottom:.65rem">Clique para copiar e colar no WhatsApp.</p>
+          <div class="quick" id="respostasRapidas"></div>
         </div>
       </section>
 
-      <section class="panel" id="tab-sistema">
+      <!-- ATALHOS -->
+      <section class="panel" id="tab-atalhos">
         <div class="card">
-          <h2>Status</h2>
-          <div id="statusBox"></div>
+          <h2><i>🔗</i> Páginas do site</h2>
+          <div class="link-grid" id="atalhosGrid"></div>
         </div>
         <div class="card">
-          <h2>Admins autorizados</h2>
-          <ul id="adminList" class="muted" style="margin-top:0.6rem;padding-left:1.2rem"></ul>
-          <p class="muted" style="margin-top:0.75rem">Tabela SQL: rode o arquivo <code>supabase-pacotes.sql</code> no SQL Editor do Supabase uma vez.</p>
+          <h2><i>📦</i> Referência rápida de pacotes</h2>
+          <p class="muted" style="margin-bottom:.75rem">Só consulta — valores de referência do catálogo atual.</p>
+          <div id="refPacotes"></div>
+        </div>
+      </section>
+
+      <!-- SISTEMA -->
+      <section class="panel" id="tab-sistema">
+        <div class="grid-2">
+          <div class="card">
+            <h2><i>⚙</i> Status</h2>
+            <div id="statusBox"></div>
+          </div>
+          <div class="card">
+            <h2><i>🛡</i> Admins autorizados</h2>
+            <ul id="adminList" class="muted" style="padding-left:1.1rem;line-height:1.8"></ul>
+            <p class="muted" style="margin-top:.75rem">Para incluir alguém, edite <span class="chip">ADMIN_EMAILS</span> no admin.html (com vírgula entre e-mails).</p>
+          </div>
         </div>
       </section>
     </div>
@@ -240,322 +250,263 @@ code{background:#0f172a;padding:0.1rem 0.35rem;border-radius:6px;font-size:0.8em
       'tourmixbrasil@gmail.com'
     ];
 
-    var DEFAULT_PACOTES = [
-      {id:'holambra',nome:'Holambra',tipo:'Excursão 1 dia',data_texto:'25 de outubro (domingo)',preco_texto:'R$ 159,90 à vista ou 2x R$ 80 no PIX (reserva 30%)',inclui:'Micro-ônibus executivo, guia credenciado, seguro Hero, kit Tourmix e sorteios',destaque:'Cidade das Flores',ativo:true},
-      {id:'foz',nome:'Foz do Iguaçu',tipo:'Pacote 4 noites',data_texto:'Saídas OUT/NOV/DEZ',preco_texto:'A partir de 12x de R$ 115 · 3% off à vista',inclui:'Aéreo SP, Hotel San Juan (café), transfer e seguro',destaque:'Cataratas',ativo:true},
-      {id:'camboriu',nome:'Balneário Camboriú',tipo:'Pacote 4 noites',data_texto:'Saídas OUT/NOV/DEZ',preco_texto:'A partir de 12x de R$ 115 · 3% off à vista',inclui:'Aéreo SP, Hotel Rosenbrock (café), transfer e seguro',destaque:'Praia',ativo:true},
-      {id:'gramado',nome:'Gramado',tipo:'Pacote 4 noites',data_texto:'Saídas SET/OUT/NOV/DEZ',preco_texto:'A partir de 12x de R$ 115 · 3% off à vista',inclui:'Aéreo SP, Life Hotel Infinity (café), transfer e seguro',destaque:'Serra',ativo:true},
-      {id:'bonito',nome:'Bonito',tipo:'Pacote 5 noites',data_texto:'Saídas NOV/DEZ',preco_texto:'A partir de 12x de R$ 167 · 3% off à vista',inclui:'Aéreo SP, Bonito Ecotel (café), transfer e seguro',destaque:'Rios cristalinos',ativo:true},
-      {id:'caldas',nome:'Caldas Novas',tipo:'Pacote 5 noites',data_texto:'Saídas OUT/NOV',preco_texto:'A partir de 12x de R$ 145 · 3% off à vista',inclui:'Aéreo SP, resort (café e jantar), transfer e seguro',destaque:'Águas termais',ativo:true},
-      {id:'santiago',nome:'Santiago do Chile',tipo:'Réveillon 4 noites',data_texto:'Saída 30/DEZ · São Paulo',preco_texto:'A partir de 10x de R$ 397 · 3% off à vista',inclui:'Aéreo SP, Hotel Panamericano (café), transfer, city tour e seguro',destaque:'Réveillon 2026/2027',ativo:true},
-      {id:'buenosaires',nome:'Buenos Aires',tipo:'Réveillon 4 noites',data_texto:'Saída 30/DEZ · São Paulo',preco_texto:'A partir de 10x de R$ 374 · 3% off à vista',inclui:'Aéreo SP, Hotel El Conquistador (café), transfer, city tour e seguro',destaque:'Réveillon 2026/2027',ativo:true}
-    ];
-
     var LABELS = { natureza:'Natureza', praia:'Praia', romantico:'Romântico', relax:'Relax', cultural:'Cultural' };
-    var allRows = [];
-    var pacotesRows = [];
+    var REFS = [
+      {nome:'Holambra', info:'1 dia · R$ 159,90 ou 2x R$ 80', link:'/holambra'},
+      {nome:'Foz do Iguaçu', info:'4 noites · 12x R$ 115', link:'/foz-iguacu'},
+      {nome:'Balneário Camboriú', info:'4 noites · 12x R$ 115', link:'/balneario-camboriu'},
+      {nome:'Gramado', info:'4 noites · 12x R$ 115', link:'/gramado'},
+      {nome:'Bonito', info:'5 noites · 12x R$ 167', link:'/bonito'},
+      {nome:'Caldas Novas', info:'5 noites · 12x R$ 145', link:'/caldas-novas'},
+      {nome:'Santiago do Chile', info:'Réveillon · 10x R$ 397', link:'/santiago-chile'},
+      {nome:'Buenos Aires', info:'Réveillon · 10x R$ 374', link:'/buenos-aires'}
+    ];
+    var ATALHOS = [
+      {t:'Início', s:'Home do site', h:'/'},
+      {t:'Pacotes', s:'Lista no site', h:'/#pacotes'},
+      {t:'Excursões', s:'Página de excursões', h:'/excursoes'},
+      {t:'Holambra', s:'Excursão', h:'/holambra'},
+      {t:'Santiago', s:'Réveillon', h:'/santiago-chile'},
+      {t:'Buenos Aires', s:'Réveillon', h:'/buenos-aires'},
+      {t:'Assistente IA', s:'Chat TOURMIX', h:'/assistente'},
+      {t:'Quiz perfil', s:'Descubra seu perfil', h:'/descubra-perfil'},
+      {t:'Login', s:'Área do cliente', h:'/login'}
+    ];
+    var RAPIDAS = [
+      'Olá! Sou da TOURMIX ✈️ Posso te ajudar com destinos, valores e datas.',
+      'Temos Réveillon em Santiago (10x R$ 397) e Buenos Aires (10x R$ 374). Quer que eu detalhe?',
+      'A excursão de Holambra está com vagas. Posso te passar embarque e forma de pagamento?',
+      'Os pacotes nacionais saem de São Paulo com aéreo, hotel, transfer e seguro. Qual destino te interessa?',
+      'Perfeito! Para reservar, a entrada é de 30% e o restante pode ser no PIX ou cartão.'
+    ];
+    var CHECK_KEY = 'tourmix_admin_checklist_v1';
     var NOTES_KEY = 'tourmix_admin_notes';
     var LEADS_KEY = 'tourmix_admin_leads';
+    var allRows = [];
     var sbClient = null;
 
-    function isAdmin(email) {
-      if (!email) return false;
+    function isAdmin(email){
+      if(!email) return false;
       return ADMIN_EMAILS.indexOf(String(email).toLowerCase().trim()) !== -1;
     }
-    function toast(msg) {
-      var el = document.getElementById('toast');
-      el.textContent = msg;
-      el.classList.add('show');
+    function toast(msg){
+      var el=document.getElementById('toast');
+      el.textContent=msg; el.classList.add('show');
       setTimeout(function(){ el.classList.remove('show'); }, 2200);
     }
-    function fmtDate(iso) {
-      try { return new Date(iso).toLocaleString('pt-BR',{day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit'}); }
-      catch(e){ return iso||'—'; }
+    function fmtDate(iso){
+      try{return new Date(iso).toLocaleString('pt-BR',{day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit'});}
+      catch(e){return iso||'—';}
     }
-    function scoresText(scores) {
-      if (!scores || typeof scores !== 'object') return '—';
-      return Object.keys(LABELS).map(function(k){ return LABELS[k]+': '+(scores[k]||0); }).join(' · ');
+    function scoresText(scores){
+      if(!scores||typeof scores!=='object') return '—';
+      return Object.keys(LABELS).map(function(k){return LABELS[k]+': '+(scores[k]||0);}).join(' · ');
     }
-    function getSb() {
-      if (sbClient) return sbClient;
-      var cfg = window.TOURMIX_AUTH || {};
-      if (!window.supabase || !cfg.supabaseUrl || !cfg.supabaseAnonKey) return null;
-      if (String(cfg.supabaseAnonKey).indexOf('COLE_AQUI') !== -1) return null;
-      if (String(cfg.supabaseUrl).indexOf('http') !== 0) return null;
-      sbClient = window.supabase.createClient(cfg.supabaseUrl, cfg.supabaseAnonKey, {
-        auth: { persistSession: true, autoRefreshToken: true, storage: window.localStorage }
+    function getSb(){
+      if(sbClient) return sbClient;
+      var cfg=window.TOURMIX_AUTH||{};
+      if(!window.supabase||!cfg.supabaseUrl||!cfg.supabaseAnonKey) return null;
+      if(String(cfg.supabaseUrl).indexOf('http')!==0) return null;
+      if(String(cfg.supabaseAnonKey).indexOf('COLE_AQUI')!==-1) return null;
+      sbClient=window.supabase.createClient(cfg.supabaseUrl,cfg.supabaseAnonKey,{
+        auth:{persistSession:true,autoRefreshToken:true,storage:window.localStorage}
       });
       return sbClient;
     }
-    function setPkgMsg(t, ok) {
-      var el = document.getElementById('pkgMsg');
-      el.textContent = t || '';
-      el.className = ok === false ? 'err' : (ok ? 'ok' : 'muted');
-    }
 
-    /* tabs */
     document.getElementById('tabs').addEventListener('click', function(e){
-      var btn = e.target.closest('.tab');
-      if (!btn) return;
-      document.querySelectorAll('.tab').forEach(function(t){ t.classList.remove('active'); });
-      document.querySelectorAll('.panel').forEach(function(p){ p.classList.remove('active'); });
+      var btn=e.target.closest('.tab'); if(!btn) return;
+      document.querySelectorAll('.tab').forEach(function(t){t.classList.remove('active');});
+      document.querySelectorAll('.panel').forEach(function(p){p.classList.remove('active');});
       btn.classList.add('active');
       document.getElementById('tab-'+btn.getAttribute('data-tab')).classList.add('active');
-      if (btn.getAttribute('data-tab') === 'editor') loadPacotes();
     });
 
-    /* ===== EDITOR PACOTES ===== */
-    function renderEditor() {
-      var box = document.getElementById('editorLista');
-      if (!pacotesRows.length) {
-        box.innerHTML = '<p class="muted">Nenhum pacote no banco. Clique em <strong>Criar pacotes padrão</strong>.</p>';
-        return;
-      }
-      box.innerHTML = pacotesRows.map(function(p, idx){
-        return (
-          '<div class="pkg-row" data-idx="'+idx+'">' +
-            '<header>' +
-              '<div><strong>'+p.nome+'</strong> <span class="badge '+(p.ativo===false?'badge-off':'')+'">'+(p.ativo===false?'Inativo':'Ativo')+'</span>' +
-              '<div class="meta">'+ (p.tipo||'') +' · id: <code>'+p.id+'</code></div></div>' +
-              '<div class="pkg-actions">' +
-                '<button type="button" class="btn btn-ghost btn-edit" data-idx="'+idx+'">Editar</button>' +
-              '</div>' +
-            '</header>' +
-            '<div class="meta"><strong>Data:</strong> '+(p.data_texto||'—')+'</div>' +
-            '<div class="meta"><strong>Preço:</strong> '+(p.preco_texto||'—')+'</div>' +
-            '<div class="edit-box" id="edit-'+idx+'">' +
-              '<label class="field">Nome</label><input type="text" data-f="nome" value="'+(p.nome||'').replace(/"/g,'&quot;')+'">' +
-              '<label class="field">Tipo</label><input type="text" data-f="tipo" value="'+(p.tipo||'').replace(/"/g,'&quot;')+'">' +
-              '<label class="field">Data / saídas</label><input type="text" data-f="data_texto" value="'+(p.data_texto||'').replace(/"/g,'&quot;')+'">' +
-              '<label class="field">Preço</label><input type="text" data-f="preco_texto" value="'+(p.preco_texto||'').replace(/"/g,'&quot;')+'">' +
-              '<label class="field">O que inclui</label><textarea data-f="inclui">'+(p.inclui||'')+'</textarea>' +
-              '<label class="field">Destaque</label><input type="text" data-f="destaque" value="'+(p.destaque||'').replace(/"/g,'&quot;')+'">' +
-              '<label class="field">Ativo</label><select data-f="ativo"><option value="true"'+(p.ativo!==false?' selected':'')+'>Sim</option><option value="false"'+(p.ativo===false?' selected':'')+'>Não</option></select>' +
-              '<div class="pkg-actions" style="margin-top:0.75rem">' +
-                '<button type="button" class="btn btn-primary btn-save" data-idx="'+idx+'">Salvar alterações</button>' +
-                '<button type="button" class="btn btn-ghost btn-cancel" data-idx="'+idx+'">Cancelar</button>' +
-              '</div>' +
-            '</div>' +
-          '</div>'
-        );
+    /* checklist */
+    function defaultChecks(){
+      return [
+        {id:'wa', t:'Responder mensagens do WhatsApp', done:false},
+        {id:'ig', t:'Checar Instagram / DMs', done:false},
+        {id:'leads', t:'Atualizar leads do dia', done:false},
+        {id:'pacotes', t:'Revisar destaques de pacotes no site', done:false}
+      ];
+    }
+    function loadChecks(){
+      var list=[];
+      try{list=JSON.parse(localStorage.getItem(CHECK_KEY)||'null');}catch(e){}
+      if(!list||!list.length) list=defaultChecks();
+      var box=document.getElementById('checklist');
+      box.innerHTML=list.map(function(c,i){
+        return '<label class="note-item" style="display:flex;gap:.65rem;align-items:flex-start;cursor:pointer">' +
+          '<input type="checkbox" data-check="'+i+'" '+(c.done?'checked':'')+' style="margin-top:.2rem">' +
+          '<span style="'+(c.done?'text-decoration:line-through;opacity:.65':'')+'">'+c.t+'</span></label>';
       }).join('');
     }
-
-    async function loadPacotes() {
-      setPkgMsg('Carregando pacotes…');
-      var sb = getSb();
-      if (!sb) {
-        setPkgMsg('Supabase não configurado (auth-config.js).', false);
-        pacotesRows = [];
-        renderEditor();
-        return;
-      }
-      try {
-        var res = await sb.from('pacotes').select('*').order('nome');
-        if (res.error) throw res.error;
-        pacotesRows = res.data || [];
-        setPkgMsg(pacotesRows.length ? (pacotesRows.length + ' pacote(s) no banco.') : 'Tabela vazia.');
-        renderEditor();
-      } catch (e) {
-        setPkgMsg('Erro: ' + (e.message || e) + ' — rode o SQL supabase-pacotes.sql no Supabase.', false);
-        pacotesRows = [];
-        renderEditor();
-      }
-    }
-
-    async function seedPacotes() {
-      var sb = getSb();
-      if (!sb) return setPkgMsg('Supabase não configurado.', false);
-      setPkgMsg('Criando pacotes padrão…');
-      try {
-        var res = await sb.from('pacotes').upsert(DEFAULT_PACOTES, { onConflict: 'id' });
-        if (res.error) throw res.error;
-        toast('Pacotes criados/atualizados');
-        await loadPacotes();
-      } catch (e) {
-        setPkgMsg('Falha ao criar: ' + (e.message || e) + ' — confira se a tabela existe e se você está logado.', false);
-      }
-    }
-
-    async function savePacote(idx) {
-      var box = document.getElementById('edit-' + idx);
-      if (!box) return;
-      var p = Object.assign({}, pacotesRows[idx]);
-      box.querySelectorAll('[data-f]').forEach(function(el){
-        var f = el.getAttribute('data-f');
-        var v = el.value;
-        if (f === 'ativo') p.ativo = (v === 'true');
-        else p[f] = v;
-      });
-      p.updated_at = new Date().toISOString();
-      var sb = getSb();
-      if (!sb) return setPkgMsg('Sem Supabase.', false);
-      setPkgMsg('Salvando ' + p.nome + '…');
-      try {
-        var res = await sb.from('pacotes').upsert(p, { onConflict: 'id' });
-        if (res.error) throw res.error;
-        // limpa cache do site
-        try { localStorage.removeItem('tourmix_pacotes_cache_v1'); } catch(e){}
-        toast('Salvo: ' + p.nome);
-        await loadPacotes();
-      } catch (e) {
-        setPkgMsg('Erro ao salvar: ' + (e.message || e), false);
-      }
-    }
-
-    document.getElementById('editorLista').addEventListener('click', function(e){
-      var edit = e.target.closest('.btn-edit');
-      var save = e.target.closest('.btn-save');
-      var cancel = e.target.closest('.btn-cancel');
-      if (edit) {
-        var i = edit.getAttribute('data-idx');
-        document.querySelectorAll('.edit-box').forEach(function(b){ b.classList.remove('open'); });
-        var box = document.getElementById('edit-' + i);
-        if (box) box.classList.add('open');
-      }
-      if (cancel) {
-        var j = cancel.getAttribute('data-idx');
-        var b2 = document.getElementById('edit-' + j);
-        if (b2) b2.classList.remove('open');
-      }
-      if (save) savePacote(Number(save.getAttribute('data-idx')));
+    document.getElementById('checklist').addEventListener('change', function(e){
+      var el=e.target.closest('[data-check]'); if(!el) return;
+      var list=[]; try{list=JSON.parse(localStorage.getItem(CHECK_KEY)||'null');}catch(err){}
+      if(!list||!list.length) list=defaultChecks();
+      list[Number(el.getAttribute('data-check'))].done=!!el.checked;
+      localStorage.setItem(CHECK_KEY, JSON.stringify(list));
+      loadChecks();
     });
-    document.getElementById('btnReloadPkg').addEventListener('click', loadPacotes);
-    document.getElementById('btnSeedPkg').addEventListener('click', seedPacotes);
+    document.getElementById('btnResetCheck').addEventListener('click', function(){
+      localStorage.setItem(CHECK_KEY, JSON.stringify(defaultChecks()));
+      loadChecks(); toast('Checklist limpo');
+    });
 
-    /* stats / perfis */
-    function renderStats(rows) {
-      var counts = { natureza:0, praia:0, romantico:0, relax:0, cultural:0 };
-      var week = 0, lim = Date.now() - 7*24*3600*1000;
+    /* stats + perfis */
+    function renderStats(rows){
+      var counts={natureza:0,praia:0,romantico:0,relax:0,cultural:0};
+      var week=0, lim=Date.now()-7*24*3600*1000;
       rows.forEach(function(r){
-        if (counts[r.perfil_key] !== undefined) counts[r.perfil_key]++;
-        if (r.created_at && new Date(r.created_at).getTime() >= lim) week++;
+        if(counts[r.perfil_key]!==undefined) counts[r.perfil_key]++;
+        if(r.created_at && new Date(r.created_at).getTime()>=lim) week++;
       });
-      document.getElementById('stats').innerHTML =
-        '<div class="stat"><strong>'+rows.length+'</strong><span>Total perfis</span></div>' +
-        '<div class="stat"><strong>'+week+'</strong><span>Últimos 7 dias</span></div>' +
-        '<div class="stat"><strong>'+counts.praia+'</strong><span>Praia</span></div>' +
-        '<div class="stat"><strong>'+counts.romantico+'</strong><span>Romântico</span></div>' +
-        '<div class="stat"><strong>'+counts.natureza+'</strong><span>Natureza</span></div>';
-      var recent = rows.slice().sort(function(a,b){ return new Date(b.created_at||0)-new Date(a.created_at||0); }).slice(0,6);
+      document.getElementById('stats').innerHTML=
+        '<div class="stat"><strong>'+rows.length+'</strong><span>Total de perfis</span></div>'+
+        '<div class="stat"><strong>'+week+'</strong><span>Últimos 7 dias</span></div>'+
+        '<div class="stat"><strong>'+counts.praia+'</strong><span>Perfil praia</span></div>'+
+        '<div class="stat"><strong>'+(counts.natureza+counts.romantico+counts.relax+counts.cultural)+'</strong><span>Outros perfis</span></div>';
+
+      var recent=rows.slice().sort(function(a,b){return new Date(b.created_at||0)-new Date(a.created_at||0);}).slice(0,6);
       document.getElementById('recentList').innerHTML = recent.length ? recent.map(function(r){
-        return '<div class="note-item"><strong>'+(r.nome||'Sem nome')+'</strong> · '+(r.perfil_titulo||r.perfil_key||'—')+
+        return '<div class="note-item"><strong>'+(r.nome||'Sem nome')+'</strong> · <span class="badge">'+(r.perfil_titulo||r.perfil_key||'—')+'</span>'+
           '<small>'+fmtDate(r.created_at)+(r.email?' · '+r.email:'')+'</small></div>';
-      }).join('') : 'Nenhum perfil ainda.';
+      }).join('') : '<div class="empty">Nenhum perfil ainda.</div>';
     }
-    function filtered() {
-      var q = (document.getElementById('busca').value||'').toLowerCase().trim();
-      var f = document.getElementById('filtroPerfil').value;
+    function filtered(){
+      var q=(document.getElementById('busca').value||'').toLowerCase().trim();
+      var f=document.getElementById('filtroPerfil').value;
       return allRows.filter(function(r){
-        if (f && r.perfil_key !== f) return false;
-        if (!q) return true;
-        return ((r.nome||'')+' '+(r.email||'')).toLowerCase().indexOf(q) !== -1;
+        if(f && r.perfil_key!==f) return false;
+        if(!q) return true;
+        return ((r.nome||'')+' '+(r.email||'')).toLowerCase().indexOf(q)!==-1;
       });
     }
-    function renderTable() {
-      var rows = filtered();
+    function renderTable(){
+      var rows=filtered();
       renderStats(allRows);
-      var tbody = document.getElementById('tbody');
-      tbody.innerHTML = '';
-      var vazio = document.getElementById('vazio');
-      if (!rows.length) { vazio.classList.remove('hidden'); return; }
+      var tbody=document.getElementById('tbody'); tbody.innerHTML='';
+      var vazio=document.getElementById('vazio');
+      if(!rows.length){vazio.classList.remove('hidden');return;}
       vazio.classList.add('hidden');
       rows.forEach(function(r){
-        var tr = document.createElement('tr');
-        tr.innerHTML = '<td>'+fmtDate(r.created_at)+'</td><td>'+(r.nome||'—')+'</td><td>'+(r.email||'—')+'</td>' +
+        var tr=document.createElement('tr');
+        tr.innerHTML='<td>'+fmtDate(r.created_at)+'</td><td>'+(r.nome||'—')+'</td><td>'+(r.email||'—')+'</td>'+
           '<td><span class="badge">'+(r.perfil_titulo||r.perfil_key||'—')+'</span></td><td class="muted">'+scoresText(r.scores)+'</td>';
         tbody.appendChild(tr);
       });
     }
-    async function loadPerfis() {
-      var errEl = document.getElementById('loadErr');
-      errEl.classList.add('hidden');
-      var sb = getSb();
-      if (!sb) {
-        errEl.textContent = 'Supabase não configurado.';
-        errEl.classList.remove('hidden');
-        allRows = []; renderTable(); return;
-      }
-      try {
-        var res = await sb.from('perfis_viajante').select('*').order('created_at',{ascending:false});
-        if (res.error) throw res.error;
-        allRows = res.data || [];
-        renderTable();
-      } catch (e) {
-        errEl.textContent = 'Erro: '+(e.message||e);
-        errEl.classList.remove('hidden');
-        allRows = []; renderTable();
+    async function loadPerfis(){
+      var errEl=document.getElementById('loadErr'); errEl.classList.add('hidden');
+      var sb=getSb();
+      if(!sb){errEl.textContent='Supabase não configurado.';errEl.classList.remove('hidden');allRows=[];renderTable();return;}
+      try{
+        var res=await sb.from('perfis_viajante').select('*').order('created_at',{ascending:false});
+        if(res.error) throw res.error;
+        allRows=res.data||[]; renderTable();
+      }catch(e){
+        errEl.textContent='Erro ao carregar: '+(e.message||e);
+        errEl.classList.remove('hidden'); allRows=[]; renderTable();
       }
     }
     document.getElementById('busca').addEventListener('input', renderTable);
     document.getElementById('filtroPerfil').addEventListener('change', renderTable);
     document.getElementById('btnRefresh').addEventListener('click', loadPerfis);
     document.getElementById('btnExport').addEventListener('click', function(){
-      var rows = filtered();
-      var csv = 'data,nome,email,perfil,scores\n'+rows.map(function(r){
+      var rows=filtered();
+      var csv='data,nome,email,perfil,scores\n'+rows.map(function(r){
         return [r.created_at,r.nome,r.email,r.perfil_titulo||r.perfil_key,scoresText(r.scores)]
-          .map(function(c){ return '"'+String(c||'').replace(/"/g,'""')+'"'; }).join(',');
+          .map(function(c){return '"'+String(c||'').replace(/"/g,'""')+'"';}).join(',');
       }).join('\n');
-      var a = document.createElement('a');
-      a.href = 'data:text/csv;charset=utf-8,'+encodeURIComponent(csv);
-      a.download = 'tourmix-perfis.csv'; a.click(); toast('CSV exportado');
+      var a=document.createElement('a');
+      a.href='data:text/csv;charset=utf-8,'+encodeURIComponent(csv);
+      a.download='tourmix-perfis.csv'; a.click(); toast('CSV exportado');
     });
-    document.getElementById('btnCopyMsg').addEventListener('click', function(){
-      var t = document.getElementById('msgPronta');
-      navigator.clipboard.writeText(t.value).then(function(){ toast('Mensagem copiada'); });
-    });
-    document.getElementById('msgPronta').value = 'Olá! Sou da TOURMIX ✈️\n\nTemos pacotes nacionais e Réveillon em Santiago/Buenos Aires.\nPosso te enviar opções?\n\nWhatsApp: (11) 91484-1404';
 
-    /* notes / leads */
+    /* msgs */
+    document.getElementById('msgPronta').value=
+      'Olá! Sou da TOURMIX ✈️\n\nTemos pacotes nacionais e Réveillon em Santiago/Buenos Aires.\nPosso te enviar opções com valores e datas?\n\nWhatsApp: (11) 91484-1404';
+    document.getElementById('btnCopyMsg').addEventListener('click', function(){
+      navigator.clipboard.writeText(document.getElementById('msgPronta').value).then(function(){toast('Mensagem copiada');});
+    });
+
+    /* respostas rápidas */
+    document.getElementById('respostasRapidas').innerHTML = RAPIDAS.map(function(t,i){
+      return '<button type="button" class="btn btn-ghost" data-rapida="'+i+'">'+t.slice(0,42)+(t.length>42?'…':'')+'</button>';
+    }).join('');
+    document.getElementById('respostasRapidas').addEventListener('click', function(e){
+      var b=e.target.closest('[data-rapida]'); if(!b) return;
+      var t=RAPIDAS[Number(b.getAttribute('data-rapida'))];
+      navigator.clipboard.writeText(t).then(function(){toast('Resposta copiada');});
+    });
+
+    /* atalhos + ref */
+    document.getElementById('atalhosGrid').innerHTML = ATALHOS.map(function(a){
+      return '<a class="link-card" href="'+a.h+'" target="_blank"><strong>'+a.t+'</strong><span>'+a.s+'</span></a>';
+    }).join('');
+    document.getElementById('refPacotes').innerHTML = REFS.map(function(p){
+      return '<div class="note-item" style="display:flex;justify-content:space-between;gap:1rem;align-items:center">'+
+        '<div><strong>'+p.nome+'</strong><small>'+p.info+'</small></div>'+
+        '<a class="btn btn-ghost" href="'+p.link+'" target="_blank">Abrir</a></div>';
+    }).join('');
+
+    /* notes */
     function loadNotes(){
-      var list=[]; try{ list=JSON.parse(localStorage.getItem(NOTES_KEY)||'[]'); }catch(e){}
+      var list=[]; try{list=JSON.parse(localStorage.getItem(NOTES_KEY)||'[]');}catch(e){}
       document.getElementById('listaNotas').innerHTML = list.length ? list.map(function(n,i){
         return '<div class="note-item">'+n.text+'<small>'+n.when+' · <a href="#" data-del-note="'+i+'">apagar</a></small></div>';
-      }).join('') : '<p class="muted">Nenhuma nota.</p>';
+      }).join('') : '<div class="empty">Nenhuma nota ainda.</div>';
     }
     document.getElementById('btnAddNota').addEventListener('click', function(){
       var text=(document.getElementById('notaTexto').value||'').trim(); if(!text) return;
-      var list=[]; try{ list=JSON.parse(localStorage.getItem(NOTES_KEY)||'[]'); }catch(e){}
+      var list=[]; try{list=JSON.parse(localStorage.getItem(NOTES_KEY)||'[]');}catch(e){}
       list.unshift({text:text,when:new Date().toLocaleString('pt-BR')});
       localStorage.setItem(NOTES_KEY, JSON.stringify(list.slice(0,100)));
       document.getElementById('notaTexto').value=''; loadNotes(); toast('Nota salva');
     });
     document.getElementById('listaNotas').addEventListener('click', function(e){
       var a=e.target.closest('[data-del-note]'); if(!a) return; e.preventDefault();
-      var list=[]; try{ list=JSON.parse(localStorage.getItem(NOTES_KEY)||'[]'); }catch(e2){}
+      var list=[]; try{list=JSON.parse(localStorage.getItem(NOTES_KEY)||'[]');}catch(e2){}
       list.splice(Number(a.getAttribute('data-del-note')),1);
       localStorage.setItem(NOTES_KEY, JSON.stringify(list)); loadNotes();
     });
+
+    /* leads */
     function loadLeads(){
-      var list=[]; try{ list=JSON.parse(localStorage.getItem(LEADS_KEY)||'[]'); }catch(e){}
+      var list=[]; try{list=JSON.parse(localStorage.getItem(LEADS_KEY)||'[]');}catch(e){}
       document.getElementById('listaLeads').innerHTML = list.length ? list.map(function(n,i){
         return '<div class="note-item"><strong>'+n.nome+'</strong> · '+n.contato+'<br>'+n.interesse+
           '<small>'+n.when+' · <a href="#" data-del-lead="'+i+'">apagar</a></small></div>';
-      }).join('') : '<p class="muted">Nenhum lead.</p>';
+      }).join('') : '<div class="empty">Nenhum lead registrado.</div>';
     }
     document.getElementById('btnAddLead').addEventListener('click', function(){
       var nome=(document.getElementById('leadNome').value||'').trim();
       var contato=(document.getElementById('leadContato').value||'').trim();
       var interesse=(document.getElementById('leadInteresse').value||'').trim();
       if(!nome&&!contato) return;
-      var list=[]; try{ list=JSON.parse(localStorage.getItem(LEADS_KEY)||'[]'); }catch(e){}
+      var list=[]; try{list=JSON.parse(localStorage.getItem(LEADS_KEY)||'[]');}catch(e){}
       list.unshift({nome:nome||'—',contato:contato||'—',interesse:interesse||'—',when:new Date().toLocaleString('pt-BR')});
       localStorage.setItem(LEADS_KEY, JSON.stringify(list.slice(0,200)));
-      document.getElementById('leadNome').value=''; document.getElementById('leadContato').value=''; document.getElementById('leadInteresse').value='';
+      document.getElementById('leadNome').value='';
+      document.getElementById('leadContato').value='';
+      document.getElementById('leadInteresse').value='';
       loadLeads(); toast('Lead salvo');
     });
     document.getElementById('listaLeads').addEventListener('click', function(e){
       var a=e.target.closest('[data-del-lead]'); if(!a) return; e.preventDefault();
-      var list=[]; try{ list=JSON.parse(localStorage.getItem(LEADS_KEY)||'[]'); }catch(e2){}
+      var list=[]; try{list=JSON.parse(localStorage.getItem(LEADS_KEY)||'[]');}catch(e2){}
       list.splice(Number(a.getAttribute('data-del-lead')),1);
       localStorage.setItem(LEADS_KEY, JSON.stringify(list)); loadLeads();
     });
     document.getElementById('btnExportLeads').addEventListener('click', function(){
-      var list=[]; try{ list=JSON.parse(localStorage.getItem(LEADS_KEY)||'[]'); }catch(e){}
+      var list=[]; try{list=JSON.parse(localStorage.getItem(LEADS_KEY)||'[]');}catch(e){}
       var csv='quando,nome,contato,interesse\n'+list.map(function(r){
         return [r.when,r.nome,r.contato,r.interesse].map(function(c){return '"'+String(c||'').replace(/"/g,'""')+'"';}).join(',');
       }).join('\n');
-      var a=document.createElement('a'); a.href='data:text/csv;charset=utf-8,'+encodeURIComponent(csv);
+      var a=document.createElement('a');
+      a.href='data:text/csv;charset=utf-8,'+encodeURIComponent(csv);
       a.download='tourmix-leads.csv'; a.click(); toast('Leads exportados');
     });
 
@@ -563,13 +514,13 @@ code{background:#0f172a;padding:0.1rem 0.35rem;border-radius:6px;font-size:0.8em
       var cfg=window.TOURMIX_AUTH||{};
       var key=cfg.supabaseAnonKey||'';
       var role='?';
-      try{ role=JSON.parse(atob(key.split('.')[1].replace(/-/g,'+').replace(/_/g,'/'))).role; }catch(e){}
+      try{role=JSON.parse(atob(key.split('.')[1].replace(/-/g,'+').replace(/_/g,'/'))).role;}catch(e){}
       var rows=[
-        ['Supabase URL', cfg.supabaseUrl&&String(cfg.supabaseUrl).indexOf('http')===0?'ok':'faltando https://'],
+        ['Supabase URL', cfg.supabaseUrl&&String(cfg.supabaseUrl).indexOf('http')===0?'ok':'verifique https://'],
         ['Chave configurada', key&&key.indexOf('COLE_AQUI')===-1?'ok':'faltando'],
         ['Tipo da chave', role+(role==='anon'?' ✓':role==='service_role'?' ⚠️ use anon':'')],
-        ['Usuário', user&&user.email?user.email:'não'],
-        ['É admin?', user&&isAdmin(user.email)?'sim':'não']
+        ['Usuário logado', user&&user.email?user.email:'não'],
+        ['Permissão admin', user&&isAdmin(user.email)?'sim':'não']
       ];
       document.getElementById('statusBox').innerHTML=rows.map(function(r){
         return '<div class="status-row"><span>'+r[0]+'</span><span>'+r[1]+'</span></div>';
@@ -597,7 +548,7 @@ code{background:#0f172a;padding:0.1rem 0.35rem;border-radius:6px;font-size:0.8em
     });
 
     async function boot(){
-      loadNotes(); loadLeads();
+      loadNotes(); loadLeads(); loadChecks();
       var user=null;
       try{ if(window.TourmixAuth) user=await window.TourmixAuth.getUser(); }catch(e){}
       renderStatus(user);
