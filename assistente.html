@@ -416,7 +416,16 @@ if(!seen.length)hbox.innerHTML='<div class="hist-item">Ainda não abriu nenhum d
 }
 var messages=document.getElementById('messages');
 function addMsg(html,who){var div=document.createElement('div');div.className='msg '+who;div.innerHTML=html;messages.appendChild(div);messages.scrollTop=messages.scrollHeight;}
-function formatPacote(p){return '<strong>'+p.nome+'</strong> · '+p.tipo+'<br>'+p.resumo+'<br>💰 '+p.preco+'<br>'+(p.data?'📅 '+p.data+'<br>':'')+(p.inclui?'✅ '+p.inclui+'<br>':'')+(p.embarque?'🚌 '+p.embarque+'<br>':'')+'<a href="'+p.link+'">Ver página completa →</a>';}
+function formatPacote(p){
+  return '<strong>'+p.nome+'</strong> — '+p.tipo+'<br>'+
+    (p.resumo?p.resumo+'<br>':'')+
+    '💰 <strong>'+p.preco+'</strong><br>'+
+    (p.data?'📅 '+p.data+'<br>':'')+
+    (p.inclui?'✅ '+p.inclui+'<br>':'')+
+    (p.embarque?'🚌 '+p.embarque+'<br>':'')+
+    'Por que ir: destino com ótimo custo-benefício no catálogo TOURMIX.<br>'+
+    '<a class="pkg-link" href="'+p.link+'">Ver pacote '+p.nome+'</a>';
+}
 function norm(s){return (s||'').toLowerCase().normalize('NFD').replace(/\p{Diacritic}/gu,'');}
 function buscar(texto){var t=norm(texto),hits=[];CATALOGO.forEach(function(p){var score=0;if(t.indexOf(norm(p.nome))!==-1)score+=6;p.tags.forEach(function(tag){if(t.indexOf(norm(tag))!==-1)score+=2;});if(score)hits.push({p:p,score:score});});hits.sort(function(a,b){return b.score-a.score;});return hits.map(function(h){return h.p;});}
 function recomendar(){var key=getPerfilKey();var ids=(key&&PERFIS[key])?PERFIS[key].destinos:['holambra','gramado','bonito'];var list=CATALOGO.filter(function(c){return ids.indexOf(c.id)!==-1;});var hist=loadJSON(HISTORICO_KEY,[]);hist.slice(-8).forEach(function(h){var nome=NOME_PATH[h.path];if(!nome)return;CATALOGO.forEach(function(c){if(norm(c.nome)===norm(nome)&&list.indexOf(c)===-1)list.unshift(c);});});return list.slice(0,3);}
@@ -549,12 +558,19 @@ if(querPerfil(t) || (/perfil/.test(t) && !querIndicacao(t) && t.indexOf('destino
 
 if(/pacotes|catalogo|catálogo|opcoes|opções|o que tem/.test(t)){
   lastBotIntent='catalogo';
-  var html='Bora lá, o que a gente tem agora:<br><br>';
+  var aberturas=[
+    'Claro! Separei o catálogo atual da TOURMIX pra você:',
+    'Bora! Hoje esses são os destinos que a gente está trabalhando:',
+    'Ótimo pedido — olha o que temos disponível agora:'
+  ];
+  var html=aberturas[Math.floor(Math.random()*aberturas.length)]+'<br><br>';
   CATALOGO.forEach(function(p){
-  html += '• <strong>'+p.nome+'</strong> — '+p.preco+
-          '<br><a class="pkg-link" href="'+p.link+'">Ver pacote '+p.nome+'</a><br><br>';
-});
-  return html+'<br>Manda o nome de um que eu abro valor, incluso e data.';
+    html += '• <strong>'+p.nome+'</strong> — '+p.tipo+'<br>'+
+            '💰 '+p.preco+'<br>'+
+            (p.resumo?p.resumo+'<br>':'')+
+            '<a class="pkg-link" href="'+p.link+'">Ver pacote '+p.nome+'</a><br><br>';
+  });
+  return html+'Quer que eu monte um <strong>roteiro</strong> de algum desses ou detalhe preço e o que está incluso?';
 }
 if(/whatsapp|contato|atendente|humano/.test(t)){
   lastBotIntent='whats';
@@ -577,7 +593,14 @@ if(/pre[cç]o|valor|quanto|investimento|incluso|inclui|parcel/.test(t)){
   if(hits2.length){
     var p=hits2[0];
     lastBotIntent='preco';
-    return 'Sobre <strong>'+p.nome+'</strong>:<br>💰 '+p.preco+'<br>✅ '+p.inclui+(p.embarque?'<br>🚌 '+p.embarque:'')+'<br><a href="'+p.link+'">Ver página →</a><br><br>Quer que eu indique algo parecido também?';
+    return 'Claro! Sobre <strong>'+p.nome+'</strong>:<br><br>'+
+      (p.resumo?p.resumo+'<br><br>':'')+
+      '💰 <strong>'+p.preco+'</strong><br>'+
+      (p.data?'📅 '+p.data+'<br>':'')+
+      '✅ '+p.inclui+
+      (p.embarque?'<br>🚌 '+p.embarque:'')+
+      '<br><br><a class="pkg-link" href="'+p.link+'">Ver pacote '+p.nome+'</a>'+
+      '<br><br>Quer que eu monte um roteiro desse destino ou compare com outro pacote?';
   }
   return 'Me fala o destino (Holambra, Gramado, Bonito, Foz, Camboriú ou Caldas) que eu te passo valor e o que entra no pacote 💰';
 }

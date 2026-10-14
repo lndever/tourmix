@@ -142,13 +142,24 @@ export default async function handler(req, res) {
         content: String(h.text).slice(0, 2000)
       });
     });
-    messages.push({ role: "user", content: message });
+    var lower = message.toLowerCase();
+    var precisaRoteiro = /roteiro|o que fazer|passeio|itiner|montar|programa(r|ção)?|dias em/.test(lower);
+    var precisaLista = /quais pacotes|o que (voces|vocês) tem|catalogo|catálogo|op[cç][oõ]es/.test(lower);
+    var reforco = "";
+    if (precisaRoteiro) {
+      reforco = "\n\n[Instrução interna: responda de forma COMPLETA com abertura natural, encaixe no pacote TOURMIX, roteiro Dia 1/Dia 2/Dia 3/Dia 4, dica prática e convite final. Mínimo 15 linhas. Proibido resposta de 3 linhas.]";
+    } else if (precisaLista) {
+      reforco = "\n\n[Instrução interna: liste os pacotes com nome, duração, preço, 1 frase de destaque e convite. Abertura natural. Não use só uma linha por item.]";
+    } else {
+      reforco = "\n\n[Instrução interna: seja completo e humano. Evite respostas secas de 1–3 linhas quando o pedido pedir explicação.]";
+    }
+    messages.push({ role: "user", content: message + reforco });
 
     const models = [
-      "llama-3.1-8b-instant",
-      "openai/gpt-oss-20b",
       "llama-3.3-70b-versatile",
-      "meta-llama/llama-4-scout-17b-16e-instruct"
+      "meta-llama/llama-4-scout-17b-16e-instruct",
+      "llama-3.1-8b-instant",
+      "openai/gpt-oss-20b"
     ];
 
     let lastError = null;
