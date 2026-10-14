@@ -550,7 +550,10 @@ if(querPerfil(t) || (/perfil/.test(t) && !querIndicacao(t) && t.indexOf('destino
 if(/pacotes|catalogo|catálogo|opcoes|opções|o que tem/.test(t)){
   lastBotIntent='catalogo';
   var html='Bora lá, o que a gente tem agora:<br><br>';
-  CATALOGO.forEach(function(p){html+='• <strong>'+p.nome+'</strong> — '+p.preco+' · <a href="'+p.link+'">ver</a><br>';});
+  CATALOGO.forEach(function(p){
+  html += '• <strong>'+p.nome+'</strong> — '+p.preco+
+          '<br><a class="pkg-link" href="'+p.link+'">Ver pacote '+p.nome+'</a><br><br>';
+});
   return html+'<br>Manda o nome de um que eu abro valor, incluso e data.';
 }
 if(/whatsapp|contato|atendente|humano/.test(t)){
@@ -597,65 +600,44 @@ function perfilLabel(){
 }
 function textToHtml(t){
   var s = String(t || '');
-  var links = [];
 
-  function putLink(href, label){
+  // se já veio HTML do modo local, não mexe
+  if (/<a\s/i.test(s) && /<strong>|<br>/i.test(s)) {
+    return s;
+  }
+
+  var links = [];
+  function put(href, label){
     var i = links.length;
     links.push('<a class="pkg-link" href="' + href + '">' + label + '<\/a>');
     return '%%L' + i + '%%';
   }
 
-  // 1) escapar
-  s = s.replace(/&/g, '&amp;')
-       .replace(/</g, '&lt;')
-       .replace(/>/g, '&gt;');
-
-  // 2) negrito / itálico
+  s = s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
   s = s.replace(/\*\*([^*]+)\*\*/g, '<strong>$1<\/strong>');
-  s = s.replace(/(^|[^*])\*([^*]+)\*(?!\*)/g, '$1<em>$2<\/em>');
 
-  // 3) mapa de pacotes (nome longo primeiro)
-  var pacotes = [
-    { re: /Balne[aá]rio Cambori[uú]/gi, href: '/balneario-camboriu', nome: 'Balneário Camboriú' },
-    { re: /Foz do Igua[cç]u/gi, href: '/foz-iguacu', nome: 'Foz do Iguaçu' },
-    { re: /Santiago do Chile/gi, href: '/santiago-chile', nome: 'Santiago do Chile' },
-    { re: /Buenos Aires/gi, href: '/buenos-aires', nome: 'Buenos Aires' },
-    { re: /Caldas Novas/gi, href: '/caldas-novas', nome: 'Caldas Novas' },
-    { re: /Holambra/gi, href: '/holambra', nome: 'Holambra' },
-    { re: /Gramado/gi, href: '/gramado', nome: 'Gramado' },
-    { re: /\bBonito\b/gi, href: '/bonito', nome: 'Bonito' }
-  ];
-
-  // 4) "Mais detalhes: xxx" → só o nome linkado
+  // apaga linhas que são só /algo ou algo-slug
+  s = s.replace(/^\s*\/?[A-Za-zÀ-ÿ0-9\-]+\s*$/gm, '');
   s = s.replace(/Mais detalhes:\s*/gi, '');
+  s = s.replace(/(^|\s)\/[A-Za-zÀ-ÿ\-]+(?=\s|$)/g, ' ');
 
-  // 5) nomes bonitos → placeholder de link
-  pacotes.forEach(function(p){
-    s = s.replace(p.re, function(){ return putLink(p.href, p.nome); });
+  // nomes → link (uma vez)
+  var lista = [
+    [/Balne[aá]rio\s+Cambori[uú]/gi, '/balneario-camboriu', 'Balneário Camboriú'],
+    [/Foz\s+do\s+Igua[cç]u/gi, '/foz-iguacu', 'Foz do Iguaçu'],
+    [/Santiago\s+do\s+Chile/gi, '/santiago-chile', 'Santiago do Chile'],
+    [/Buenos\s+Aires/gi, '/buenos-aires', 'Buenos Aires'],
+    [/Caldas\s+Novas/gi, '/caldas-novas', 'Caldas Novas'],
+    [/\bHolambra\b/gi, '/holambra', 'Holambra'],
+    [/\bGramado\b/gi, '/gramado', 'Gramado'],
+    [/\bBonito\b(?!\s*Ecotel)/gi, '/bonito', 'Bonito']
+  ];
+  lista.forEach(function(x){
+    s = s.replace(x[0], function(){ return put(x[1], x[2]); });
   });
 
-  // 6) slugs feios que sobraram → nome bonito linkado
-  var slugs = {
-    'balneario-camboriu': { href: '/balneario-camboriu', nome: 'Balneário Camboriú' },
-    'foz-iguacu': { href: '/foz-iguacu', nome: 'Foz do Iguaçu' },
-    'santiago-chile': { href: '/santiago-chile', nome: 'Santiago do Chile' },
-    'buenos-aires': { href: '/buenos-aires', nome: 'Buenos Aires' },
-    'caldas-novas': { href: '/caldas-novas', nome: 'Caldas Novas' },
-    'holambra': { href: '/holambra', nome: 'Holambra' },
-    'gramado': { href: '/gramado', nome: 'Gramado' },
-    'bonito': { href: '/bonito', nome: 'Bonito' },
-    'excursoes': { href: '/excursoes', nome: 'Excursões' }
-  };
-  s = s.replace(/\/?(balneario-camboriu|foz-iguacu|santiago-chile|buenos-aires|caldas-novas|holambra|gramado|bonito|excursoes)(?:\.html)?/gi, function(m, slug){
-    var info = slugs[String(slug).toLowerCase()];
-    return info ? putLink(info.href, info.nome) : m;
-  });
-
-  // 7) restaurar links
-  s = s.replace(/%%L(\d+)%%/g, function(_, i){ return links[Number(i)] || ''; });
-
-  // 8) quebras de linha
-  s = s.replace(/\n/g, '<br>');
+  s = s.replace(/%%L(\d+)%%/g, function(_, i){ return links[+i] || ''; });
+  s = s.replace(/\n{3,}/g, '\n\n').replace(/\n/g, '<br>');
   return s;
 }
 async function perguntarIA(message){
