@@ -480,8 +480,12 @@ if(/\bpix\b|chave pix|forma de pagamento|parcel|cartao|cartão/.test(t)){
 if(/cadastur|cnpj|empresa|voces sao|vocês são|confiavel|confiável/.test(t)){
   return 'Somos a <strong>Tourmix Br</strong> — viagens e experiências.<br>CNPJ / CADASTUR: <strong>65.063.425/0001-95</strong><br>Atendimento humano no WhatsApp (11) 91484-1404.';
 }
-if(/mais barato|mais barata|promocao|promoção|oferta|desconto/.test(t)){
-  return 'Hoje os destaques de preço são:<br>• <strong>Holambra</strong> (1 dia) — R$ 159,90 à vista ou 2x R$ 80 no PIX<br>• <strong>Foz, Camboriú e Gramado</strong> — a partir de 12x de R$ 115<br>• <strong>Caldas Novas</strong> — 12x de R$ 145 · <strong>Bonito</strong> — 12x de R$ 167<br><br>Quer que eu detalhe um deles?';
+if(/mais barato|mais barata|promocao|promoção|oferta|desconto/.test(t) && !/indica|suger|recomend/.test(t)){
+  return 'Ótimo pedido! Separei os destinos com <strong>melhor custo-benefício</strong> agora:<br><br>'+
+    '🌷 <strong>Holambra</strong> — excursão de 1 dia<br>💰 R$ 159,90 à vista ou 2x R$ 80 no PIX<br>Ideal pra quem quer um dia de flores, fotos e passeio leve sem precisar de hotel.<br><br>'+
+    '🌊 <strong>Foz, Camboriú e Gramado</strong> — 4 noites<br>💰 a partir de 12x de R$ 115 · 3% off à vista<br>Aéreo de SP, hotel com café, transfer e seguro inclusos.<br><br>'+
+    '♨️ <strong>Caldas Novas</strong> — 5 noites · 12x R$ 145<br>🌿 <strong>Bonito</strong> — 5 noites · 12x R$ 167<br><br>'+
+    'Quer que eu monte o <strong>roteiro</strong> de algum desses ou detalhe o que está incluso?';
 }
 if(isDespedida(t) || /obrigad|valeu|vlw|thanks/.test(t)){
   lastBotIntent='despedida';
