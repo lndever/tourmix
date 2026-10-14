@@ -597,34 +597,44 @@ function perfilLabel(){
 }
 function textToHtml(t){
   var s = String(t || '');
+  var links = [];
 
+  function putLink(href, label){
+    var i = links.length;
+    links.push('<a class="pkg-link" href="' + href + '">' + label + '<\/a>');
+    return '%%L' + i + '%%';
+  }
+
+  // 1) escapar
   s = s.replace(/&/g, '&amp;')
        .replace(/</g, '&lt;')
        .replace(/>/g, '&gt;');
 
-  // negrito / itálico
+  // 2) negrito / itálico
   s = s.replace(/\*\*([^*]+)\*\*/g, '<strong>$1<\/strong>');
   s = s.replace(/(^|[^*])\*([^*]+)\*(?!\*)/g, '$1<em>$2<\/em>');
 
-  // nomes bonitos → link (sem mostrar /slug)
+  // 3) mapa de pacotes (nome longo primeiro)
   var pacotes = [
-    { nome: 'Balneário Camboriú', href: '/balneario-camboriu' },
-    { nome: 'Foz do Iguaçu', href: '/foz-iguacu' },
-    { nome: 'Santiago do Chile', href: '/santiago-chile' },
-    { nome: 'Buenos Aires', href: '/buenos-aires' },
-    { nome: 'Caldas Novas', href: '/caldas-novas' },
-    { nome: 'Holambra', href: '/holambra' },
-    { nome: 'Gramado', href: '/gramado' },
-    { nome: 'Bonito', href: '/bonito' }
+    { re: /Balne[aá]rio Cambori[uú]/gi, href: '/balneario-camboriu', nome: 'Balneário Camboriú' },
+    { re: /Foz do Igua[cç]u/gi, href: '/foz-iguacu', nome: 'Foz do Iguaçu' },
+    { re: /Santiago do Chile/gi, href: '/santiago-chile', nome: 'Santiago do Chile' },
+    { re: /Buenos Aires/gi, href: '/buenos-aires', nome: 'Buenos Aires' },
+    { re: /Caldas Novas/gi, href: '/caldas-novas', nome: 'Caldas Novas' },
+    { re: /Holambra/gi, href: '/holambra', nome: 'Holambra' },
+    { re: /Gramado/gi, href: '/gramado', nome: 'Gramado' },
+    { re: /\bBonito\b/gi, href: '/bonito', nome: 'Bonito' }
   ];
+
+  // 4) "Mais detalhes: xxx" → só o nome linkado
+  s = s.replace(/Mais detalhes:\s*/gi, '');
+
+  // 5) nomes bonitos → placeholder de link
   pacotes.forEach(function(p){
-    var re = new RegExp(p.nome.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'gi');
-    s = s.replace(re, function(m){
-      return '<a class="pkg-link" href="' + p.href + '">' + m + '<\/a>';
-    });
+    s = s.replace(p.re, function(){ return putLink(p.href, p.nome); });
   });
 
-  // se a IA ainda mandar slug feio, troca pelo nome bonito + link
+  // 6) slugs feios que sobraram → nome bonito linkado
   var slugs = {
     'balneario-camboriu': { href: '/balneario-camboriu', nome: 'Balneário Camboriú' },
     'foz-iguacu': { href: '/foz-iguacu', nome: 'Foz do Iguaçu' },
@@ -636,16 +646,15 @@ function textToHtml(t){
     'bonito': { href: '/bonito', nome: 'Bonito' },
     'excursoes': { href: '/excursoes', nome: 'Excursões' }
   };
-  s = s.replace(/\/?(holambra|foz-iguacu|balneario-camboriu|gramado|bonito|caldas-novas|santiago-chile|buenos-aires|excursoes)(?:\.html)?/gi, function(m, slug){
-    var k = String(slug).toLowerCase();
-    var info = slugs[k];
-    if (!info) return m;
-    return '<a class="pkg-link" href="' + info.href + '">' + info.nome + '<\/a>';
+  s = s.replace(/\/?(balneario-camboriu|foz-iguacu|santiago-chile|buenos-aires|caldas-novas|holambra|gramado|bonito|excursoes)(?:\.html)?/gi, function(m, slug){
+    var info = slugs[String(slug).toLowerCase()];
+    return info ? putLink(info.href, info.nome) : m;
   });
 
-  // remove "Mais detalhes:" solto se sobrar
-  s = s.replace(/Mais detalhes:\s*/gi, '');
+  // 7) restaurar links
+  s = s.replace(/%%L(\d+)%%/g, function(_, i){ return links[Number(i)] || ''; });
 
+  // 8) quebras de linha
   s = s.replace(/\n/g, '<br>');
   return s;
 }
