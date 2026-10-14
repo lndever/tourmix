@@ -8,7 +8,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-:root{--bg:#0b1220;--panel:#1e293b;--line:#334155;--text:#f1f5f9;--muted:#94a3b8;--yellow:#eab308;--cyan:#06b6d4;--green:#22c55e;--red:#ef4444}
+:root{--bg:#0b1220;--panel:#1e293b;--line:#334155;--text:#f1f5f9;--muted:#94a3b8;--yellow:#eab308;--cyan:#06b6d4}
 body{font-family:Montserrat,system-ui,sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
 a{color:#67e8f9;text-decoration:none}
 .top{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:0.9rem 1.25rem;border-bottom:1px solid var(--line);background:#0f172a;position:sticky;top:0;z-index:20;flex-wrap:wrap}
@@ -21,6 +21,7 @@ a{color:#67e8f9;text-decoration:none}
 .btn-ghost{background:transparent;border:1px solid var(--line);color:var(--text)}
 .btn-danger{background:rgba(239,68,68,.15);color:#fca5a5;border:1px solid rgba(239,68,68,.35)}
 .btn-cyan{background:rgba(6,182,212,.15);color:#67e8f9;border:1px solid rgba(6,182,212,.35)}
+.btn:disabled{opacity:.55;cursor:not-allowed}
 .wrap{width:min(1200px,94%);margin:0 auto;padding:1.25rem 0 3rem}
 .gate{max-width:440px;margin:3rem auto;text-align:center;background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:1.5rem}
 .gate p{color:var(--muted);font-size:0.9rem;margin:0.75rem 0 1.2rem;line-height:1.55}
@@ -37,30 +38,39 @@ a{color:#67e8f9;text-decoration:none}
 .stat strong{display:block;font-size:1.45rem;color:#fbbf24}
 .stat span{font-size:0.7rem;color:var(--muted);text-transform:uppercase;letter-spacing:.04em}
 .grid-2{display:grid;gap:1rem}
-@media(min-width:900px){.grid-2{grid-template-columns:1.2fr 0.8fr}}
+@media(min-width:900px){.grid-2{grid-template-columns:1.15fr 0.85fr}}
 .card{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:1.15rem;margin-bottom:1rem}
 .card h2{font-size:0.95rem;margin-bottom:0.85rem}
 .card h3{font-size:0.85rem;color:#fbbf24;margin:0.75rem 0 0.4rem}
 .toolbar{display:flex;flex-wrap:wrap;gap:0.55rem;margin-bottom:0.85rem;align-items:center}
-.toolbar input,.toolbar select,textarea,input[type=text],input[type=email],input[type=password]{background:#0f172a;border:1px solid var(--line);color:var(--text);border-radius:10px;padding:0.55rem 0.75rem;font-family:inherit;font-size:0.85rem}
-textarea{width:100%;min-height:100px;resize:vertical}
+.toolbar input,.toolbar select,textarea,input[type=text],input[type=email],input[type=password],select{background:#0f172a;border:1px solid var(--line);color:var(--text);border-radius:10px;padding:0.55rem 0.75rem;font-family:inherit;font-size:0.85rem}
+textarea{width:100%;min-height:90px;resize:vertical}
+label.field{display:block;font-size:0.72rem;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;margin:0.65rem 0 0.3rem}
 table{width:100%;border-collapse:collapse;font-size:0.82rem}
 th,td{padding:0.65rem 0.5rem;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}
 th{color:var(--muted);font-size:0.7rem;text-transform:uppercase;letter-spacing:.04em}
 tr:hover td{background:rgba(255,255,255,.03)}
 .badge{display:inline-block;padding:0.18rem 0.5rem;border-radius:50px;font-size:0.7rem;font-weight:700;background:#0e7490;color:#fff}
+.badge-off{background:#7f1d1d}
 .muted{color:var(--muted);font-size:0.82rem;line-height:1.5}
 .ok{color:#86efac}
 .err{color:#fca5a5}
 .list-pkg{display:grid;gap:0.55rem}
-.pkg-item{display:flex;justify-content:space-between;gap:0.75rem;align-items:center;padding:0.7rem 0.8rem;background:#0f172a;border:1px solid var(--line);border-radius:12px;font-size:0.84rem}
-.pkg-item a{font-weight:700;color:#fbbf24}
+.pkg-row{display:grid;gap:0.35rem;padding:0.85rem;background:#0f172a;border:1px solid var(--line);border-radius:12px}
+.pkg-row header{display:flex;justify-content:space-between;gap:0.5rem;align-items:center;flex-wrap:wrap}
+.pkg-row strong{font-size:0.9rem}
+.pkg-row .meta{font-size:0.8rem;color:var(--muted)}
+.pkg-actions{display:flex;gap:0.4rem;flex-wrap:wrap}
 .quick{display:flex;flex-wrap:wrap;gap:0.45rem}
 .note-item{border-bottom:1px solid var(--line);padding:0.65rem 0;font-size:0.85rem}
 .note-item small{display:block;color:var(--muted);margin-top:0.25rem}
 .status-row{display:flex;justify-content:space-between;gap:0.5rem;padding:0.45rem 0;border-bottom:1px solid var(--line);font-size:0.84rem}
+.edit-box{display:none;margin-top:0.75rem;padding-top:0.75rem;border-top:1px solid var(--line)}
+.edit-box.open{display:block}
+.edit-box input,.edit-box textarea{width:100%}
 #toast{position:fixed;bottom:1.25rem;right:1.25rem;background:#14532d;color:#dcfce7;padding:0.75rem 1.1rem;border-radius:12px;font-size:0.85rem;font-weight:600;opacity:0;pointer-events:none;transition:opacity .25s;z-index:50}
 #toast.show{opacity:1}
+code{background:#0f172a;padding:0.1rem 0.35rem;border-radius:6px;font-size:0.8em}
 </style>
 </head>
 <body>
@@ -77,7 +87,6 @@ tr:hover td{background:rgba(255,255,255,.03)}
   </header>
 
   <div class="wrap">
-    <!-- GATE LOGIN -->
     <div id="gate" class="gate">
       <h2>Acesso restrito</h2>
       <p>Entre com a conta admin da TOURMIX (Supabase).</p>
@@ -85,26 +94,24 @@ tr:hover td{background:rgba(255,255,255,.03)}
       <input type="password" id="gateSenha" placeholder="Senha" autocomplete="current-password">
       <p id="gateMsg" class="muted" style="min-height:1.2em"></p>
       <button class="btn btn-primary" type="button" id="btnGateLogin" style="width:100%;justify-content:center">Entrar no painel</button>
-      <p class="muted" style="margin-top:1rem;font-size:0.78rem">Também pode entrar em <a href="/login">/login</a> e depois abrir /admin</p>
+      <p class="muted" style="margin-top:1rem;font-size:0.78rem">Ou entre em <a href="/login">/login</a> e depois abra /admin</p>
     </div>
 
     <div id="denied" class="gate hidden">
       <h2>Sem permissão</h2>
-      <p>Esta conta está logada, mas não está na lista de administradores.</p>
+      <p>Conta logada, mas não está na lista de administradores.</p>
       <button class="btn btn-danger" type="button" id="btnSair2">Sair</button>
     </div>
 
-    <!-- PAINEL -->
     <div id="painel" class="hidden">
       <div class="tabs" id="tabs">
         <button class="tab active" data-tab="dash">Dashboard</button>
+        <button class="tab" data-tab="editor">Editar pacotes</button>
         <button class="tab" data-tab="perfis">Perfis viajante</button>
-        <button class="tab" data-tab="pacotes">Pacotes</button>
         <button class="tab" data-tab="leads">Leads / Notas</button>
         <button class="tab" data-tab="sistema">Sistema</button>
       </div>
 
-      <!-- DASHBOARD -->
       <section class="panel active" id="tab-dash">
         <div class="stats" id="stats"></div>
         <div class="grid-2">
@@ -113,26 +120,54 @@ tr:hover td{background:rgba(255,255,255,.03)}
             <div id="recentList" class="muted">Carregando…</div>
           </div>
           <div class="card">
-            <h2>Atalhos rápidos</h2>
+            <h2>Atalhos</h2>
             <div class="quick">
-              <a class="btn btn-cyan" href="/#pacotes" target="_blank">Pacotes no site</a>
+              <a class="btn btn-cyan" href="/#pacotes" target="_blank">Pacotes</a>
               <a class="btn btn-cyan" href="/excursoes" target="_blank">Excursões</a>
               <a class="btn btn-cyan" href="/holambra" target="_blank">Holambra</a>
               <a class="btn btn-cyan" href="/santiago-chile" target="_blank">Santiago</a>
               <a class="btn btn-cyan" href="/buenos-aires" target="_blank">Buenos Aires</a>
               <a class="btn btn-primary" href="https://wa.me/5511914841404" target="_blank">WhatsApp</a>
             </div>
-            <h3>Mensagem pronta (WhatsApp)</h3>
+            <h3>Mensagem pronta</h3>
             <textarea id="msgPronta" readonly></textarea>
             <button class="btn btn-ghost" type="button" id="btnCopyMsg" style="margin-top:0.5rem">Copiar texto</button>
           </div>
         </div>
       </section>
 
-      <!-- PERFIS -->
+      <!-- EDITOR DE PACOTES -->
+      <section class="panel" id="tab-editor">
+        <div class="card">
+          <h2>Editar datas, preços e textos dos pacotes</h2>
+          <p class="muted" style="margin-bottom:0.85rem">
+            Alterações ficam no Supabase e aparecem no site onde houver
+            <code>data-pacote</code> + <code>catalogo-live.js</code>.
+            Ex.: mudar a data da Holambra aqui atualiza o site automaticamente.
+          </p>
+          <div class="toolbar">
+            <button class="btn btn-ghost" type="button" id="btnReloadPkg">Recarregar</button>
+            <button class="btn btn-primary" type="button" id="btnSeedPkg">Criar pacotes padrão (se vazio)</button>
+          </div>
+          <p id="pkgMsg" class="muted" style="margin-bottom:0.75rem"></p>
+          <div class="list-pkg" id="editorLista"></div>
+        </div>
+        <div class="card">
+          <h2>Como ligar no site</h2>
+          <p class="muted">No HTML do pacote (ex. <code>holambra.html</code>), use:</p>
+          <pre style="background:#0f172a;padding:0.85rem;border-radius:10px;overflow:auto;font-size:0.78rem;margin:0.6rem 0;line-height:1.5;color:#e2e8f0">&lt;span data-pacote="holambra" data-campo="data_texto"&gt;25 de outubro&lt;/span&gt;
+&lt;span data-pacote="holambra" data-campo="preco_texto"&gt;R$ 159,90&lt;/span&gt;
+
+&lt;script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"&gt;&lt;/script&gt;
+&lt;script src="auth-config.js"&gt;&lt;/script&gt;
+&lt;script src="catalogo-live.js"&gt;&lt;/script&gt;</pre>
+          <p class="muted">IDs: <code>holambra</code>, <code>foz</code>, <code>camboriu</code>, <code>gramado</code>, <code>bonito</code>, <code>caldas</code>, <code>santiago</code>, <code>buenosaires</code></p>
+        </div>
+      </section>
+
       <section class="panel" id="tab-perfis">
         <div class="card">
-          <h2>Perfis de viajante (quiz + site)</h2>
+          <h2>Perfis de viajante</h2>
           <div class="toolbar">
             <input type="search" id="busca" placeholder="Buscar nome ou e-mail…">
             <select id="filtroPerfil">
@@ -148,15 +183,7 @@ tr:hover td{background:rgba(255,255,255,.03)}
           </div>
           <div style="overflow:auto">
             <table>
-              <thead>
-                <tr>
-                  <th>Data</th>
-                  <th>Nome</th>
-                  <th>E-mail</th>
-                  <th>Perfil</th>
-                  <th>Scores</th>
-                </tr>
-              </thead>
+              <thead><tr><th>Data</th><th>Nome</th><th>E-mail</th><th>Perfil</th><th>Scores</th></tr></thead>
               <tbody id="tbody"></tbody>
             </table>
           </div>
@@ -165,22 +192,12 @@ tr:hover td{background:rgba(255,255,255,.03)}
         </div>
       </section>
 
-      <!-- PACOTES -->
-      <section class="panel" id="tab-pacotes">
-        <div class="card">
-          <h2>Catálogo TOURMIX (referência)</h2>
-          <p class="muted" style="margin-bottom:0.85rem">Valores de referência do site — use para atendimento rápido.</p>
-          <div class="list-pkg" id="listaPacotes"></div>
-        </div>
-      </section>
-
-      <!-- LEADS / NOTAS -->
       <section class="panel" id="tab-leads">
         <div class="grid-2">
           <div class="card">
             <h2>Anotações internas</h2>
-            <p class="muted" style="margin-bottom:0.6rem">Salvas só neste navegador (localStorage).</p>
-            <textarea id="notaTexto" placeholder="Ex.: Cliente João pediu orçamento Santiago para 2 pessoas…"></textarea>
+            <p class="muted" style="margin-bottom:0.6rem">Salvas neste navegador.</p>
+            <textarea id="notaTexto" placeholder="Anotação…"></textarea>
             <button class="btn btn-primary" type="button" id="btnAddNota" style="margin-top:0.5rem">Salvar nota</button>
             <div id="listaNotas" style="margin-top:1rem"></div>
           </div>
@@ -188,7 +205,7 @@ tr:hover td{background:rgba(255,255,255,.03)}
             <h2>Lead rápido</h2>
             <input type="text" id="leadNome" placeholder="Nome" style="width:100%;margin-bottom:0.5rem">
             <input type="text" id="leadContato" placeholder="WhatsApp ou e-mail" style="width:100%;margin-bottom:0.5rem">
-            <input type="text" id="leadInteresse" placeholder="Interesse (ex.: Réveillon Santiago)" style="width:100%;margin-bottom:0.5rem">
+            <input type="text" id="leadInteresse" placeholder="Interesse" style="width:100%;margin-bottom:0.5rem">
             <button class="btn btn-primary" type="button" id="btnAddLead">Registrar lead</button>
             <div id="listaLeads" style="margin-top:1rem"></div>
             <button class="btn btn-ghost" type="button" id="btnExportLeads" style="margin-top:0.75rem">Exportar leads CSV</button>
@@ -196,16 +213,15 @@ tr:hover td{background:rgba(255,255,255,.03)}
         </div>
       </section>
 
-      <!-- SISTEMA -->
       <section class="panel" id="tab-sistema">
         <div class="card">
-          <h2>Status do sistema</h2>
+          <h2>Status</h2>
           <div id="statusBox"></div>
         </div>
         <div class="card">
-          <h2>E-mails admin autorizados</h2>
-          <p class="muted">Só estes e-mails entram no painel. Para adicionar, edite <code>ADMIN_EMAILS</code> no admin.html (com vírgula entre eles).</p>
+          <h2>Admins autorizados</h2>
           <ul id="adminList" class="muted" style="margin-top:0.6rem;padding-left:1.2rem"></ul>
+          <p class="muted" style="margin-top:0.75rem">Tabela SQL: rode o arquivo <code>supabase-pacotes.sql</code> no SQL Editor do Supabase uma vez.</p>
         </div>
       </section>
     </div>
@@ -218,127 +234,224 @@ tr:hover td{background:rgba(255,255,255,.03)}
   <script src="auth.js"></script>
   <script>
   (function () {
-    /** E-mails que podem acessar o painel (minúsculas, SEPARADOS POR VÍRGULA) */
     var ADMIN_EMAILS = [
       'embacado12300@gmail.com',
       'alexandre.10102001@gmail.com',
       'tourmixbrasil@gmail.com'
     ];
 
-    var PACOTES = [
-      { nome: 'Holambra', preco: 'R$ 159,90 ou 2x R$ 80', tipo: 'Excursão 1 dia', link: '/holambra' },
-      { nome: 'Foz do Iguaçu', preco: '12x R$ 115', tipo: '4 noites', link: '/foz-iguacu' },
-      { nome: 'Balneário Camboriú', preco: '12x R$ 115', tipo: '4 noites', link: '/balneario-camboriu' },
-      { nome: 'Gramado', preco: '12x R$ 115', tipo: '4 noites', link: '/gramado' },
-      { nome: 'Bonito', preco: '12x R$ 167', tipo: '5 noites', link: '/bonito' },
-      { nome: 'Caldas Novas', preco: '12x R$ 145', tipo: '5 noites', link: '/caldas-novas' },
-      { nome: 'Santiago do Chile', preco: '10x R$ 397', tipo: 'Réveillon 4 noites', link: '/santiago-chile' },
-      { nome: 'Buenos Aires', preco: '10x R$ 374', tipo: 'Réveillon 4 noites', link: '/buenos-aires' }
+    var DEFAULT_PACOTES = [
+      {id:'holambra',nome:'Holambra',tipo:'Excursão 1 dia',data_texto:'25 de outubro (domingo)',preco_texto:'R$ 159,90 à vista ou 2x R$ 80 no PIX (reserva 30%)',inclui:'Micro-ônibus executivo, guia credenciado, seguro Hero, kit Tourmix e sorteios',destaque:'Cidade das Flores',ativo:true},
+      {id:'foz',nome:'Foz do Iguaçu',tipo:'Pacote 4 noites',data_texto:'Saídas OUT/NOV/DEZ',preco_texto:'A partir de 12x de R$ 115 · 3% off à vista',inclui:'Aéreo SP, Hotel San Juan (café), transfer e seguro',destaque:'Cataratas',ativo:true},
+      {id:'camboriu',nome:'Balneário Camboriú',tipo:'Pacote 4 noites',data_texto:'Saídas OUT/NOV/DEZ',preco_texto:'A partir de 12x de R$ 115 · 3% off à vista',inclui:'Aéreo SP, Hotel Rosenbrock (café), transfer e seguro',destaque:'Praia',ativo:true},
+      {id:'gramado',nome:'Gramado',tipo:'Pacote 4 noites',data_texto:'Saídas SET/OUT/NOV/DEZ',preco_texto:'A partir de 12x de R$ 115 · 3% off à vista',inclui:'Aéreo SP, Life Hotel Infinity (café), transfer e seguro',destaque:'Serra',ativo:true},
+      {id:'bonito',nome:'Bonito',tipo:'Pacote 5 noites',data_texto:'Saídas NOV/DEZ',preco_texto:'A partir de 12x de R$ 167 · 3% off à vista',inclui:'Aéreo SP, Bonito Ecotel (café), transfer e seguro',destaque:'Rios cristalinos',ativo:true},
+      {id:'caldas',nome:'Caldas Novas',tipo:'Pacote 5 noites',data_texto:'Saídas OUT/NOV',preco_texto:'A partir de 12x de R$ 145 · 3% off à vista',inclui:'Aéreo SP, resort (café e jantar), transfer e seguro',destaque:'Águas termais',ativo:true},
+      {id:'santiago',nome:'Santiago do Chile',tipo:'Réveillon 4 noites',data_texto:'Saída 30/DEZ · São Paulo',preco_texto:'A partir de 10x de R$ 397 · 3% off à vista',inclui:'Aéreo SP, Hotel Panamericano (café), transfer, city tour e seguro',destaque:'Réveillon 2026/2027',ativo:true},
+      {id:'buenosaires',nome:'Buenos Aires',tipo:'Réveillon 4 noites',data_texto:'Saída 30/DEZ · São Paulo',preco_texto:'A partir de 10x de R$ 374 · 3% off à vista',inclui:'Aéreo SP, Hotel El Conquistador (café), transfer, city tour e seguro',destaque:'Réveillon 2026/2027',ativo:true}
     ];
 
-    var LABELS = { natureza: 'Natureza', praia: 'Praia', romantico: 'Romântico', relax: 'Relax', cultural: 'Cultural' };
+    var LABELS = { natureza:'Natureza', praia:'Praia', romantico:'Romântico', relax:'Relax', cultural:'Cultural' };
     var allRows = [];
+    var pacotesRows = [];
     var NOTES_KEY = 'tourmix_admin_notes';
     var LEADS_KEY = 'tourmix_admin_leads';
+    var sbClient = null;
 
     function isAdmin(email) {
       if (!email) return false;
       return ADMIN_EMAILS.indexOf(String(email).toLowerCase().trim()) !== -1;
     }
-
     function toast(msg) {
       var el = document.getElementById('toast');
       el.textContent = msg;
       el.classList.add('show');
-      setTimeout(function () { el.classList.remove('show'); }, 2200);
+      setTimeout(function(){ el.classList.remove('show'); }, 2200);
     }
-
     function fmtDate(iso) {
-      try {
-        return new Date(iso).toLocaleString('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' });
-      } catch (e) { return iso || '—'; }
+      try { return new Date(iso).toLocaleString('pt-BR',{day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit'}); }
+      catch(e){ return iso||'—'; }
     }
-
     function scoresText(scores) {
       if (!scores || typeof scores !== 'object') return '—';
-      return Object.keys(LABELS).map(function (k) {
-        return LABELS[k] + ': ' + (scores[k] || 0);
-      }).join(' · ');
+      return Object.keys(LABELS).map(function(k){ return LABELS[k]+': '+(scores[k]||0); }).join(' · ');
     }
-
     function getSb() {
+      if (sbClient) return sbClient;
       var cfg = window.TOURMIX_AUTH || {};
       if (!window.supabase || !cfg.supabaseUrl || !cfg.supabaseAnonKey) return null;
       if (String(cfg.supabaseAnonKey).indexOf('COLE_AQUI') !== -1) return null;
-      // avisa se for service_role (inseguro / pode falhar)
-      try {
-        var payload = JSON.parse(atob(cfg.supabaseAnonKey.split('.')[1].replace(/-/g, '+').replace(/_/g, '/')));
-        if (payload.role === 'service_role') {
-          console.error('TOURMIX: você colocou a service_role no auth-config.js. Use a chave anon public.');
-        }
-      } catch (e) {}
-      return window.supabase.createClient(cfg.supabaseUrl, cfg.supabaseAnonKey, {
+      if (String(cfg.supabaseUrl).indexOf('http') !== 0) return null;
+      sbClient = window.supabase.createClient(cfg.supabaseUrl, cfg.supabaseAnonKey, {
         auth: { persistSession: true, autoRefreshToken: true, storage: window.localStorage }
       });
+      return sbClient;
+    }
+    function setPkgMsg(t, ok) {
+      var el = document.getElementById('pkgMsg');
+      el.textContent = t || '';
+      el.className = ok === false ? 'err' : (ok ? 'ok' : 'muted');
     }
 
-    /* Tabs */
-    document.getElementById('tabs').addEventListener('click', function (e) {
+    /* tabs */
+    document.getElementById('tabs').addEventListener('click', function(e){
       var btn = e.target.closest('.tab');
       if (!btn) return;
-      document.querySelectorAll('.tab').forEach(function (t) { t.classList.remove('active'); });
-      document.querySelectorAll('.panel').forEach(function (p) { p.classList.remove('active'); });
+      document.querySelectorAll('.tab').forEach(function(t){ t.classList.remove('active'); });
+      document.querySelectorAll('.panel').forEach(function(p){ p.classList.remove('active'); });
       btn.classList.add('active');
-      document.getElementById('tab-' + btn.getAttribute('data-tab')).classList.add('active');
+      document.getElementById('tab-'+btn.getAttribute('data-tab')).classList.add('active');
+      if (btn.getAttribute('data-tab') === 'editor') loadPacotes();
     });
 
-    /* Pacotes */
-    function renderPacotes() {
-      document.getElementById('listaPacotes').innerHTML = PACOTES.map(function (p) {
-        return '<div class="pkg-item"><div><strong>' + p.nome + '</strong><div class="muted">' + p.tipo + ' · ' + p.preco + '</div></div><a href="' + p.link + '" target="_blank">Abrir</a></div>';
+    /* ===== EDITOR PACOTES ===== */
+    function renderEditor() {
+      var box = document.getElementById('editorLista');
+      if (!pacotesRows.length) {
+        box.innerHTML = '<p class="muted">Nenhum pacote no banco. Clique em <strong>Criar pacotes padrão</strong>.</p>';
+        return;
+      }
+      box.innerHTML = pacotesRows.map(function(p, idx){
+        return (
+          '<div class="pkg-row" data-idx="'+idx+'">' +
+            '<header>' +
+              '<div><strong>'+p.nome+'</strong> <span class="badge '+(p.ativo===false?'badge-off':'')+'">'+(p.ativo===false?'Inativo':'Ativo')+'</span>' +
+              '<div class="meta">'+ (p.tipo||'') +' · id: <code>'+p.id+'</code></div></div>' +
+              '<div class="pkg-actions">' +
+                '<button type="button" class="btn btn-ghost btn-edit" data-idx="'+idx+'">Editar</button>' +
+              '</div>' +
+            '</header>' +
+            '<div class="meta"><strong>Data:</strong> '+(p.data_texto||'—')+'</div>' +
+            '<div class="meta"><strong>Preço:</strong> '+(p.preco_texto||'—')+'</div>' +
+            '<div class="edit-box" id="edit-'+idx+'">' +
+              '<label class="field">Nome</label><input type="text" data-f="nome" value="'+(p.nome||'').replace(/"/g,'&quot;')+'">' +
+              '<label class="field">Tipo</label><input type="text" data-f="tipo" value="'+(p.tipo||'').replace(/"/g,'&quot;')+'">' +
+              '<label class="field">Data / saídas</label><input type="text" data-f="data_texto" value="'+(p.data_texto||'').replace(/"/g,'&quot;')+'">' +
+              '<label class="field">Preço</label><input type="text" data-f="preco_texto" value="'+(p.preco_texto||'').replace(/"/g,'&quot;')+'">' +
+              '<label class="field">O que inclui</label><textarea data-f="inclui">'+(p.inclui||'')+'</textarea>' +
+              '<label class="field">Destaque</label><input type="text" data-f="destaque" value="'+(p.destaque||'').replace(/"/g,'&quot;')+'">' +
+              '<label class="field">Ativo</label><select data-f="ativo"><option value="true"'+(p.ativo!==false?' selected':'')+'>Sim</option><option value="false"'+(p.ativo===false?' selected':'')+'>Não</option></select>' +
+              '<div class="pkg-actions" style="margin-top:0.75rem">' +
+                '<button type="button" class="btn btn-primary btn-save" data-idx="'+idx+'">Salvar alterações</button>' +
+                '<button type="button" class="btn btn-ghost btn-cancel" data-idx="'+idx+'">Cancelar</button>' +
+              '</div>' +
+            '</div>' +
+          '</div>'
+        );
       }).join('');
-      document.getElementById('msgPronta').value =
-        'Olá! Sou da TOURMIX ✈️\n\nTemos pacotes nacionais e Réveillon em Santiago/Buenos Aires.\nPosso te enviar opções com valores e datas?\n\nWhatsApp: (11) 91484-1404';
     }
 
-    /* Stats + table */
+    async function loadPacotes() {
+      setPkgMsg('Carregando pacotes…');
+      var sb = getSb();
+      if (!sb) {
+        setPkgMsg('Supabase não configurado (auth-config.js).', false);
+        pacotesRows = [];
+        renderEditor();
+        return;
+      }
+      try {
+        var res = await sb.from('pacotes').select('*').order('nome');
+        if (res.error) throw res.error;
+        pacotesRows = res.data || [];
+        setPkgMsg(pacotesRows.length ? (pacotesRows.length + ' pacote(s) no banco.') : 'Tabela vazia.');
+        renderEditor();
+      } catch (e) {
+        setPkgMsg('Erro: ' + (e.message || e) + ' — rode o SQL supabase-pacotes.sql no Supabase.', false);
+        pacotesRows = [];
+        renderEditor();
+      }
+    }
+
+    async function seedPacotes() {
+      var sb = getSb();
+      if (!sb) return setPkgMsg('Supabase não configurado.', false);
+      setPkgMsg('Criando pacotes padrão…');
+      try {
+        var res = await sb.from('pacotes').upsert(DEFAULT_PACOTES, { onConflict: 'id' });
+        if (res.error) throw res.error;
+        toast('Pacotes criados/atualizados');
+        await loadPacotes();
+      } catch (e) {
+        setPkgMsg('Falha ao criar: ' + (e.message || e) + ' — confira se a tabela existe e se você está logado.', false);
+      }
+    }
+
+    async function savePacote(idx) {
+      var box = document.getElementById('edit-' + idx);
+      if (!box) return;
+      var p = Object.assign({}, pacotesRows[idx]);
+      box.querySelectorAll('[data-f]').forEach(function(el){
+        var f = el.getAttribute('data-f');
+        var v = el.value;
+        if (f === 'ativo') p.ativo = (v === 'true');
+        else p[f] = v;
+      });
+      p.updated_at = new Date().toISOString();
+      var sb = getSb();
+      if (!sb) return setPkgMsg('Sem Supabase.', false);
+      setPkgMsg('Salvando ' + p.nome + '…');
+      try {
+        var res = await sb.from('pacotes').upsert(p, { onConflict: 'id' });
+        if (res.error) throw res.error;
+        // limpa cache do site
+        try { localStorage.removeItem('tourmix_pacotes_cache_v1'); } catch(e){}
+        toast('Salvo: ' + p.nome);
+        await loadPacotes();
+      } catch (e) {
+        setPkgMsg('Erro ao salvar: ' + (e.message || e), false);
+      }
+    }
+
+    document.getElementById('editorLista').addEventListener('click', function(e){
+      var edit = e.target.closest('.btn-edit');
+      var save = e.target.closest('.btn-save');
+      var cancel = e.target.closest('.btn-cancel');
+      if (edit) {
+        var i = edit.getAttribute('data-idx');
+        document.querySelectorAll('.edit-box').forEach(function(b){ b.classList.remove('open'); });
+        var box = document.getElementById('edit-' + i);
+        if (box) box.classList.add('open');
+      }
+      if (cancel) {
+        var j = cancel.getAttribute('data-idx');
+        var b2 = document.getElementById('edit-' + j);
+        if (b2) b2.classList.remove('open');
+      }
+      if (save) savePacote(Number(save.getAttribute('data-idx')));
+    });
+    document.getElementById('btnReloadPkg').addEventListener('click', loadPacotes);
+    document.getElementById('btnSeedPkg').addEventListener('click', seedPacotes);
+
+    /* stats / perfis */
     function renderStats(rows) {
-      var counts = { natureza: 0, praia: 0, romantico: 0, relax: 0, cultural: 0 };
-      var week = 0;
-      var lim = Date.now() - 7 * 24 * 3600 * 1000;
-      rows.forEach(function (r) {
+      var counts = { natureza:0, praia:0, romantico:0, relax:0, cultural:0 };
+      var week = 0, lim = Date.now() - 7*24*3600*1000;
+      rows.forEach(function(r){
         if (counts[r.perfil_key] !== undefined) counts[r.perfil_key]++;
         if (r.created_at && new Date(r.created_at).getTime() >= lim) week++;
       });
       document.getElementById('stats').innerHTML =
-        '<div class="stat"><strong>' + rows.length + '</strong><span>Total perfis</span></div>' +
-        '<div class="stat"><strong>' + week + '</strong><span>Últimos 7 dias</span></div>' +
-        '<div class="stat"><strong>' + counts.praia + '</strong><span>Praia</span></div>' +
-        '<div class="stat"><strong>' + counts.romantico + '</strong><span>Romântico</span></div>' +
-        '<div class="stat"><strong>' + counts.natureza + '</strong><span>Natureza</span></div>';
-
-      var recent = rows.slice().sort(function (a, b) {
-        return new Date(b.created_at || 0) - new Date(a.created_at || 0);
-      }).slice(0, 6);
-      document.getElementById('recentList').innerHTML = recent.length
-        ? recent.map(function (r) {
-            return '<div class="note-item"><strong>' + (r.nome || 'Sem nome') + '</strong> · ' +
-              (r.perfil_titulo || r.perfil_key || '—') +
-              '<small>' + fmtDate(r.created_at) + (r.email ? ' · ' + r.email : '') + '</small></div>';
-          }).join('')
-        : 'Nenhum perfil ainda.';
+        '<div class="stat"><strong>'+rows.length+'</strong><span>Total perfis</span></div>' +
+        '<div class="stat"><strong>'+week+'</strong><span>Últimos 7 dias</span></div>' +
+        '<div class="stat"><strong>'+counts.praia+'</strong><span>Praia</span></div>' +
+        '<div class="stat"><strong>'+counts.romantico+'</strong><span>Romântico</span></div>' +
+        '<div class="stat"><strong>'+counts.natureza+'</strong><span>Natureza</span></div>';
+      var recent = rows.slice().sort(function(a,b){ return new Date(b.created_at||0)-new Date(a.created_at||0); }).slice(0,6);
+      document.getElementById('recentList').innerHTML = recent.length ? recent.map(function(r){
+        return '<div class="note-item"><strong>'+(r.nome||'Sem nome')+'</strong> · '+(r.perfil_titulo||r.perfil_key||'—')+
+          '<small>'+fmtDate(r.created_at)+(r.email?' · '+r.email:'')+'</small></div>';
+      }).join('') : 'Nenhum perfil ainda.';
     }
-
     function filtered() {
-      var q = (document.getElementById('busca').value || '').toLowerCase().trim();
+      var q = (document.getElementById('busca').value||'').toLowerCase().trim();
       var f = document.getElementById('filtroPerfil').value;
-      return allRows.filter(function (r) {
+      return allRows.filter(function(r){
         if (f && r.perfil_key !== f) return false;
         if (!q) return true;
-        return ((r.nome || '') + ' ' + (r.email || '')).toLowerCase().indexOf(q) !== -1;
+        return ((r.nome||'')+' '+(r.email||'')).toLowerCase().indexOf(q) !== -1;
       });
     }
-
     function renderTable() {
       var rows = filtered();
       renderStats(allRows);
@@ -347,227 +460,154 @@ tr:hover td{background:rgba(255,255,255,.03)}
       var vazio = document.getElementById('vazio');
       if (!rows.length) { vazio.classList.remove('hidden'); return; }
       vazio.classList.add('hidden');
-      rows.forEach(function (r) {
+      rows.forEach(function(r){
         var tr = document.createElement('tr');
-        tr.innerHTML =
-          '<td>' + fmtDate(r.created_at) + '</td>' +
-          '<td>' + (r.nome || '—') + '</td>' +
-          '<td>' + (r.email || '—') + '</td>' +
-          '<td><span class="badge">' + (r.perfil_titulo || r.perfil_key || '—') + '</span></td>' +
-          '<td class="muted">' + scoresText(r.scores) + '</td>';
+        tr.innerHTML = '<td>'+fmtDate(r.created_at)+'</td><td>'+(r.nome||'—')+'</td><td>'+(r.email||'—')+'</td>' +
+          '<td><span class="badge">'+(r.perfil_titulo||r.perfil_key||'—')+'</span></td><td class="muted">'+scoresText(r.scores)+'</td>';
         tbody.appendChild(tr);
       });
     }
-
     async function loadPerfis() {
       var errEl = document.getElementById('loadErr');
       errEl.classList.add('hidden');
       var sb = getSb();
       if (!sb) {
-        errEl.textContent = 'Supabase não configurado. Coloque a chave ANON em auth-config.js';
+        errEl.textContent = 'Supabase não configurado.';
         errEl.classList.remove('hidden');
-        allRows = [];
-        renderTable();
-        return;
+        allRows = []; renderTable(); return;
       }
       try {
-        var res = await sb.from('perfis_viajante').select('*').order('created_at', { ascending: false });
+        var res = await sb.from('perfis_viajante').select('*').order('created_at',{ascending:false});
         if (res.error) throw res.error;
         allRows = res.data || [];
         renderTable();
       } catch (e) {
-        errEl.textContent = 'Erro ao carregar: ' + (e.message || e);
+        errEl.textContent = 'Erro: '+(e.message||e);
         errEl.classList.remove('hidden');
-        allRows = [];
-        renderTable();
+        allRows = []; renderTable();
       }
     }
-
     document.getElementById('busca').addEventListener('input', renderTable);
     document.getElementById('filtroPerfil').addEventListener('change', renderTable);
     document.getElementById('btnRefresh').addEventListener('click', loadPerfis);
-
-    document.getElementById('btnExport').addEventListener('click', function () {
+    document.getElementById('btnExport').addEventListener('click', function(){
       var rows = filtered();
-      var csv = 'data,nome,email,perfil,scores\n' + rows.map(function (r) {
-        return [r.created_at, r.nome, r.email, r.perfil_titulo || r.perfil_key, scoresText(r.scores)]
-          .map(function (c) { return '"' + String(c || '').replace(/"/g, '""') + '"'; }).join(',');
+      var csv = 'data,nome,email,perfil,scores\n'+rows.map(function(r){
+        return [r.created_at,r.nome,r.email,r.perfil_titulo||r.perfil_key,scoresText(r.scores)]
+          .map(function(c){ return '"'+String(c||'').replace(/"/g,'""')+'"'; }).join(',');
       }).join('\n');
       var a = document.createElement('a');
-      a.href = 'data:text/csv;charset=utf-8,' + encodeURIComponent(csv);
-      a.download = 'tourmix-perfis.csv';
-      a.click();
-      toast('CSV exportado');
+      a.href = 'data:text/csv;charset=utf-8,'+encodeURIComponent(csv);
+      a.download = 'tourmix-perfis.csv'; a.click(); toast('CSV exportado');
     });
-
-    document.getElementById('btnCopyMsg').addEventListener('click', function () {
+    document.getElementById('btnCopyMsg').addEventListener('click', function(){
       var t = document.getElementById('msgPronta');
-      t.select();
-      navigator.clipboard.writeText(t.value).then(function () { toast('Mensagem copiada'); });
+      navigator.clipboard.writeText(t.value).then(function(){ toast('Mensagem copiada'); });
     });
+    document.getElementById('msgPronta').value = 'Olá! Sou da TOURMIX ✈️\n\nTemos pacotes nacionais e Réveillon em Santiago/Buenos Aires.\nPosso te enviar opções?\n\nWhatsApp: (11) 91484-1404';
 
-    /* Notes */
-    function loadNotes() {
-      var list = [];
-      try { list = JSON.parse(localStorage.getItem(NOTES_KEY) || '[]'); } catch (e) {}
-      document.getElementById('listaNotas').innerHTML = list.length
-        ? list.map(function (n, i) {
-            return '<div class="note-item">' + n.text + '<small>' + n.when +
-              ' · <a href="#" data-del-note="' + i + '">apagar</a></small></div>';
-          }).join('')
-        : '<p class="muted">Nenhuma nota ainda.</p>';
+    /* notes / leads */
+    function loadNotes(){
+      var list=[]; try{ list=JSON.parse(localStorage.getItem(NOTES_KEY)||'[]'); }catch(e){}
+      document.getElementById('listaNotas').innerHTML = list.length ? list.map(function(n,i){
+        return '<div class="note-item">'+n.text+'<small>'+n.when+' · <a href="#" data-del-note="'+i+'">apagar</a></small></div>';
+      }).join('') : '<p class="muted">Nenhuma nota.</p>';
     }
-    document.getElementById('btnAddNota').addEventListener('click', function () {
-      var text = (document.getElementById('notaTexto').value || '').trim();
-      if (!text) return;
-      var list = [];
-      try { list = JSON.parse(localStorage.getItem(NOTES_KEY) || '[]'); } catch (e) {}
-      list.unshift({ text: text, when: new Date().toLocaleString('pt-BR') });
-      localStorage.setItem(NOTES_KEY, JSON.stringify(list.slice(0, 100)));
-      document.getElementById('notaTexto').value = '';
-      loadNotes();
-      toast('Nota salva');
+    document.getElementById('btnAddNota').addEventListener('click', function(){
+      var text=(document.getElementById('notaTexto').value||'').trim(); if(!text) return;
+      var list=[]; try{ list=JSON.parse(localStorage.getItem(NOTES_KEY)||'[]'); }catch(e){}
+      list.unshift({text:text,when:new Date().toLocaleString('pt-BR')});
+      localStorage.setItem(NOTES_KEY, JSON.stringify(list.slice(0,100)));
+      document.getElementById('notaTexto').value=''; loadNotes(); toast('Nota salva');
     });
-    document.getElementById('listaNotas').addEventListener('click', function (e) {
-      var a = e.target.closest('[data-del-note]');
-      if (!a) return;
-      e.preventDefault();
-      var list = [];
-      try { list = JSON.parse(localStorage.getItem(NOTES_KEY) || '[]'); } catch (e2) {}
-      list.splice(Number(a.getAttribute('data-del-note')), 1);
-      localStorage.setItem(NOTES_KEY, JSON.stringify(list));
-      loadNotes();
+    document.getElementById('listaNotas').addEventListener('click', function(e){
+      var a=e.target.closest('[data-del-note]'); if(!a) return; e.preventDefault();
+      var list=[]; try{ list=JSON.parse(localStorage.getItem(NOTES_KEY)||'[]'); }catch(e2){}
+      list.splice(Number(a.getAttribute('data-del-note')),1);
+      localStorage.setItem(NOTES_KEY, JSON.stringify(list)); loadNotes();
     });
-
-    /* Leads */
-    function loadLeads() {
-      var list = [];
-      try { list = JSON.parse(localStorage.getItem(LEADS_KEY) || '[]'); } catch (e) {}
-      document.getElementById('listaLeads').innerHTML = list.length
-        ? list.map(function (n, i) {
-            return '<div class="note-item"><strong>' + n.nome + '</strong> · ' + n.contato +
-              '<br>' + n.interesse +
-              '<small>' + n.when + ' · <a href="#" data-del-lead="' + i + '">apagar</a></small></div>';
-          }).join('')
-        : '<p class="muted">Nenhum lead registrado.</p>';
+    function loadLeads(){
+      var list=[]; try{ list=JSON.parse(localStorage.getItem(LEADS_KEY)||'[]'); }catch(e){}
+      document.getElementById('listaLeads').innerHTML = list.length ? list.map(function(n,i){
+        return '<div class="note-item"><strong>'+n.nome+'</strong> · '+n.contato+'<br>'+n.interesse+
+          '<small>'+n.when+' · <a href="#" data-del-lead="'+i+'">apagar</a></small></div>';
+      }).join('') : '<p class="muted">Nenhum lead.</p>';
     }
-    document.getElementById('btnAddLead').addEventListener('click', function () {
-      var nome = (document.getElementById('leadNome').value || '').trim();
-      var contato = (document.getElementById('leadContato').value || '').trim();
-      var interesse = (document.getElementById('leadInteresse').value || '').trim();
-      if (!nome && !contato) return;
-      var list = [];
-      try { list = JSON.parse(localStorage.getItem(LEADS_KEY) || '[]'); } catch (e) {}
-      list.unshift({ nome: nome || '—', contato: contato || '—', interesse: interesse || '—', when: new Date().toLocaleString('pt-BR') });
-      localStorage.setItem(LEADS_KEY, JSON.stringify(list.slice(0, 200)));
-      document.getElementById('leadNome').value = '';
-      document.getElementById('leadContato').value = '';
-      document.getElementById('leadInteresse').value = '';
-      loadLeads();
-      toast('Lead salvo');
+    document.getElementById('btnAddLead').addEventListener('click', function(){
+      var nome=(document.getElementById('leadNome').value||'').trim();
+      var contato=(document.getElementById('leadContato').value||'').trim();
+      var interesse=(document.getElementById('leadInteresse').value||'').trim();
+      if(!nome&&!contato) return;
+      var list=[]; try{ list=JSON.parse(localStorage.getItem(LEADS_KEY)||'[]'); }catch(e){}
+      list.unshift({nome:nome||'—',contato:contato||'—',interesse:interesse||'—',when:new Date().toLocaleString('pt-BR')});
+      localStorage.setItem(LEADS_KEY, JSON.stringify(list.slice(0,200)));
+      document.getElementById('leadNome').value=''; document.getElementById('leadContato').value=''; document.getElementById('leadInteresse').value='';
+      loadLeads(); toast('Lead salvo');
     });
-    document.getElementById('listaLeads').addEventListener('click', function (e) {
-      var a = e.target.closest('[data-del-lead]');
-      if (!a) return;
-      e.preventDefault();
-      var list = [];
-      try { list = JSON.parse(localStorage.getItem(LEADS_KEY) || '[]'); } catch (e2) {}
-      list.splice(Number(a.getAttribute('data-del-lead')), 1);
-      localStorage.setItem(LEADS_KEY, JSON.stringify(list));
-      loadLeads();
+    document.getElementById('listaLeads').addEventListener('click', function(e){
+      var a=e.target.closest('[data-del-lead]'); if(!a) return; e.preventDefault();
+      var list=[]; try{ list=JSON.parse(localStorage.getItem(LEADS_KEY)||'[]'); }catch(e2){}
+      list.splice(Number(a.getAttribute('data-del-lead')),1);
+      localStorage.setItem(LEADS_KEY, JSON.stringify(list)); loadLeads();
     });
-    document.getElementById('btnExportLeads').addEventListener('click', function () {
-      var list = [];
-      try { list = JSON.parse(localStorage.getItem(LEADS_KEY) || '[]'); } catch (e) {}
-      var csv = 'quando,nome,contato,interesse\n' + list.map(function (r) {
-        return [r.when, r.nome, r.contato, r.interesse].map(function (c) {
-          return '"' + String(c || '').replace(/"/g, '""') + '"';
-        }).join(',');
+    document.getElementById('btnExportLeads').addEventListener('click', function(){
+      var list=[]; try{ list=JSON.parse(localStorage.getItem(LEADS_KEY)||'[]'); }catch(e){}
+      var csv='quando,nome,contato,interesse\n'+list.map(function(r){
+        return [r.when,r.nome,r.contato,r.interesse].map(function(c){return '"'+String(c||'').replace(/"/g,'""')+'"';}).join(',');
       }).join('\n');
-      var a = document.createElement('a');
-      a.href = 'data:text/csv;charset=utf-8,' + encodeURIComponent(csv);
-      a.download = 'tourmix-leads.csv';
-      a.click();
-      toast('Leads exportados');
+      var a=document.createElement('a'); a.href='data:text/csv;charset=utf-8,'+encodeURIComponent(csv);
+      a.download='tourmix-leads.csv'; a.click(); toast('Leads exportados');
     });
 
-    /* Sistema status */
-    function renderStatus(user) {
-      var cfg = window.TOURMIX_AUTH || {};
-      var key = cfg.supabaseAnonKey || '';
-      var role = '?';
-      try {
-        role = JSON.parse(atob(key.split('.')[1].replace(/-/g, '+').replace(/_/g, '/'))).role;
-      } catch (e) {}
-      var rows = [
-        ['Supabase URL', cfg.supabaseUrl ? 'ok' : 'faltando'],
-        ['Chave configurada', key && key.indexOf('COLE_AQUI') === -1 ? 'ok' : 'faltando'],
-        ['Tipo da chave (JWT role)', role + (role === 'service_role' ? ' ⚠️ TROQUE pela anon' : role === 'anon' ? ' ✓' : '')],
-        ['Usuário logado', user && user.email ? user.email : 'não'],
-        ['É admin?', user && isAdmin(user.email) ? 'sim' : 'não']
+    function renderStatus(user){
+      var cfg=window.TOURMIX_AUTH||{};
+      var key=cfg.supabaseAnonKey||'';
+      var role='?';
+      try{ role=JSON.parse(atob(key.split('.')[1].replace(/-/g,'+').replace(/_/g,'/'))).role; }catch(e){}
+      var rows=[
+        ['Supabase URL', cfg.supabaseUrl&&String(cfg.supabaseUrl).indexOf('http')===0?'ok':'faltando https://'],
+        ['Chave configurada', key&&key.indexOf('COLE_AQUI')===-1?'ok':'faltando'],
+        ['Tipo da chave', role+(role==='anon'?' ✓':role==='service_role'?' ⚠️ use anon':'')],
+        ['Usuário', user&&user.email?user.email:'não'],
+        ['É admin?', user&&isAdmin(user.email)?'sim':'não']
       ];
-      document.getElementById('statusBox').innerHTML = rows.map(function (r) {
-        return '<div class="status-row"><span>' + r[0] + '</span><span>' + r[1] + '</span></div>';
+      document.getElementById('statusBox').innerHTML=rows.map(function(r){
+        return '<div class="status-row"><span>'+r[0]+'</span><span>'+r[1]+'</span></div>';
       }).join('');
-      document.getElementById('adminList').innerHTML = ADMIN_EMAILS.map(function (e) {
-        return '<li>' + e + '</li>';
-      }).join('');
+      document.getElementById('adminList').innerHTML=ADMIN_EMAILS.map(function(e){return '<li>'+e+'</li>';}).join('');
     }
 
-    async function sair() {
-      if (window.TourmixAuth) await window.TourmixAuth.signOut();
-      location.reload();
-    }
+    async function sair(){ if(window.TourmixAuth) await window.TourmixAuth.signOut(); location.reload(); }
     document.getElementById('btnSair').addEventListener('click', sair);
     document.getElementById('btnSair2').addEventListener('click', sair);
 
-    document.getElementById('btnGateLogin').addEventListener('click', async function () {
-      var msg = document.getElementById('gateMsg');
-      msg.textContent = 'Entrando…';
-      msg.className = 'muted';
-      try {
-        if (!window.TourmixAuth) throw new Error('auth.js não carregou');
-        await window.TourmixAuth.signIn(
-          document.getElementById('gateEmail').value,
-          document.getElementById('gateSenha').value
-        );
+    document.getElementById('btnGateLogin').addEventListener('click', async function(){
+      var msg=document.getElementById('gateMsg');
+      msg.textContent='Entrando…'; msg.className='muted';
+      try{
+        if(!window.TourmixAuth) throw new Error('auth.js não carregou');
+        await window.TourmixAuth.signIn(document.getElementById('gateEmail').value, document.getElementById('gateSenha').value);
         location.reload();
-      } catch (err) {
-        var t = (err && err.message) || 'Falha no login';
-        if (t.indexOf('Invalid login') !== -1) t = 'E-mail ou senha incorretos.';
-        if (t.indexOf('Email not confirmed') !== -1) t = 'Confirme o e-mail no Supabase (Authentication → Users) ou desative “Confirm email”.';
-        if (t.indexOf('COLE_AQUI') !== -1 || t.indexOf('configurado') !== -1) t = 'Configure a chave ANON em auth-config.js';
-        msg.textContent = t;
-        msg.className = 'err';
+      }catch(err){
+        var t=(err&&err.message)||'Falha no login';
+        if(t.indexOf('Invalid login')!==-1) t='E-mail ou senha incorretos.';
+        if(t.indexOf('Email not confirmed')!==-1) t='Confirme o e-mail ou desative Confirm email no Supabase.';
+        msg.textContent=t; msg.className='err';
       }
     });
 
-    async function boot() {
-      renderPacotes();
-      loadNotes();
-      loadLeads();
-
-      var user = null;
-      try {
-        if (window.TourmixAuth) user = await window.TourmixAuth.getUser();
-      } catch (e) {}
-
+    async function boot(){
+      loadNotes(); loadLeads();
+      var user=null;
+      try{ if(window.TourmixAuth) user=await window.TourmixAuth.getUser(); }catch(e){}
       renderStatus(user);
-
-      if (!user) {
-        document.getElementById('gate').classList.remove('hidden');
-        return;
-      }
+      if(!user){ document.getElementById('gate').classList.remove('hidden'); return; }
       document.getElementById('gate').classList.add('hidden');
-      if (!isAdmin(user.email)) {
-        document.getElementById('denied').classList.remove('hidden');
-        return;
-      }
+      if(!isAdmin(user.email)){ document.getElementById('denied').classList.remove('hidden'); return; }
       document.getElementById('painel').classList.remove('hidden');
-      document.getElementById('topActions').style.display = 'flex';
+      document.getElementById('topActions').style.display='flex';
       loadPerfis();
     }
-
     boot();
   })();
   </script>
