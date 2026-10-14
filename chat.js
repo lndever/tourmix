@@ -16,35 +16,35 @@ EMPRESA
    Roteiro: Portal, Campo de Flores (opcional), Moinho Gigante, Rua dos Guarda-Chuvas, Deck do Amor, Parque Van Gogh
    Página: Holambra
 
-2) Foz do Iguaçu — 4 noites — saídas OUT/NOV/DEZ
-   Preço: a partir de 12x R$ 115 · 3% off à vista
-   Inclui: aéreo SP, Hotel San Juan (café), transfer, seguro · taxas de embarque não inclusas
-   Ideias: Cataratas lado BR, Parque das Aves, cidade, compras; lado AR é opcional/extra
+2) Foz do Iguaçu — 4 noites — Férias Janeiro 2027 — saídas 09 a 27/JAN
+   Preço: a partir de 10x R$ 178 · 3% off à vista
+   Inclui: aéreo SP, Bogari Hotel (café), transfer, seguro · taxas de embarque não inclusas
    Página: Foz do Iguaçu
 
-3) Balneário Camboriú — 4 noites — saídas OUT/NOV/DEZ
-   Preço: a partir de 12x R$ 115 · 3% off à vista
-   Inclui: aéreo SP, Hotel Rosenbrock (café), transfer, seguro · taxas de embarque não inclusas
-   Ideias: praia central, orla, Cristo Luz, teleférico Unipraias
+3) Balneário Camboriú — 4 noites — Férias Janeiro 2027 — saídas 10 a 24/JAN
+   Preço: a partir de 10x R$ 184 · 3% off à vista
+   Inclui: aéreo SP, Hotel Negrini (café), transfer, seguro · taxas de embarque não inclusas
    Página: Balneário Camboriú
 
-4) Gramado — 4 noites — saídas SET/OUT/NOV/DEZ
-   Preço: a partir de 12x R$ 115 · 3% off à vista
-   Inclui: aéreo SP, Life Hotel Infinity (café), transfer, seguro · taxas de embarque não inclusas
-   Ideias: Rua Coberta, Mini Mundo, Canela, chocolate, serra
+4) Gramado — 4 noites — Férias Janeiro 2027 — saídas 03 a 20/JAN
+   Preço: a partir de 10x R$ 181 · 3% off à vista
+   Inclui: aéreo SP, Life Hotel Infinity (café), transfer, ingresso 1 dia Bustour, seguro · taxas de embarque não inclusas
    Página: Gramado
 
-5) Bonito — 5 noites — saídas NOV/DEZ
-   Preço: a partir de 12x R$ 167 · 3% off à vista
-   Inclui: aéreo SP, Bonito Ecotel (café), transfer, seguro · taxas de embarque não inclusas
-   Ideias: flutuação / rio, gruta, natureza, ecoturismo
+5) Bonito — 5 noites — Férias Janeiro 2027 — saídas 10, 17 e 24/JAN
+   Preço: a partir de 10x R$ 253 · 3% off à vista
+   Inclui: aéreo SP voo direto, Bonito Ecotel (café), transfer, seguro · taxas de embarque não inclusas
    Página: Bonito
 
-6) Caldas Novas — 5 noites — saídas OUT/NOV
-   Preço: a partir de 12x R$ 145 · 3% off à vista
-   Inclui: aéreo SP, resort (café e jantar), transfer, seguro · taxas de embarque não inclusas
-   Ideias: águas termais, relax no resort
+6) Caldas Novas — 4 noites — Férias Janeiro 2027 — saídas 03, 10, 17 e 24/JAN
+   Preço: a partir de 10x R$ 186 · 3% off à vista
+   Inclui: aéreo SP voo direto, Encontro das Águas Thermas Resort (café), transfer, seguro · taxas de embarque não inclusas
    Página: Caldas Novas
+
+6b) Florianópolis — 4 noites — Férias Janeiro 2027 — saídas 13, 20 e 27/JAN
+   Preço: a partir de 10x R$ 186 · 3% off à vista
+   Inclui: aéreo SP, Porto da Ilha Hotel (café), transfer, seguro · taxas de embarque não inclusas
+   Página: Florianópolis
 
 7) Santiago do Chile — Réveillon 2026/2027 — 4 noites — saída 30/DEZ de São Paulo
    Preço: a partir de 10x R$ 397 · 3% off à vista
@@ -98,7 +98,7 @@ TIPOS DE PEDIDO:
 FORMATO:
 - Sem tabela Markdown, sem HTML, sem código.
 - Sem slug feio (/foz-iguacu, caldas-novas…).
-- Nomes bonitos: Foz do Iguaçu, Balneário Camboriú, Caldas Novas, Santiago do Chile, Buenos Aires, Holambra, Gramado, Bonito.
+- Nomes bonitos: Foz do Iguaçu, Balneário Camboriú, Caldas Novas, Santiago do Chile, Buenos Aires, Holambra, Gramado, Bonito, Florianópolis.
 - **negrito** nos nomes.
 - Preço/hotel/data só do catálogo.
 - Feche com pergunta ou convite (WhatsApp (11) 91484-1404).
