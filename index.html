@@ -684,6 +684,67 @@
     <script src="i18n.js"></script>
     <script src="script.js"></script>
     <script src="assistente-widget.js"></script>
+
+    <script>
+(function () {
+  var tipo = 'pacotes';
+  var tabs = document.querySelectorAll('.tmx-tab');
+  var destino = document.getElementById('tmxDestino');
+
+  function filtrarDestinos(tipoSel) {
+    if (!destino) return;
+    Array.prototype.forEach.call(destino.options, function (opt) {
+      if (!opt.value) {
+        opt.hidden = false;
+        opt.disabled = false;
+        return;
+      }
+      var t = opt.getAttribute('data-tipo') || 'pacotes';
+      var mostrar = true;
+      if (tipoSel === 'excursoes') {
+        mostrar = (t === 'excursoes');
+      } else if (tipoSel === 'pacotes') {
+        mostrar = (t === 'pacotes');
+      }
+      opt.hidden = !mostrar;
+      opt.disabled = !mostrar;
+    });
+    destino.value = '';
+  }
+
+  tabs.forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      tabs.forEach(function (b) { b.classList.remove('active'); });
+      btn.classList.add('active');
+      tipo = btn.getAttribute('data-tipo') || 'pacotes';
+      filtrarDestinos(tipo);
+    });
+  });
+
+  filtrarDestinos('pacotes');
+
+  var form = document.getElementById('tmxBuscaForm');
+  if (!form) return;
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var dest = destino ? destino.value : '';
+
+    if (tipo === 'perfil') {
+      window.location.href = '/descubra-perfil';
+      return;
+    }
+    if (tipo === 'excursoes') {
+      window.location.href = dest ? '/' + dest : '/excursoes';
+      return;
+    }
+    if (tipo === 'destinos') {
+      window.location.href = dest ? '/' + dest : '/#destinos';
+      return;
+    }
+    window.location.href = dest ? '/' + dest : '/#pacotes';
+  });
+})();
+</script>
 </body>
 </html>
 </body>
