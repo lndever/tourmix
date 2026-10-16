@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Templo Zu Lai + Rota do Vinho | TOURMIX</title>
+    <link rel="icon" type="image/png" href="LOGO-05.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+
+        body { font-family: 'Montserrat', system-ui, sans-serif; background: #fffdf5; }
+        h1, h2, h3, h4 { font-family: 'Montserrat', system-ui, sans-serif; font-weight: 700; }
+
+        .pacote-hero {
+            height: 52vh;
+            min-height: 340px;
+            background: url('https://images.pexels.com/photos/1123260/pexels-photo-1123260.jpeg?auto=compress&cs=tinysrgb&w=1600') center/cover no-repeat;
+            position: relative;
+            display: flex;
+            align-items: flex-end;
+            color: white;
+        }
+        .pacote-hero-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(30,20,0,0.8), rgba(0,0,0,0.25));
+        }
+        .pacote-hero-content {
+            position: relative;
+            z-index: 2;
+            padding: 2.5rem 1.2rem;
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .voltar {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+            padding: 0.55rem 1.3rem;
+            background: rgba(255,255,255,0.92);
+            color: #a16207;
+            font-weight: 600;
+            font-size: 0.9rem;
+            border-radius: 50px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.12);
+        }
+        .voltar:hover { background: #fff; }
+
+        .badge-data {
+            display: inline-block;
+            background: #eab308;
+            color: #1c1917;
+            font-size: 0.78rem;
+            font-weight: 700;
+            padding: 0.35rem 0.9rem;
+            border-radius: 50px;
+            margin-bottom: 0.75rem;
+        }
+
+        .pacote-detalhes { padding: 3.5rem 0 4.5rem; }
+        .pacote-grid {
+            display: grid;
+            grid-template-columns: 1.55fr 1fr;
+            gap: 2.5rem;
+            align-items: start;
+        }
+
+        .intro-text {
+            color: #57534e;
+            line-height: 1.75;
+            margin-bottom: 1.8rem;
+            font-size: 1.02rem;
+        }
+
+        /* ACCORDION */
+        .acordeon { display: flex; flex-direction: column; gap: 0.75rem; }
+
+        .acordeon-item {
+            background: #fff;
+            border: 1px solid #f5e6b8;
+            border-radius: 14px;
+            overflow: hidden;
+            box-shadow: 0 4px 14px rgba(161, 98, 7, 0.06);
+        }
+
+        .acordeon-btn {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            padding: 1.1rem 1.25rem;
+            background: #fffbeb;
+            border: none;
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 1rem;
+            font-weight: 700;
+            color: #854d0e;
+            text-align: left;
+            transition: background 0.2s ease;
+        }
+        .acordeon-btn:hover { background: #fef3c7; }
+
+        .acordeon-btn .seta {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: #eab308;
+            color: #1c1917;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.85rem;
+            flex-shrink: 0;
+            transition: transform 0.25s ease;
+        }
+
+        .acordeon-item.aberto .acordeon-btn .seta {
+            transform: rotate(180deg);
+        }
+
+        .acordeon-corpo {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.35s ease;
+        }
+        .acordeon-item.aberto .acordeon-corpo {
+            max-height: 800px;
+        }
+        .acordeon-inner {
+            padding: 0 1.25rem 1.3rem;
+            color: #44403c;
+            font-size: 0.95rem;
+            line-height: 1.65;
+        }
+
+        .lista-limpa {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .lista-limpa li {
+            padding: 0.55rem 0;
+            padding-left: 1.6rem;
+            position: relative;
+            border-bottom: 1px solid #f5f5f4;
+        }
+        .lista-limpa li:last-child { border-bottom: none; }
+        .lista-limpa li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #eab308;
+            font-weight: 700;
+        }
+
+        .ponto {
+            display: flex;
+            gap: 0.75rem;
+            padding: 0.7rem 0;
+            border-bottom: 1px solid #f5f5f4;
+        }
+        .ponto:last-child { border-bottom: none; }
+        .ponto strong {
+            color: #a16207;
+            min-width: 70px;
+            font-size: 0.9rem;
+        }
+
+        /* SIDE CARD */
+        .info-box {
+            background: #fff;
+            border-radius: 16px;
+            padding: 1.8rem;
+            box-shadow: 0 10px 30px rgba(161, 98, 7, 0.1);
+            border: 1px solid #f5e6b8;
+            position: sticky;
+            top: 90px;
+        }
+        .info-box .label {
+            font-size: 0.85rem;
+            color: #78716c;
+            margin-bottom: 0.25rem;
+        }
+        .info-box .preco {
+            font-size: 1.75rem;
+            color: #a16207;
+            font-weight: 800;
+            margin-bottom: 0.25rem;
+        }
+        .info-box .preco small {
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: #78716c;
+        }
+        .info-box .pix {
+            font-size: 0.95rem;
+            color: #57534e;
+            margin-bottom: 1.2rem;
+        }
+        .info-box .meta {
+            font-size: 0.9rem;
+            color: #44403c;
+            margin-bottom: 0.4rem;
+        }
+        .info-box .meta strong { color: #a16207; }
+
+        .btn-amarelo {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            padding: 0.95rem 1.2rem;
+            background: #eab308;
+            color: #1c1917;
+            font-weight: 700;
+            font-size: 0.95rem;
+            border-radius: 50px;
+            border: none;
+            cursor: pointer;
+            text-decoration: none;
+            margin-top: 1.2rem;
+            transition: background 0.2s ease, transform 0.2s ease;
+        }
+        .btn-amarelo:hover {
+            background: #ca8a04;
+            transform: translateY(-2px);
+            color: #1c1917;
+        }
+
+        .obs {
+            font-size: 0.8rem;
+            color: #78716c;
+            line-height: 1.55;
+            margin-top: 1rem;
+            padding-top: 0.9rem;
+            border-top: 1px solid #f5e6b8;
+        }
+
+        .logo-img { height: 48px; width: auto; }
+
+        @media (max-width: 900px) {
+            .pacote-grid { grid-template-columns: 1fr; }
+            .info-box { position: static; }
+            .pacote-hero { height: 42vh; }
+        }
+    
+        .footer-bottom { text-align: center; padding: 1.25rem 0; }
+        .footer-logo { height: 42px; width: auto; display: block; margin: 0 auto 0.55rem; }
+        .footer-cnpj { font-size: 0.85rem; opacity: 0.85; margin-bottom: 0.35rem; }
+
+    </style>
+</head>
+<body>
+    <header class="header scrolled" id="header">
+        <div class="container header-inner">
+            <a href="/" class="logo">
+                <img src="LOGO-05.png" alt="TOURMIX" class="logo-img" onerror="this.onerror=null;this.src='LOGO-01.png'">
+            </a>
+            <nav class="nav" id="nav">
+                <a href="/">Início</a>
+                <a href="/#pacotes">Pacotes</a>
+                <a href="/excursoes">Excursões</a>
+                <a href="/#contato" class="btn-nav">Fale Conosco</a>
+            </nav>
+            <button class="menu-toggle" id="menuToggle" aria-label="Abrir menu">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </header>
+
+    <section class="pacote-hero">
+        <div class="pacote-hero-overlay"></div>
+        <div class="pacote-hero-content">
+            <a href="/excursoes" class="voltar">← Voltar para excursões</a>
+            <div>
+                <span class="badge-data">Excursão · 05 de dezembro</span>
+            </div>
+            <p class="eyebrow" style="color:#eab308;margin:0 0 0.4rem;">Excursão de 1 dia · Cultura e gastronomia</p>
+            <h1 style="font-size:clamp(1.8rem,4vw,2.6rem);margin:0 0 0.4rem;">Templo Zu Lai + Rota do Vinho</h1>
+            <p style="opacity:0.92;font-size:1.05rem;margin:0;">Sábado, 05 de dezembro de 2026</p>
+        </div>
+    </section>
+
+    <section class="pacote-detalhes">
+        <div class="container pacote-grid">
+            <div>
+                <p class="intro-text">Combine tranquilidade, cultura, gastronomia e bons momentos em um único passeio. Começamos no Templo Zu Lai — arquitetura oriental, jardins e contemplação — e seguimos para São Roque, a Terra do Vinho, com vinícolas, gastronomia local e lugares cheios de charme.</p>
+                <div class="acordeon">
+
+                    <div class="acordeon-item">
+                        <button type="button" class="acordeon-btn" aria-expanded="false">
+                            <span>Roteiro</span>
+                            <span class="acordeon-icon">+</span>
+                        </button>
+                        <div class="acordeon-panel">
+                            
+            <ul style="margin:0;padding-left:1.1rem;color:#57534e;line-height:1.7;">
+                <li>Templo Zu Lai</li>
+                <li>Vinícola XV de Novembro</li>
+                <li>Vinícola Canguera</li>
+                <li>Restaurante Villa Almeida</li>
+                <li>Vila Don Patto</li>
+                <li>Quinta do Olivardo</li>
+                <li>Empório Santa Cecília</li>
+            </ul>
+                        </div>
+                    </div>
+                    <div class="acordeon-item">
+                        <button type="button" class="acordeon-btn" aria-expanded="false">
+                            <span>Embarques</span>
+                            <span class="acordeon-icon">+</span>
+                        </button>
+                        <div class="acordeon-panel">
+                            
+            <div class="pontos">
+                <div class="ponto"><strong>Capão Redondo</strong><span>06h20</span></div>
+                <div class="ponto"><strong>Barra Funda</strong><span>07h40</span></div>
+            </div>
+                        </div>
+                    </div>
+                    <div class="acordeon-item">
+                        <button type="button" class="acordeon-btn" aria-expanded="false">
+                            <span>Sobre a experiência</span>
+                            <span class="acordeon-icon">+</span>
+                        </button>
+                        <div class="acordeon-panel">
+                            
+            <p style="margin:0;color:#57534e;line-height:1.7;">
+                Uma experiência para sair da rotina, conhecer novos lugares e aproveitar o melhor de cada parada,
+                com a organização e o cuidado da Tourmix BR. Viajar faz bem — vem fazer esse mix com a gente!
+            </p>
+                        </div>
+                    </div>
+                    <div class="acordeon-item">
+                        <button type="button" class="acordeon-btn" aria-expanded="false">
+                            <span>Reserva e valores</span>
+                            <span class="acordeon-icon">+</span>
+                        </button>
+                        <div class="acordeon-panel">
+                            
+            <p style="margin:0;color:#57534e;line-height:1.7;">
+                Consulte valores e disponibilidade e reserve seu lugar pelo WhatsApp.
+                PIX: CNPJ 65.063.425/0001-95
+            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <aside class="info-box">
+                <p class="label">Investimento a partir de</p>
+                <div class="preco">Consulte <small>no WhatsApp</small></div>
+                <p class="pix">Valores e vagas sob consulta</p>
+
+                <p class="meta"><strong>Data:</strong> 05 de dezembro de 2026 (Sábado)</p>
+                <p class="meta"><strong>Duração:</strong> 1 dia</p>
+                <p class="meta"><strong>Saídas:</strong> Capão Redondo 06h20 · Barra Funda 07h40</p>
+                <p class="meta"><strong>Reserva:</strong> Consulte no WhatsApp</p>
+
+                <a href="https://wa.me/5511914841404?text=Ol%C3%A1%21%20Quero%20reservar%20a%20excurs%C3%A3o%20Templo%20Zu%20Lai%20%2B%20Rota%20do%20Vinho%20%2805/12%29." target="_blank" class="btn-amarelo">
+                    Reservar no WhatsApp
+                </a>
+
+                <p class="obs">
+                    Tourmix Br — Viagens e Experiências.<br>
+                    Vagas limitadas. Valores sujeitos a disponibilidade.
+                </p>
+            </aside>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container footer-bottom">
+            <a href="/"><img src="LOGO-05.png" alt="TOURMIX" class="footer-logo" onerror="this.onerror=null;this.src='LOGO-01.png'"></a>
+            <p class="footer-cnpj notranslate" translate="no">CADASTUR / CNPJ 65.063.425/0001-95</p>
+            <p>© 2026 Tourmix Br. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+
+    <a href="https://wa.me/5511914841404?text=Ol%C3%A1%21%20Quero%20reservar%20a%20excurs%C3%A3o%20Templo%20Zu%20Lai%20%2B%20Rota%20do%20Vinho%20%2805/12%29." target="_blank" class="whatsapp-float" aria-label="WhatsApp">
+        <svg viewBox="0 0 32 32" width="28" height="28"><path fill="white" d="M16.004 0C7.174 0 0 7.176 0 16.004c0 2.824.74 5.566 2.146 7.99L0 32l8.202-2.15A15.92 15.92 0 0 0 16.004 32C24.83 32 32 24.824 32 16.004 32 7.176 24.83 0 16.004 0zm0 29.24a13.18 13.18 0 0 1-6.72-1.846l-.482-.286-4.868 1.276 1.3-4.748-.314-.498A13.18 13.18 0 0 1 2.76 16.004c0-7.3 5.94-13.24 13.244-13.24 7.3 0 13.24 5.94 13.24 13.24 0 7.304-5.94 13.236-13.24 13.236z"/></svg>
+    </a>
+
+    <script src="script.js"></script>
+    <script src="theme.js"></script>
+    <script>
+    document.querySelectorAll('.acordeon-btn').forEach(function(btn){
+      btn.addEventListener('click', function(){
+        var item = btn.parentElement;
+        var open = item.classList.contains('open');
+        document.querySelectorAll('.acordeon-item').forEach(function(i){ i.classList.remove('open'); i.querySelector('.acordeon-btn').setAttribute('aria-expanded','false'); });
+        if(!open){ item.classList.add('open'); btn.setAttribute('aria-expanded','true'); }
+      });
+    });
+    </script>
+</body>
+</html>
