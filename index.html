@@ -747,6 +747,128 @@
   });
 })();
 </script>
+    <!-- TOURMIX COOKIES - cole antes de </body> em todas as páginas principais -->
+<div id="tmxCookieBanner" class="tmx-cookie" role="dialog" aria-live="polite" aria-label="Aviso de cookies" hidden>
+  <div class="tmx-cookie-inner">
+    <div class="tmx-cookie-text">
+      <strong>🍪 Cookies</strong>
+      <p>
+        Usamos cookies para melhorar sua experiência, lembrar preferências (como tema) e entender como o site é usado.
+        Ao continuar, você concorda com o uso de cookies.
+      </p>
+    </div>
+    <div class="tmx-cookie-actions">
+      <button type="button" class="tmx-cookie-btn tmx-cookie-accept" id="tmxCookieAccept">Aceitar</button>
+      <button type="button" class="tmx-cookie-btn tmx-cookie-reject" id="tmxCookieReject">Só essenciais</button>
+    </div>
+  </div>
+</div>
+
+<style>
+.tmx-cookie {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 99999;
+  padding: 1rem;
+  pointer-events: none;
+}
+.tmx-cookie[hidden] { display: none !important; }
+.tmx-cookie-inner {
+  pointer-events: auto;
+  max-width: 920px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  flex-wrap: wrap;
+  background: #0f172a;
+  color: #f1f5f9;
+  border: 1px solid rgba(34, 211, 238, 0.25);
+  border-radius: 18px;
+  padding: 1.1rem 1.25rem;
+  box-shadow: 0 -8px 40px rgba(0,0,0,0.35);
+}
+.tmx-cookie-text {
+  flex: 1 1 280px;
+  min-width: 0;
+}
+.tmx-cookie-text strong {
+  display: block;
+  font-size: 0.95rem;
+  margin-bottom: 0.35rem;
+  color: #eab308;
+}
+.tmx-cookie-text p {
+  margin: 0;
+  font-size: 0.86rem;
+  line-height: 1.5;
+  color: #cbd5e1;
+}
+.tmx-cookie-actions {
+  display: flex;
+  gap: 0.55rem;
+  flex-wrap: wrap;
+}
+.tmx-cookie-btn {
+  border: none;
+  border-radius: 999px;
+  padding: 0.7rem 1.2rem;
+  font-weight: 700;
+  font-size: 0.88rem;
+  font-family: inherit;
+  cursor: pointer;
+  transition: transform 0.15s, filter 0.15s;
+}
+.tmx-cookie-btn:hover { transform: translateY(-1px); }
+.tmx-cookie-accept {
+  background: #eab308;
+  color: #0f172a;
+}
+.tmx-cookie-reject {
+  background: transparent;
+  color: #e2e8f0;
+  border: 1px solid #475569;
+}
+@media (max-width: 600px) {
+  .tmx-cookie-inner { padding: 1rem; }
+  .tmx-cookie-actions { width: 100%; }
+  .tmx-cookie-btn { flex: 1; text-align: center; }
+}
+</style>
+
+<script>
+(function () {
+  var KEY = 'tmx_cookie_consent';
+  var banner = document.getElementById('tmxCookieBanner');
+  if (!banner) return;
+
+  function hide() {
+    banner.hidden = true;
+  }
+  function show() {
+    banner.hidden = false;
+  }
+
+  try {
+    if (!localStorage.getItem(KEY)) show();
+  } catch (e) {
+    show();
+  }
+
+  function save(value) {
+    try { localStorage.setItem(KEY, value); } catch (e) {}
+    hide();
+  }
+
+  var accept = document.getElementById('tmxCookieAccept');
+  var reject = document.getElementById('tmxCookieReject');
+  if (accept) accept.addEventListener('click', function () { save('accepted'); });
+  if (reject) reject.addEventListener('click', function () { save('essential'); });
+})();
+</script>
+<!-- /TOURMIX COOKIES -->
 </body>
 </html>
 </body>
