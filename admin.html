@@ -123,6 +123,7 @@ tr:hover td{background:rgba(255,255,255,.025)}
         <button class="tab" data-tab="perfis">Perfis</button>
         <button class="tab" data-tab="atendimento">Atendimento</button>
         <button class="tab" data-tab="atalhos">Atalhos</button>
+        <button class="tab" data-tab="cookies">Cookies</button>
         <button class="tab" data-tab="sistema">Sistema</button>
       </div>
 
@@ -221,6 +222,48 @@ tr:hover td{background:rgba(255,255,255,.025)}
       </section>
 
       <!-- SISTEMA -->
+      
+      <section class="panel" id="tab-cookies">
+        <div class="grid-2">
+          <div class="card">
+            <h2><i>🍪</i> Resumo de cookies</h2>
+            <div id="cookieStats" class="muted">Carregando…</div>
+          </div>
+          <div class="card">
+            <h2><i>ℹ</i> Como funciona</h2>
+            <p class="muted" style="line-height:1.7">
+              Cada clique em <strong>Aceitar</strong> ou <strong>Só essenciais</strong> no site gera um registro.
+              Não identifica nome da pessoa, a menos que ela esteja logada (aí aparece o e-mail).
+            </p>
+            <p class="muted" style="margin-top:.75rem;line-height:1.7">
+              É preciso criar a tabela <span class="chip">cookie_consents</span> no Supabase
+              (arquivo <span class="chip">supabase-cookies.sql</span>).
+            </p>
+          </div>
+        </div>
+        <div class="card" style="margin-top:1rem">
+          <div style="display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap;margin-bottom:.75rem">
+            <h2 style="margin:0"><i>📋</i> Últimos registros</h2>
+            <button class="btn btn-ghost" type="button" id="btnReloadCookies">Atualizar</button>
+          </div>
+          <div style="overflow:auto">
+            <table>
+              <thead>
+                <tr>
+                  <th>Data</th>
+                  <th>Escolha</th>
+                  <th>Página</th>
+                  <th>E-mail (se logado)</th>
+                </tr>
+              </thead>
+              <tbody id="cookieTableBody">
+                <tr><td colspan="4" class="muted">Carregando…</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
       <section class="panel" id="tab-sistema">
         <div class="grid-2">
           <div class="card">
@@ -560,6 +603,55 @@ tr:hover td{background:rgba(255,255,255,.025)}
       loadPerfis();
     }
     boot();
+  
+    async function loadCookieConsents() {
+      var stats = document.getElementById('cookieStats');
+      var body = document.getElementById('cookieTableBody');
+      if (!stats || !body) return;
+      var sb = getSb();
+      if (!sb) {
+        stats.innerHTML = 'Supabase não configurado (auth-config.js).';
+        body.innerHTML = '<tr><td colspan="4" class="muted">Configure o Supabase para ver os registros.</td></tr>';
+        return;
+      }
+      try {
+        var res = await sb.from('cookie_consents').select('*').order('created_at', { ascending: false }).limit(100);
+        if (res.error) throw res.error;
+        var rows = res.data || [];
+        var accepted = rows.filter(function (r) { return r.choice === 'accepted'; }).length;
+        var essential = rows.filter(function (r) { return r.choice === 'essential'; }).length;
+        stats.innerHTML =
+          '<div style="display:flex;gap:1rem;flex-wrap:wrap">' +
+          '<div><div class="muted" style="font-size:.75rem">Total (últimos 100)</div><strong style="font-size:1.4rem">' + rows.length + '</strong></div>' +
+          '<div><div class="muted" style="font-size:.75rem">Aceitaram</div><strong style="font-size:1.4rem;color:var(--yellow)">' + accepted + '</strong></div>' +
+          '<div><div class="muted" style="font-size:.75rem">Só essenciais</div><strong style="font-size:1.4rem">' + essential + '</strong></div>' +
+          '</div>';
+        if (!rows.length) {
+          body.innerHTML = '<tr><td colspan="4" class="muted">Nenhum registro ainda. Aceite cookies no site para testar.</td></tr>';
+          return;
+        }
+        body.innerHTML = rows.map(function (r) {
+          var d = r.created_at ? new Date(r.created_at).toLocaleString('pt-BR') : '—';
+          var choice = r.choice === 'accepted' ? 'Aceitou' : 'Só essenciais';
+          var page = r.page_path || '—';
+          var email = r.user_email || '—';
+          return '<tr><td>' + d + '</td><td>' + choice + '</td><td>' + page + '</td><td>' + email + '</td></tr>';
+        }).join('');
+      } catch (err) {
+        stats.innerHTML = 'Erro ao carregar. Crie a tabela cookie_consents no Supabase.';
+        body.innerHTML = '<tr><td colspan="4" class="muted">' + (err.message || err) + '</td></tr>';
+      }
+    }
+
+    var btnReloadCookies = document.getElementById('btnReloadCookies');
+    if (btnReloadCookies) btnReloadCookies.addEventListener('click', loadCookieConsents);
+
+    // carrega ao abrir a aba Cookies
+    document.getElementById('tabs').addEventListener('click', function (e) {
+      var btn = e.target.closest('.tab');
+      if (btn && btn.getAttribute('data-tab') === 'cookies') loadCookieConsents();
+    });
+
   })();
   </script>
 </body>
