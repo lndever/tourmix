@@ -47,6 +47,295 @@
             </div>
             
     </section>
+     <!-- TOURMIX BUSCA -->
+    <section class="tmx-busca" id="busca">
+        <div class="container">
+            <div class="tmx-busca-card">
+                <div class="tmx-busca-head">
+                    <p class="tmx-busca-eyebrow">Busca TOURMIX</p>
+                    <h2>Para onde você quer ir?</h2>
+                    <p class="tmx-busca-sub">Escolha o tipo de viagem e a gente te mostra as melhores opções do catálogo.</p>
+                </div>
+
+                <div class="tmx-busca-tabs" role="tablist">
+                    <button type="button" class="tmx-tab active" data-tipo="pacotes">
+                        <span class="tmx-tab-icon">✈</span>
+                        <span>Pacotes</span>
+                    </button>
+                    <button type="button" class="tmx-tab" data-tipo="excursoes">
+                        <span class="tmx-tab-icon">🚌</span>
+                        <span>Excursões</span>
+                    </button>
+                    <button type="button" class="tmx-tab" data-tipo="destinos">
+                        <span class="tmx-tab-icon">🌴</span>
+                        <span>Destinos</span>
+                    </button>
+                    <button type="button" class="tmx-tab" data-tipo="perfil">
+                        <span class="tmx-tab-icon">✨</span>
+                        <span>Meu perfil</span>
+                    </button>
+                </div>
+
+                <form class="tmx-busca-form" id="tmxBuscaForm" autocomplete="off">
+                    <div class="tmx-field">
+                        <label for="tmxOrigem">Saindo de</label>
+                        <input id="tmxOrigem" type="text" value="São Paulo" readonly>
+                    </div>
+                    <div class="tmx-field tmx-field-grow">
+                        <label for="tmxDestino">Destino</label>
+                        <select id="tmxDestino">
+                            <option value="">Qualquer destino</option>
+                            <option value="foz-iguacu">Foz do Iguaçu</option>
+                            <option value="balneario-camboriu">Balneário Camboriú</option>
+                            <option value="gramado">Gramado</option>
+                            <option value="bonito">Bonito</option>
+                            <option value="caldas-novas">Caldas Novas</option>
+                            <option value="florianopolis">Florianópolis</option>
+                            <option value="holambra">Holambra (excursão)</option>
+                            <option value="santiago-chile">Santiago do Chile</option>
+                            <option value="buenos-aires">Buenos Aires</option>
+                        </select>
+                    </div>
+                    <div class="tmx-field">
+                        <label for="tmxPeriodo">Quando</label>
+                        <select id="tmxPeriodo">
+                            <option value="">Flexível</option>
+                            <option value="jan">Janeiro</option>
+                            <option value="fev">Fevereiro</option>
+                            <option value="mar">Março</option>
+                            <option value="abr">Abril</option>
+                            <option value="mai">Maio</option>
+                            <option value="jun">Junho</option>
+                            <option value="jul">Julho</option>
+                            <option value="ago">Agosto</option>
+                            <option value="set">Setembro</option>
+                            <option value="out">Outubro</option>
+                            <option value="nov">Novembro</option>
+                            <option value="dez">Dezembro / Réveillon</option>
+                        </select>
+                    </div>
+                    <div class="tmx-field">
+                        <label for="tmxPessoas">Viajantes</label>
+                        <select id="tmxPessoas">
+                            <option value="1">1 pessoa</option>
+                            <option value="2" selected>2 pessoas</option>
+                            <option value="3">3 pessoas</option>
+                            <option value="4">4 pessoas</option>
+                            <option value="5+">5 ou mais</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="tmx-busca-btn">Buscar</button>
+                </form>
+                <p class="tmx-busca-hint">Ou fale com a gente no WhatsApp e montamos o roteiro sob medida.</p>
+            </div>
+        </div>
+    </section>
+
+    <style>
+    .tmx-busca {
+        position: relative;
+        z-index: 5;
+        margin-top: -2.5rem;
+        margin-bottom: 1rem;
+        padding: 0 0 2rem;
+    }
+    .tmx-busca-card {
+        background: #fff;
+        border-radius: 22px;
+        padding: 1.5rem 1.5rem 1.25rem;
+        box-shadow: 0 18px 50px rgba(15, 23, 42, 0.12);
+        border: 1px solid rgba(14, 116, 144, 0.08);
+    }
+    .tmx-busca-head { margin-bottom: 1.1rem; }
+    .tmx-busca-eyebrow {
+        font-size: 0.75rem;
+        font-weight: 700;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        color: #0e7490;
+        margin: 0 0 0.35rem;
+    }
+    .tmx-busca-head h2 {
+        margin: 0 0 0.35rem;
+        font-size: clamp(1.35rem, 2.5vw, 1.75rem);
+        color: #0f172a;
+        font-weight: 800;
+    }
+    .tmx-busca-sub {
+        margin: 0;
+        color: #64748b;
+        font-size: 0.95rem;
+    }
+    .tmx-busca-tabs {
+        display: flex;
+        gap: 0.5rem;
+        flex-wrap: wrap;
+        margin-bottom: 1rem;
+    }
+    .tmx-tab {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4rem;
+        border: 1px solid #e2e8f0;
+        background: #f8fafc;
+        color: #334155;
+        border-radius: 14px;
+        padding: 0.55rem 0.9rem;
+        font-weight: 600;
+        font-size: 0.88rem;
+        cursor: pointer;
+        transition: 0.2s ease;
+        font-family: inherit;
+    }
+    .tmx-tab:hover { border-color: #22d3ee; color: #0e7490; }
+    .tmx-tab.active {
+        background: linear-gradient(135deg, #0e7490, #0891b2);
+        border-color: transparent;
+        color: #fff;
+        box-shadow: 0 8px 20px rgba(14, 116, 144, 0.25);
+    }
+    .tmx-tab-icon { font-size: 1rem; line-height: 1; }
+    .tmx-busca-form {
+        display: grid;
+        grid-template-columns: 1.1fr 1.4fr 1fr 1fr auto;
+        gap: 0.65rem;
+        align-items: end;
+    }
+    .tmx-field {
+        display: flex;
+        flex-direction: column;
+        gap: 0.3rem;
+        min-width: 0;
+    }
+    .tmx-field label {
+        font-size: 0.72rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+        color: #64748b;
+    }
+    .tmx-field input,
+    .tmx-field select {
+        width: 100%;
+        border: 1px solid #e2e8f0;
+        background: #f8fafc;
+        border-radius: 12px;
+        padding: 0.85rem 0.9rem;
+        font-size: 0.95rem;
+        color: #0f172a;
+        font-family: inherit;
+        outline: none;
+        transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .tmx-field input:focus,
+    .tmx-field select:focus {
+        border-color: #22d3ee;
+        box-shadow: 0 0 0 3px rgba(34, 211, 238, 0.2);
+        background: #fff;
+    }
+    .tmx-busca-btn {
+        border: none;
+        border-radius: 12px;
+        padding: 0.9rem 1.4rem;
+        font-weight: 800;
+        font-size: 0.95rem;
+        background: #eab308;
+        color: #0f172a;
+        cursor: pointer;
+        font-family: inherit;
+        transition: transform 0.15s, box-shadow 0.15s;
+        white-space: nowrap;
+        height: 48px;
+    }
+    .tmx-busca-btn:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 10px 22px rgba(234, 179, 8, 0.35);
+    }
+    .tmx-busca-hint {
+        margin: 0.85rem 0 0;
+        font-size: 0.82rem;
+        color: #94a3b8;
+    }
+    @media (max-width: 900px) {
+        .tmx-busca { margin-top: -1.25rem; }
+        .tmx-busca-form { grid-template-columns: 1fr 1fr; }
+        .tmx-busca-btn { grid-column: 1 / -1; width: 100%; height: 50px; }
+    }
+    @media (max-width: 560px) {
+        .tmx-busca-form { grid-template-columns: 1fr; }
+        .tmx-busca-card { padding: 1.15rem; border-radius: 18px; }
+    }
+    [data-theme="dark"] .tmx-busca-card {
+        background: #1e293b;
+        border-color: #334155;
+        box-shadow: 0 18px 50px rgba(0,0,0,0.35);
+    }
+    [data-theme="dark"] .tmx-busca-head h2 { color: #f1f5f9; }
+    [data-theme="dark"] .tmx-busca-sub { color: #94a3b8; }
+    [data-theme="dark"] .tmx-tab {
+        background: #0f172a;
+        border-color: #334155;
+        color: #cbd5e1;
+    }
+    [data-theme="dark"] .tmx-tab.active {
+        background: linear-gradient(135deg, #0e7490, #0891b2);
+        color: #fff;
+    }
+    [data-theme="dark"] .tmx-field input,
+    [data-theme="dark"] .tmx-field select {
+        background: #0f172a;
+        border-color: #334155;
+        color: #f1f5f9;
+    }
+    </style>
+
+    <script>
+    (function () {
+      var tipo = 'pacotes';
+      var tabs = document.querySelectorAll('.tmx-tab');
+      tabs.forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          tabs.forEach(function (b) { b.classList.remove('active'); });
+          btn.classList.add('active');
+          tipo = btn.getAttribute('data-tipo') || 'pacotes';
+        });
+      });
+
+      var form = document.getElementById('tmxBuscaForm');
+      if (!form) return;
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        var dest = (document.getElementById('tmxDestino') || {}).value || '';
+        var periodo = (document.getElementById('tmxPeriodo') || {}).value || '';
+        var pessoas = (document.getElementById('tmxPessoas') || {}).value || '2';
+
+        if (tipo === 'perfil') {
+          window.location.href = '/descubra-perfil';
+          return;
+        }
+        if (tipo === 'excursoes') {
+          if (dest === 'holambra') { window.location.href = '/holambra'; return; }
+          window.location.href = '/excursoes';
+          return;
+        }
+        if (dest) {
+          window.location.href = '/' + dest;
+          return;
+        }
+        if (tipo === 'destinos') {
+          window.location.href = '/#destinos';
+          return;
+        }
+        // sem destino específico → pacotes + mensagem whatsapp opcional
+        var msg = 'Olá! Quero buscar uma viagem TOURMIX. Tipo: ' + tipo +
+          (periodo ? ', período: ' + periodo : '') +
+          ', viajantes: ' + pessoas + '.';
+        // primeiro mostra os pacotes; usuário pode falar no WA
+        window.location.href = '/#pacotes';
+      });
+    })();
+    </script>
+    <!-- /TOURMIX BUSCA -->
 
     <section class="section destinos" id="destinos">
         <div class="container">
