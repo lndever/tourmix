@@ -747,7 +747,7 @@
   });
 })();
 </script>
-    <!-- TOURMIX COOKIES - cole antes de </body> em todas as páginas principais -->
+   <!-- TOURMIX COOKIES - cole antes de </body> -->
 <div id="tmxCookieBanner" class="tmx-cookie" role="dialog" aria-live="polite" aria-label="Aviso de cookies" hidden>
   <div class="tmx-cookie-inner">
     <div class="tmx-cookie-text">
@@ -790,10 +790,7 @@
   padding: 1.1rem 1.25rem;
   box-shadow: 0 -8px 40px rgba(0,0,0,0.35);
 }
-.tmx-cookie-text {
-  flex: 1 1 280px;
-  min-width: 0;
-}
+.tmx-cookie-text { flex: 1 1 280px; min-width: 0; }
 .tmx-cookie-text strong {
   display: block;
   font-size: 0.95rem;
@@ -806,11 +803,7 @@
   line-height: 1.5;
   color: #cbd5e1;
 }
-.tmx-cookie-actions {
-  display: flex;
-  gap: 0.55rem;
-  flex-wrap: wrap;
-}
+.tmx-cookie-actions { display: flex; gap: 0.55rem; flex-wrap: wrap; }
 .tmx-cookie-btn {
   border: none;
   border-radius: 999px;
@@ -822,10 +815,7 @@
   transition: transform 0.15s, filter 0.15s;
 }
 .tmx-cookie-btn:hover { transform: translateY(-1px); }
-.tmx-cookie-accept {
-  background: #eab308;
-  color: #0f172a;
-}
+.tmx-cookie-accept { background: #eab308; color: #0f172a; }
 .tmx-cookie-reject {
   background: transparent;
   color: #e2e8f0;
@@ -844,21 +834,46 @@
   var banner = document.getElementById('tmxCookieBanner');
   if (!banner) return;
 
-  function hide() {
-    banner.hidden = true;
-  }
-  function show() {
-    banner.hidden = false;
-  }
+  function hide() { banner.hidden = true; }
+  function show() { banner.hidden = false; }
 
   try {
     if (!localStorage.getItem(KEY)) show();
-  } catch (e) {
-    show();
+  } catch (e) { show(); }
+
+  function getSb() {
+    try {
+      if (!window.supabase) return null;
+      var cfg = window.TOURMIX_AUTH || {};
+      if (!cfg.supabaseUrl || !cfg.supabaseAnonKey) return null;
+      if (String(cfg.supabaseAnonKey).indexOf('COLE_AQUI') !== -1) return null;
+      return window.supabase.createClient(cfg.supabaseUrl, cfg.supabaseAnonKey);
+    } catch (e) { return null; }
+  }
+
+  async function logConsent(choice) {
+    try {
+      var sb = getSb();
+      if (!sb) return;
+      var email = null;
+      try {
+        var sess = await sb.auth.getSession();
+        email = (sess && sess.data && sess.data.session && sess.data.session.user && sess.data.session.user.email) || null;
+      } catch (e) {}
+      await sb.from('cookie_consents').insert({
+        choice: choice,
+        page_path: (location.pathname || '/') + (location.hash || ''),
+        user_email: email,
+        user_agent: (navigator.userAgent || '').slice(0, 180)
+      });
+    } catch (e) {
+      // silencioso: banner fecha mesmo se o log falhar
+    }
   }
 
   function save(value) {
     try { localStorage.setItem(KEY, value); } catch (e) {}
+    logConsent(value);
     hide();
   }
 
