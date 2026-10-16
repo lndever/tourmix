@@ -83,18 +83,22 @@
                     </div>
                     <div class="tmx-field tmx-field-grow">
                         <label for="tmxDestino">Destino</label>
-                        <select id="tmxDestino">
-                            <option value="">Qualquer destino</option>
-                            <option value="foz-iguacu">Foz do Iguaçu</option>
-                            <option value="balneario-camboriu">Balneário Camboriú</option>
-                            <option value="gramado">Gramado</option>
-                            <option value="bonito">Bonito</option>
-                            <option value="caldas-novas">Caldas Novas</option>
-                            <option value="florianopolis">Florianópolis</option>
-                            <option value="holambra">Holambra (excursão)</option>
-                            <option value="santiago-chile">Santiago do Chile</option>
-                            <option value="buenos-aires">Buenos Aires</option>
-                        </select>
+                       <select id="tmxDestino">
+  <option value="">Qualquer destino</option>
+
+  <!-- PACOTES -->
+  <option value="foz-iguacu" data-tipo="pacotes">Foz do Iguaçu</option>
+  <option value="balneario-camboriu" data-tipo="pacotes">Balneário Camboriú</option>
+  <option value="gramado" data-tipo="pacotes">Gramado</option>
+  <option value="bonito" data-tipo="pacotes">Bonito</option>
+  <option value="caldas-novas" data-tipo="pacotes">Caldas Novas</option>
+  <option value="florianopolis" data-tipo="pacotes">Florianópolis</option>
+  <option value="santiago-chile" data-tipo="pacotes">Santiago do Chile</option>
+  <option value="buenos-aires" data-tipo="pacotes">Buenos Aires</option>
+
+  <!-- EXCURSÕES -->
+  <option value="holambra" data-tipo="excursoes">Holambra</option>
+</select>
                     </div>
                     <div class="tmx-field">
                         <label for="tmxPeriodo">Quando</label>
