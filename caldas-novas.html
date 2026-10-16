@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Caldas Novas | TOURMIX</title>
+    <link rel="icon" type="image/png" href="LOGO-05.png">
+    <link rel="apple-touch-icon" href="LOGO-05.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -90,6 +92,7 @@
             border-radius: 50px;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
             transition: all 0.3s ease;
+            text-decoration: none;
         }
         .voltar:hover {
             background: white;
@@ -113,24 +116,45 @@
             border-radius: 50px;
             margin-bottom: 0.8rem;
         }
+        .badge-reveillon {
+            display: inline-block;
+            background: #e11d48;
+            color: #fff;
+            font-size: 0.75rem;
+            font-weight: 700;
+            padding: 0.3rem 0.85rem;
+            border-radius: 50px;
+            margin-bottom: 0.8rem;
+            margin-right: 0.4rem;
+        }
         @media (max-width: 900px) {
             .pacote-grid { grid-template-columns: 1fr; }
             .info-box { position: static; }
             .pacote-hero { height: 45vh; }
         }
+        [data-theme="dark"] .info-box { background: #1e293b; color: #f1f5f9; }
+        [data-theme="dark"] .info-lista li { color: #cbd5e1; border-color: #334155; }
+        [data-theme="dark"] .roteiro-dia { background: #0f172a; }
+        [data-theme="dark"] .roteiro-dia p { color: #94a3b8; }
+        [data-theme="dark"] .obs { color: #94a3b8; border-color: #334155; }
+
+        .footer-bottom { text-align: center; padding: 1.25rem 0; }
+        .footer-logo { height: 42px; width: auto; display: block; margin: 0 auto 0.55rem; }
+        .footer-cnpj { font-size: 0.85rem; opacity: 0.85; margin-bottom: 0.35rem; }
+
     </style>
 </head>
 <body>
     <header class="header scrolled" id="header">
         <div class="container header-inner">
-            <a href="index.html" class="logo">
-                <span class="logo-text"><span class="logo-tour">Tour</span><span class="logo-mix">MIX</span></span>
+            <a href="/" class="logo">
+                <img src="LOGO-05.png" alt="TOURMIX" class="logo-img" onerror="this.onerror=null;this.src='LOGO-01.png'">
             </a>
             <nav class="nav" id="nav">
-                <a href="index.html">Início</a>
-                <a href="index.html#destinos">Destinos</a>
-                <a href="index.html#pacotes">Pacotes</a>
-                <a href="index.html#contato" class="btn-nav">Fale Conosco</a>
+                <a href="/">Início</a>
+                <a href="/#destinos">Destinos</a>
+                <a href="/#pacotes">Pacotes</a>
+                <a href="/#contato" class="btn-nav">Fale Conosco</a>
             </nav>
             <button class="menu-toggle" id="menuToggle" aria-label="Abrir menu">
                 <span></span><span></span><span></span>
@@ -141,7 +165,7 @@
     <section class="pacote-hero">
         <div class="pacote-hero-overlay"></div>
         <div class="pacote-hero-content container">
-            <a href="index.html#pacotes" class="voltar">← Voltar para pacotes</a>
+            <a href="/#pacotes" class="voltar">← Voltar para pacotes</a>
             <p class="eyebrow" style="color: #eab308;">Brasil · Goiás</p>
             <h1 style="font-size: 2.6rem; margin-bottom: 0.5rem;">Caldas Novas</h1>
             <p style="opacity: 0.9; font-size: 1.1rem;">5 noites · Baixa Temporada 2026</p>
@@ -153,20 +177,24 @@
             <div>
                 <span class="badge-promo">Agosto em 12x iguais</span>
                 <h2 style="color: #0e7490; margin-bottom: 1.5rem;">Sobre o pacote</h2>
-                <p style="color: #475569; margin-bottom: 1.5rem; line-height: 1.7;">
-                    O maior complexo de águas termais do mundo. Piscina quente, lazer em família
-                    e resort completo com café da manhã e jantar inclusos.
-                </p>
+                <p style="color: #475569; margin-bottom: 1.5rem; line-height: 1.7;">O maior complexo de águas termais do mundo. Piscina quente, lazer em família e resort completo com café da manhã e jantar inclusos.</p>
 
                 <h3 style="color: #0e7490; margin: 2rem 0 1rem;">Roteiro sugerido</h3>
-
                 <div class="roteiro-dia">
                     <h4>Dia 1 – Chegada</h4>
                     <p>Transfer até o Resort Encontro das Águas Thermas, check-in e início do lazer nas piscinas termais.</p>
                 </div>
                 <div class="roteiro-dia">
-                    <h4>Dias 2 a 4 – Resort all day</h4>
-                    <p>Dias livres para aproveitar as piscinas termais, estrutura do resort e atividades de lazer. Café da manhã e jantar inclusos.</p>
+                    <h4>Dia 2 – Resort</h4>
+                    <p>Dia livre para aproveitar as águas quentes, estrutura de lazer e descanso.</p>
+                </div>
+                <div class="roteiro-dia">
+                    <h4>Dia 3 – Lazer</h4>
+                    <p>Continue aproveitando o resort; passeios opcionais na cidade conforme preferência.</p>
+                </div>
+                <div class="roteiro-dia">
+                    <h4>Dia 4 – Livre</h4>
+                    <p>Mais um dia de termas e relax no complexo.</p>
                 </div>
                 <div class="roteiro-dia">
                     <h4>Dia 5 – Retorno</h4>
@@ -174,15 +202,13 @@
                 </div>
 
                 <h3 style="color: #0e7490; margin: 2rem 0 1rem;">Datas de saída</h3>
-                <p style="color: #475569; line-height: 1.7;">
-                    <strong>Outubro:</strong> 27<br>
-                    <strong>Novembro:</strong> 05 e 10
-                </p>
+                <p style="color: #475569; line-height: 1.7;"><strong>Outubro:</strong> 27<br>
+                    <strong>Novembro:</strong> 05 e 10</p>
             </div>
 
             <div class="info-box">
                 <p style="font-size: 0.9rem; color: #64748b;">A partir de</p>
-                <div class="preco">12x de R$ 145 <small>/ pessoa</small></div>
+                <div class="preco notranslate" translate="no">12x de R$ 145 <small>/ pessoa</small></div>
                 <p style="font-size: 0.9rem; color: #0e7490; font-weight: 600; margin-bottom: 1rem;">3% de desconto à vista</p>
 
                 <p><strong>Duração:</strong> 5 noites</p>
@@ -193,20 +219,17 @@
                 <h4 style="margin: 1.5rem 0 0.8rem; color: #0e7490;">O que está incluso</h4>
                 <ul class="info-lista">
                     <li>Aéreo saindo de São Paulo</li>
-                    <li>Resort Encontro das Águas Thermas</li>
-                    <li>Café da manhã e jantar</li>
+                    <li>Resort Encontro das Águas Thermas (café da manhã e jantar)</li>
                     <li>Transfer aeroporto / hotel / aeroporto</li>
                     <li>Seguro viagem</li>
                 </ul>
 
-                <a href="https://wa.me/5511914841404?text=Olá! Tenho interesse no pacote Caldas Novas (5 noites)" target="_blank" class="btn btn-primary btn-full" style="margin-top: 1rem;">
+                <a href="https://wa.me/5511914841404?text=Ol%C3%A1%21%20Tenho%20interesse%20no%20pacote%20Caldas%20Novas%20%285%20noites%29" target="_blank" class="btn btn-primary" style="display:block;text-align:center;margin-top:1rem;padding:0.9rem;border-radius:50px;font-weight:700;background:#eab308;color:#0f172a;text-decoration:none;">
                     Quero este pacote
                 </a>
 
                 <p class="obs">
-                    Valor calculado em 18/08 por pessoa em apartamento duplo. Base saída 27/OUT.
-                    Sujeito a reajuste e disponibilidade. Taxas de embarque não incluídas.
-                    Promoção válida para pagamentos até 31 de agosto.
+                    Valor calculado por pessoa em apartamento duplo. Sujeito a reajuste e disponibilidade. Taxas de embarque não incluídas.
                 </p>
             </div>
         </div>
@@ -214,13 +237,18 @@
 
     <footer class="footer">
         <div class="container footer-bottom">
-            <p>© 2026 TOURMIX. Todos os direitos reservados.</p>
+            <a href="/"><img src="LOGO-05.png" alt="TOURMIX" class="footer-logo" onerror="this.onerror=null;this.src='LOGO-01.png'"></a>
+            <p class="footer-cnpj notranslate" translate="no">CADASTUR / CNPJ 65.063.425/0001-95</p>
+            <p>© 2026 Tourmix Br. Todos os direitos reservados.</p>
         </div>
     </footer>
 
     <a href="https://wa.me/5511914841404" target="_blank" class="whatsapp-float" aria-label="WhatsApp">
-        <svg viewBox="0 0 32 32" width="28" height="28"><path fill="white" d="M16.004 0C7.174 0 0 7.176 0 16.004c0 2.824.74 5.566 2.146 7.99L0 32l8.202-2.15A15.92 15.92 0 0 0 16.004 32C24.83 32 32 24.824 32 16.004 32 7.176 24.83 0 16.004 0zm0 29.24a13.18 13.18 0 0 1-6.72-1.846l-.482-.286-4.868 1.276 1.3-4.748-.314-.498A13.18 13.18 0 0 1 2.76 16.004c0-7.3 5.94-13.24 13.244-13.24 7.3 0 13.24 5.94 13.24 13.24 0 7.304-5.94 13.236-13.236z"/></svg>
+        <svg viewBox="0 0 32 32" width="28" height="28"><path fill="white" d="M16.004 0C7.174 0 0 7.176 0 16.004c0 2.824.74 5.566 2.146 7.99L0 32l8.202-2.15A15.92 15.92 0 0 0 16.004 32C24.83 32 32 24.824 32 16.004 32 7.176 24.83 0 16.004 0zm0 29.24a13.18 13.18 0 0 1-6.72-1.846l-.482-.286-4.868 1.276 1.3-4.748-.314-.498A13.18 13.18 0 0 1 2.76 16.004c0-7.3 5.94-13.24 13.244-13.24 7.3 0 13.24 5.94 13.24 13.24 0 7.304-5.94 13.236-13.24 13.236z"/></svg>
     </a>
     <script src="script.js"></script>
+    <script src="theme.js"></script>
+    <script src="i18n.js"></script>
+    <script src="assistente-widget.js"></script>
 </body>
 </html>
