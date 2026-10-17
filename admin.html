@@ -123,6 +123,7 @@ tr:hover td{background:rgba(255,255,255,.025)}
         <button class="tab" data-tab="perfis">Perfis</button>
         <button class="tab" data-tab="atendimento">Atendimento</button>
         <button class="tab" data-tab="atalhos">Atalhos</button>
+        <button class="tab" data-tab="pedidos">Pedidos</button>
         <button class="tab" data-tab="cookies">Cookies</button>
         <button class="tab" data-tab="sistema">Sistema</button>
       </div>
@@ -223,6 +224,36 @@ tr:hover td{background:rgba(255,255,255,.025)}
 
       <!-- SISTEMA -->
       
+      
+      <section class="panel" id="tab-pedidos">
+        <div class="card">
+          <div style="display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap;margin-bottom:.75rem">
+            <h2 style="margin:0"><i>💳</i> Pedidos de excursões (PIX)</h2>
+            <button class="btn btn-ghost" type="button" id="btnReloadPedidos">Atualizar</button>
+          </div>
+          <p class="muted" style="margin-bottom:1rem">Somente excursões. Pacotes ainda não usam pagamento online.</p>
+          <div id="pedidoStats" class="muted" style="margin-bottom:1rem">—</div>
+          <div style="overflow:auto">
+            <table>
+              <thead>
+                <tr>
+                  <th>Pedido</th>
+                  <th>Data</th>
+                  <th>Excursão</th>
+                  <th>Cliente</th>
+                  <th>Qtd</th>
+                  <th>Total</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody id="pedidoTableBody">
+                <tr><td colspan="7" class="muted">Carregando…</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
       <section class="panel" id="tab-cookies">
         <div class="grid-2">
           <div class="card">
