@@ -400,6 +400,168 @@
       line-height: 1.35;
     }
 
+    
+    /* ========== ANIMAÇÕES ========== */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(18px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    @keyframes scaleIn {
+      from { opacity: 0; transform: scale(0.92); }
+      to { opacity: 1; transform: scale(1); }
+    }
+    @keyframes slideRight {
+      from { opacity: 0; transform: translateX(-12px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+    @keyframes softPulse {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(14, 116, 144, 0.25); }
+      50% { box-shadow: 0 0 0 10px rgba(14, 116, 144, 0); }
+    }
+    @keyframes shimmer {
+      0% { background-position: -200% 0; }
+      100% { background-position: 200% 0; }
+    }
+    @keyframes floatY {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-4px); }
+    }
+
+    .anim-fade-up {
+      animation: fadeUp 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
+    }
+    .anim-delay-1 { animation-delay: 0.08s; }
+    .anim-delay-2 { animation-delay: 0.16s; }
+    .anim-delay-3 { animation-delay: 0.24s; }
+    .anim-delay-4 { animation-delay: 0.32s; }
+
+    .topbar {
+      animation: fadeIn 0.4s ease both;
+    }
+    .profile-hero {
+      animation: fadeUp 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+    }
+    .avatar-xl {
+      animation: scaleIn 0.55s cubic-bezier(0.22, 1, 0.36, 1) 0.15s both;
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+    .avatar-xl:hover {
+      transform: scale(1.05);
+    }
+    .card {
+      animation: fadeUp 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
+      transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+    }
+    .grid > div:first-child .card { animation-delay: 0.12s; }
+    .grid > div:last-child .card:nth-child(1) { animation-delay: 0.18s; }
+    .grid > div:last-child .card:nth-child(2) { animation-delay: 0.26s; }
+    .grid > div:last-child .card:nth-child(3) { animation-delay: 0.34s; }
+
+    .card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 22px 55px rgba(15, 23, 42, 0.12);
+    }
+
+    .tab {
+      transition: all 0.2s ease, transform 0.15s ease;
+    }
+    .tab:active { transform: scale(0.97); }
+    .tab.active {
+      transition: all 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .panel.active {
+      animation: fadeUp 0.35s cubic-bezier(0.22, 1, 0.36, 1) both;
+    }
+
+    input {
+      transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease, transform 0.15s ease;
+    }
+    input:focus {
+      transform: translateY(-1px);
+    }
+
+    .btn {
+      transition: transform 0.18s ease, filter 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
+    }
+    .btn:hover {
+      transform: translateY(-2px);
+    }
+    .btn:active {
+      transform: translateY(0) scale(0.98);
+    }
+    .btn-primary:hover {
+      box-shadow: 0 14px 28px rgba(234, 179, 8, 0.35);
+    }
+    .btn-cyan:hover {
+      box-shadow: 0 14px 28px rgba(14, 116, 144, 0.35);
+    }
+
+    .quick {
+      transition: border-color 0.2s ease, transform 0.22s cubic-bezier(0.22, 1, 0.36, 1), background 0.2s ease, box-shadow 0.22s ease;
+    }
+    .quick:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 28px rgba(14, 116, 144, 0.12);
+    }
+    .quick .emoji {
+      display: inline-block;
+      transition: transform 0.25s ease;
+    }
+    .quick:hover .emoji {
+      transform: scale(1.15) rotate(-6deg);
+    }
+
+    .msg.ok, .msg.err {
+      animation: fadeUp 0.3s ease both;
+    }
+
+    .badge-soft {
+      animation: softPulse 2.8s ease-in-out infinite;
+    }
+
+    .perfil-box {
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+    .perfil-box:hover {
+      transform: translateY(-2px);
+    }
+
+    .btn-logout {
+      transition: background 0.2s ease, transform 0.15s ease;
+    }
+    .btn-logout:hover {
+      transform: translateY(-1px);
+    }
+
+    /* loading pulse */
+    #loading {
+      animation: fadeIn 0.4s ease both;
+    }
+    #loading::after {
+      content: '';
+      display: block;
+      width: 42px;
+      height: 4px;
+      margin: 1rem auto 0;
+      border-radius: 999px;
+      background: linear-gradient(90deg, transparent, var(--cyan), transparent);
+      background-size: 200% 100%;
+      animation: shimmer 1.2s linear infinite;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+
     /* DARK */
     [data-theme="dark"] {
       --bg: #0b1220;
@@ -439,7 +601,7 @@
   <div id="loading">Carregando sua conta…</div>
 
   <main class="wrap" id="conteudo">
-    <section class="profile-hero">
+    <section class="profile-hero anim-fade-up">
       <div class="profile-hero-inner">
         <div class="avatar-xl" id="avatar">U</div>
         <div>
@@ -450,7 +612,7 @@
       </div>
     </section>
 
-    <div class="grid">
+    <div class="grid" id="accountGrid">
       <div>
         <section class="card">
           <div class="card-head">
