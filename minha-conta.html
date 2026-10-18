@@ -34,421 +34,467 @@
             gap: 1rem;
         }
         .logo img { height: 40px; width: auto; display: block; }
-        .header-actions {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-        }
-        .header-actions .ola {
-            font-size: 0.88rem;
-            color: #64748b;
-        }
+        .header-actions { display: flex; align-items: center; gap: 0.75rem; }
+        .header-actions .ola { font-size: 0.88rem; color: #64748b; }
         .header-actions .ola strong { color: #0e7490; }
         .btn-sair {
-            border: none;
-            background: #fef2f2;
-            color: #b91c1c;
-            font-family: inherit;
-            font-size: 0.82rem;
-            font-weight: 600;
-            padding: 0.45rem 0.9rem;
-            border-radius: 50px;
-            cursor: pointer;
+            border: none; background: #fef2f2; color: #b91c1c;
+            font-family: inherit; font-size: 0.82rem; font-weight: 600;
+            padding: 0.45rem 0.9rem; border-radius: 50px; cursor: pointer;
         }
         .btn-sair:hover { background: #fee2e2; }
 
         main {
             width: min(1100px, 92%);
-            margin: 1.75rem auto 3rem;
+            margin: 0 auto;
+            padding: 2rem 0 3.5rem;
         }
-
-        .welcome {
-            background: linear-gradient(135deg, #0e7490 0%, #0a2e38 100%);
-            color: #fff;
-            border-radius: 20px;
-            padding: 1.75rem 1.5rem;
-            margin-bottom: 1.5rem;
-            display: flex;
-            flex-wrap: wrap;
-            align-items: center;
-            justify-content: space-between;
-            gap: 1rem;
-        }
-        .welcome h1 {
-            font-size: 1.45rem;
-            margin-bottom: 0.35rem;
-        }
-        .welcome p {
-            opacity: 0.9;
-            font-size: 0.92rem;
-            line-height: 1.5;
-            max-width: 480px;
-        }
-        .welcome .avatar {
-            width: 56px;
-            height: 56px;
-            border-radius: 50%;
-            background: rgba(234,179,8,0.95);
-            color: #0f172a;
-            font-weight: 800;
-            font-size: 1.15rem;
+        .hero-user {
             display: flex;
             align-items: center;
-            justify-content: center;
+            gap: 1.1rem;
+            margin-bottom: 1.75rem;
+        }
+        .avatar {
+            width: 64px; height: 64px; border-radius: 50%;
+            background: linear-gradient(135deg, #0e7490, #0891b2);
+            color: #fff; font-weight: 800; font-size: 1.2rem;
+            display: flex; align-items: center; justify-content: center;
             flex-shrink: 0;
         }
+        .hero-user h1 { font-size: 1.45rem; margin-bottom: 0.2rem; }
+        .hero-user p { color: #64748b; font-size: 0.92rem; }
 
-        .section-title {
-            font-size: 1.05rem;
+        .grid {
+            display: grid;
+            grid-template-columns: 1.1fr 0.9fr;
+            gap: 1.25rem;
+            align-items: start;
+        }
+        .card {
+            background: #fff;
+            border: 1px solid #e2e8f0;
+            border-radius: 18px;
+            padding: 1.25rem 1.35rem;
+            box-shadow: 0 8px 24px rgba(14, 116, 144, 0.06);
+            margin-bottom: 1.1rem;
+        }
+        .card h2 {
+            font-size: 1.02rem;
+            color: #0e7490;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.45rem;
+        }
+        label {
+            display: block;
+            font-size: 0.72rem;
             font-weight: 700;
-            margin: 1.75rem 0 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            color: #64748b;
+            margin: 0 0 0.35rem;
+        }
+        input {
+            width: 100%;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 0.8rem 0.95rem;
+            font: inherit;
+            margin-bottom: 0.85rem;
+            background: #f8fafc;
             color: #0f172a;
         }
-        .section-sub {
-            font-size: 0.88rem;
-            color: #64748b;
-            margin: -0.45rem 0 1rem;
+        input:focus {
+            outline: none;
+            border-color: #22d3ee;
+            box-shadow: 0 0 0 3px rgba(34, 211, 238, 0.18);
+            background: #fff;
         }
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.4rem;
+            border: none;
+            border-radius: 999px;
+            padding: 0.8rem 1.2rem;
+            font-weight: 800;
+            font-family: inherit;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+        .btn-primary { background: #eab308; color: #0f172a; width: 100%; }
+        .btn-primary:hover { filter: brightness(1.05); }
+        .btn-cyan { background: #0e7490; color: #fff; width: 100%; }
+        .btn-ghost {
+            background: transparent;
+            border: 1px solid #e2e8f0;
+            color: #334155;
+            width: 100%;
+            margin-top: 0.5rem;
+        }
+        .btn:disabled { opacity: 0.55; cursor: not-allowed; }
+        .msg {
+            font-size: 0.85rem;
+            margin-top: 0.65rem;
+            line-height: 1.45;
+            display: none;
+        }
+        .msg.ok { display: block; color: #047857; background: #ecfdf5; border: 1px solid #a7f3d0; padding: 0.65rem 0.8rem; border-radius: 10px; }
+        .msg.err { display: block; color: #b91c1c; background: #fef2f2; border: 1px solid #fecaca; padding: 0.65rem 0.8rem; border-radius: 10px; }
+        .hint { font-size: 0.8rem; color: #64748b; line-height: 1.5; margin: -0.35rem 0 0.85rem; }
+        .info-line {
+            display: flex;
+            justify-content: space-between;
+            gap: 1rem;
+            padding: 0.55rem 0;
+            border-bottom: 1px solid #f1f5f9;
+            font-size: 0.92rem;
+        }
+        .info-line span { color: #64748b; }
+        .info-line strong { color: #0f172a; word-break: break-all; text-align: right; }
 
         .atalhos {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
+            grid-template-columns: 1fr 1fr;
             gap: 0.75rem;
         }
-        @media (min-width: 720px) {
-            .atalhos { grid-template-columns: repeat(4, 1fr); }
-        }
         .atalho {
-            background: #fff;
+            display: block;
+            padding: 0.95rem 1rem;
+            border-radius: 14px;
             border: 1px solid #e2e8f0;
-            border-radius: 16px;
-            padding: 1.1rem 0.9rem;
-            text-align: center;
-            transition: 0.2s;
-            box-shadow: 0 4px 14px rgba(14,116,144,0.05);
+            background: #f8fafc;
+            transition: border-color 0.15s, transform 0.15s;
         }
-        .atalho:hover {
-            border-color: #0e7490;
-            transform: translateY(-2px);
-            box-shadow: 0 10px 24px rgba(14,116,144,0.1);
-        }
-        .atalho .ico { font-size: 1.5rem; margin-bottom: 0.4rem; }
-        .atalho strong {
-            display: block;
-            font-size: 0.88rem;
-            color: #0f172a;
-        }
-        .atalho span {
-            display: block;
-            font-size: 0.75rem;
-            color: #64748b;
-            margin-top: 0.2rem;
-        }
+        .atalho:hover { border-color: #22d3ee; transform: translateY(-1px); }
+        .atalho strong { display: block; font-size: 0.9rem; margin-bottom: 0.2rem; color: #0e7490; }
+        .atalho span { font-size: 0.78rem; color: #64748b; }
 
-        .pacotes {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 1rem;
-        }
-        @media (min-width: 720px) {
-            .pacotes { grid-template-columns: repeat(3, 1fr); }
-        }
-        .pacote {
-            background: #fff;
-            border: 1px solid #e2e8f0;
-            border-radius: 16px;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            box-shadow: 0 6px 18px rgba(14,116,144,0.06);
-            transition: 0.2s;
-        }
-        .pacote:hover { transform: translateY(-3px); box-shadow: 0 14px 28px rgba(14,116,144,0.12); }
-        .pacote img {
-            width: 100%;
-            height: 140px;
-            object-fit: cover;
-            display: block;
-        }
-        .pacote-body { padding: 1rem 1.05rem 1.15rem; flex: 1; display: flex; flex-direction: column; }
-        .pacote-body .meta {
-            font-size: 0.75rem;
-            color: #64748b;
-            margin-bottom: 0.25rem;
-        }
-        .pacote-body h3 {
-            font-size: 1.05rem;
-            margin-bottom: 0.35rem;
-            color: #0f172a;
-        }
-        .pacote-body p {
-            font-size: 0.84rem;
-            color: #64748b;
-            line-height: 1.45;
-            flex: 1;
-        }
-        .pacote-body .preco {
-            margin: 0.75rem 0 0.85rem;
-            font-weight: 800;
-            color: #0e7490;
-            font-size: 0.95rem;
-        }
-        .pacote-body .btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            padding: 0.55rem 1rem;
-            border-radius: 50px;
-            background: #eab308;
-            color: #0f172a;
-            font-size: 0.82rem;
-            font-weight: 700;
-            width: 100%;
-        }
-        .pacote-body .btn:hover { background: #ca8a04; }
-
-        .perfil-box {
-            background: #fff;
-            border: 1px solid #e2e8f0;
-            border-radius: 16px;
-            padding: 1.25rem 1.2rem;
+        .tabs {
             display: flex;
             flex-wrap: wrap;
-            align-items: center;
-            justify-content: space-between;
-            gap: 1rem;
-            margin-top: 0.5rem;
-        }
-        .perfil-box h3 { font-size: 1rem; margin-bottom: 0.25rem; }
-        .perfil-box p { font-size: 0.88rem; color: #64748b; max-width: 420px; line-height: 1.5; }
-        .perfil-box .btn-outline {
-            display: inline-flex;
-            padding: 0.6rem 1.15rem;
-            border-radius: 50px;
-            border: 1.5px solid #0e7490;
-            color: #0e7490;
-            font-size: 0.85rem;
-            font-weight: 700;
-            white-space: nowrap;
-        }
-        .perfil-box .btn-outline:hover { background: #f0f9ff; }
-
-        .ajuda {
-            margin-top: 1.75rem;
-            background: linear-gradient(135deg, #fffbeb, #f0f9ff);
-            border: 1px solid #e2e8f0;
-            border-radius: 16px;
-            padding: 1.25rem 1.2rem;
-            display: flex;
-            flex-wrap: wrap;
-            align-items: center;
-            justify-content: space-between;
-            gap: 1rem;
-        }
-        .ajuda h3 { font-size: 1rem; margin-bottom: 0.25rem; }
-        .ajuda p { font-size: 0.88rem; color: #64748b; }
-        .ajuda .btn-wa {
-            display: inline-flex;
-            align-items: center;
             gap: 0.4rem;
-            background: #25d366;
-            color: #fff;
+            margin-bottom: 1rem;
+        }
+        .tab {
+            border: 1px solid #e2e8f0;
+            background: #fff;
+            border-radius: 999px;
+            padding: 0.45rem 0.9rem;
+            font-family: inherit;
+            font-size: 0.8rem;
             font-weight: 700;
-            font-size: 0.88rem;
-            padding: 0.7rem 1.2rem;
-            border-radius: 50px;
-        }
-        .ajuda .btn-wa:hover { filter: brightness(1.05); }
-
-        #loading {
-            min-height: 60vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
             color: #64748b;
-            font-size: 0.95rem;
+            cursor: pointer;
         }
+        .tab.active { background: #0e7490; color: #fff; border-color: #0e7490; }
+        .panel { display: none; }
+        .panel.active { display: block; }
+
+        #loading { text-align: center; padding: 4rem 1rem; color: #64748b; }
         #conteudo { display: none; }
 
-        [data-theme="dark"] body { background: #0b1220 !important; color: #f1f5f9 !important; }
-        [data-theme="dark"] header { background: rgba(15,23,42,0.96) !important; border-color: #1f2937 !important; }
-        [data-theme="dark"] .header-actions .ola { color: #94a3b8 !important; }
-        [data-theme="dark"] .header-actions .ola strong { color: #67e8f9 !important; }
-        [data-theme="dark"] .section-title { color: #f8fafc !important; }
-        [data-theme="dark"] .section-sub { color: #94a3b8 !important; }
-        [data-theme="dark"] .atalho,
-        [data-theme="dark"] .pacote,
-        [data-theme="dark"] .perfil-box,
-        [data-theme="dark"] .ajuda {
-            background: #1e293b !important;
-            border-color: #334155 !important;
-            color: #f1f5f9 !important;
+        @media (max-width: 800px) {
+            .grid { grid-template-columns: 1fr; }
+            .atalhos { grid-template-columns: 1fr; }
         }
-        [data-theme="dark"] .atalho strong,
-        [data-theme="dark"] .pacote-body h3,
-        [data-theme="dark"] .perfil-box h3,
-        [data-theme="dark"] .ajuda h3 { color: #f8fafc !important; }
-        [data-theme="dark"] .atalho span,
-        [data-theme="dark"] .pacote-body p,
-        [data-theme="dark"] .perfil-box p,
-        [data-theme="dark"] .ajuda p,
-        [data-theme="dark"] .pacote-body .meta { color: #94a3b8 !important; }
-        [data-theme="dark"] .pacote-body .preco { color: #fbbf24 !important; }
+        [data-theme="dark"] body { background: #0f172a; color: #f1f5f9; }
+        [data-theme="dark"] header { background: #0f172a; border-color: #334155; }
+        [data-theme="dark"] .card { background: #1e293b; border-color: #334155; }
+        [data-theme="dark"] input { background: #0f172a; border-color: #334155; color: #f1f5f9; }
+        [data-theme="dark"] .atalho { background: #0f172a; border-color: #334155; }
+        [data-theme="dark"] .info-line { border-color: #334155; }
+        [data-theme="dark"] .info-line strong { color: #f1f5f9; }
+        [data-theme="dark"] .tab { background: #1e293b; border-color: #334155; color: #94a3b8; }
+        [data-theme="dark"] .tab.active { background: #0e7490; color: #fff; }
     </style>
 </head>
 <body>
-    <div id="loading">Carregando sua conta...</div>
-
-    <div id="conteudo">
-        <header>
-            <div class="header-inner">
-                <a href="/" class="logo" aria-label="TOURMIX">
-                    <img src="LOGO-05.png" alt="TOURMIX" onerror="this.onerror=null;this.src='LOGO-01.png'">
-                </a>
-                <div class="header-actions">
-                    <span class="ola">Olá, <strong id="nomeUser">—</strong></span>
-                    <button type="button" class="btn-sair" id="btnSair">Sair</button>
-                </div>
+    <header>
+        <div class="header-inner">
+            <a href="/" class="logo" aria-label="TOURMIX">
+                <img src="LOGO-05.png" alt="TOURMIX" onerror="this.onerror=null;this.src='LOGO-01.png'">
+            </a>
+            <div class="header-actions">
+                <span class="ola">Olá, <strong id="nomeUser">…</strong></span>
+                <button type="button" class="btn-sair" id="btnSair">Sair</button>
             </div>
-        </header>
+        </div>
+    </header>
 
-        <main>
-            <div class="welcome">
-                <div style="display:flex;align-items:center;gap:1rem;">
-                    <div class="avatar" id="avatar">U</div>
-                    <div>
-                        <h1>Olá, <span id="nomeWelcome">viajante</span></h1>
-                        <p>Bem-vindo à sua área TOURMIX. Acompanhe ofertas, descubra seu perfil de viagem e fale com a gente quando quiser.</p>
+    <div id="loading">Carregando sua conta…</div>
+
+    <main id="conteudo">
+        <div class="hero-user">
+            <div class="avatar" id="avatar">U</div>
+            <div>
+                <h1>Olá, <span id="nomeWelcome">viajante</span></h1>
+                <p id="emailLine">—</p>
+            </div>
+        </div>
+
+        <div class="grid">
+            <div>
+                <div class="card">
+                    <h2>⚙ Configurações da conta</h2>
+                    <div class="tabs" id="tabs">
+                        <button type="button" class="tab active" data-panel="nome">Nome</button>
+                        <button type="button" class="tab" data-panel="email">E-mail</button>
+                        <button type="button" class="tab" data-panel="senha">Senha</button>
+                        <button type="button" class="tab" data-panel="dados">Resumo</button>
+                    </div>
+
+                    <div class="panel active" id="panel-nome">
+                        <label for="inputNome">Nome de exibição</label>
+                        <input id="inputNome" type="text" placeholder="Seu nome" autocomplete="name">
+                        <p class="hint">Aparece no site e no painel da conta.</p>
+                        <button type="button" class="btn btn-primary" id="btnSalvarNome">Salvar nome</button>
+                        <div class="msg" id="msgNome"></div>
+                    </div>
+
+                    <div class="panel" id="panel-email">
+                        <label for="inputEmail">Novo e-mail</label>
+                        <input id="inputEmail" type="email" placeholder="novo@email.com" autocomplete="email">
+                        <p class="hint">O Supabase pode pedir confirmação no e-mail novo e/ou no atual, conforme a configuração do projeto.</p>
+                        <button type="button" class="btn btn-primary" id="btnSalvarEmail">Alterar e-mail</button>
+                        <div class="msg" id="msgEmail"></div>
+                    </div>
+
+                    <div class="panel" id="panel-senha">
+                        <label for="inputSenha">Nova senha</label>
+                        <input id="inputSenha" type="password" placeholder="Mínimo 6 caracteres" autocomplete="new-password">
+                        <label for="inputSenha2">Confirmar nova senha</label>
+                        <input id="inputSenha2" type="password" placeholder="Repita a senha" autocomplete="new-password">
+                        <p class="hint">Use uma senha forte. Você precisará dela no próximo login.</p>
+                        <button type="button" class="btn btn-primary" id="btnSalvarSenha">Alterar senha</button>
+                        <div class="msg" id="msgSenha"></div>
+                    </div>
+
+                    <div class="panel" id="panel-dados">
+                        <div class="info-line"><span>Nome</span><strong id="infoNome">—</strong></div>
+                        <div class="info-line"><span>E-mail</span><strong id="infoEmail">—</strong></div>
+                        <div class="info-line"><span>ID da conta</span><strong id="infoId" style="font-size:0.75rem">—</strong></div>
+                        <div class="info-line"><span>Criada em</span><strong id="infoCriada">—</strong></div>
+                        <p class="hint" style="margin-top:0.85rem">Para excluir a conta permanentemente, fale com a Tourmix no WhatsApp.</p>
+                        <a class="btn btn-ghost" href="https://wa.me/5511914841404?text=Olá! Quero falar sobre minha conta no site." target="_blank" rel="noopener">Falar no WhatsApp</a>
                     </div>
                 </div>
-            </div>
 
-            <h2 class="section-title">Acesso rápido</h2>
-            <div class="atalhos">
-                <a class="atalho" href="/#pacotes">
-                    <div class="ico">🎒</div>
-                    <strong>Pacotes</strong>
-                    <span>Ofertas em destaque</span>
-                </a>
-                <a class="atalho" href="/excursoes">
-                    <div class="ico">🚌</div>
-                    <strong>Excursões</strong>
-                    <span>Passeios de um dia</span>
-                </a>
-                <a class="atalho" href="/meu-perfil">
-                    <div class="ico">✨</div>
-                    <strong>Meu perfil</strong>
-                    <span>Quiz de viajante</span>
-                </a>
-                <a class="atalho" href="/assistente">
-                    <div class="ico">💬</div>
-                    <strong>Assistente</strong>
-                    <span>Dúvidas e ideias</span>
-                </a>
-            </div>
-
-            <h2 class="section-title">Pacotes em destaque</h2>
-            <p class="section-sub">Selecionamos opções para você explorar com a TOURMIX.</p>
-            <div class="pacotes">
-                <article class="pacote">
-                    <img src="https://images.pexels.com/photos/2583852/pexels-photo-2583852.jpeg?auto=compress&cs=tinysrgb&w=1600" alt="Foz do Iguaçu">
-                    <div class="pacote-body">
-                        <p class="meta">4 noites · Brasil</p>
-                        <h3>Foz do Iguaçu</h3>
-                        <p>Cataratas, hotel com café e aéreo saindo de São Paulo.</p>
-                        <div class="preco notranslate" translate="no">12x de R$ 115</div>
-                        <a class="btn" href="/foz-iguacu">Ver detalhes</a>
-                    </div>
-                </article>
-                <article class="pacote">
-                    <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=800&q=80" alt="Gramado">
-                    <div class="pacote-body">
-                        <p class="meta">4 noites · Brasil</p>
-                        <h3>Gramado</h3>
-                        <p>Serra gaúcha, hotel com café e transfer incluso.</p>
-                        <div class="preco notranslate" translate="no">12x de R$ 115</div>
-                        <a class="btn" href="/gramado">Ver detalhes</a>
-                    </div>
-                </article>
-                <article class="pacote">
-                    <img src="https://images.unsplash.com/photo-1571896349842-33c89424de2d?auto=format&fit=crop&w=800&q=80" alt="Caldas Novas">
-                    <div class="pacote-body">
-                        <p class="meta">5 noites · Brasil</p>
-                        <h3>Caldas Novas</h3>
-                        <p>Resort com café e jantar, ideal para família.</p>
-                        <div class="preco notranslate" translate="no">12x de R$ 145</div>
-                        <a class="btn" href="/caldas-novas">Ver detalhes</a>
-                    </div>
-                </article>
-            </div>
-
-            <h2 class="section-title">Seu perfil de viajante</h2>
-            <div class="perfil-box">
-                <div>
-                    <h3 id="perfilTitulo">Ainda não descobrimos seu estilo</h3>
-                    <p id="perfilDesc">Faça o quiz rápido e receba indicações de destinos e pacotes combinando com você.</p>
+                <div class="card">
+                    <h2>🧳 Meu perfil de viajante</h2>
+                    <p id="perfilTitulo" style="font-weight:700;margin-bottom:0.35rem">Ainda não definido</p>
+                    <p id="perfilDesc" style="color:#64748b;font-size:0.9rem;line-height:1.55;margin-bottom:1rem">Faça o quiz e descubra seu estilo de viagem.</p>
+                    <a class="btn btn-cyan" id="perfilBtn" href="/descubra-perfil">Descobrir meu perfil</a>
                 </div>
-                <a class="btn-outline" href="/descubra-perfil" id="perfilBtn">Descobrir meu perfil</a>
             </div>
 
-            <div class="ajuda">
-                <div>
-                    <h3>Precisa de ajuda para fechar a viagem?</h3>
-                    <p>Nossa equipe responde pelo WhatsApp com atendimento humano.</p>
+            <div>
+                <div class="card">
+                    <h2>⚡ Acesso rápido</h2>
+                    <div class="atalhos">
+                        <a class="atalho" href="/#pacotes">
+                            <strong>Pacotes</strong>
+                            <span>Ver destinos e ofertas</span>
+                        </a>
+                        <a class="atalho" href="/excursoes">
+                            <strong>Excursões</strong>
+                            <span>Passeios de 1 dia</span>
+                        </a>
+                        <a class="atalho" href="/pagamento">
+                            <strong>Pagamento</strong>
+                            <span>Reservar excursão</span>
+                        </a>
+                        <a class="atalho" href="/assistente">
+                            <strong>Assistente</strong>
+                            <span>Tire dúvidas com a IA</span>
+                        </a>
+                        <a class="atalho" href="/meu-perfil">
+                            <strong>Meu perfil</strong>
+                            <span>Perfil de viajante</span>
+                        </a>
+                        <a class="atalho" href="/">
+                            <strong>Início</strong>
+                            <span>Voltar à home</span>
+                        </a>
+                    </div>
                 </div>
-                <a class="btn-wa" href="https://wa.me/5511914841404" target="_blank" rel="noopener">WhatsApp TOURMIX</a>
+
+                <div class="card">
+                    <h2>🔒 Segurança</h2>
+                    <p class="hint" style="margin:0 0 0.85rem">Sua senha fica criptografada no Supabase. Nunca compartilhamos dados de login.</p>
+                    <button type="button" class="btn btn-ghost" id="btnSair2" style="color:#b91c1c;border-color:#fecaca">Encerrar sessão</button>
+                </div>
             </div>
-        </main>
-    </div>
+        </div>
+    </main>
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="auth-config.js"></script>
     <script src="auth.js"></script>
     <script>
-        (async function () {
-            var user = await TourmixAuth.requireAuth('/login');
-            if (!user) return;
+    (async function () {
+        var user = await TourmixAuth.requireAuth('/login');
+        if (!user) return;
 
-            document.getElementById('loading').style.display = 'none';
-            document.getElementById('conteudo').style.display = 'block';
+        document.getElementById('loading').style.display = 'none';
+        document.getElementById('conteudo').style.display = 'block';
 
-            var nome = TourmixAuth.displayName(user);
+        function fillUser(u) {
+            var nome = TourmixAuth.displayName(u);
             document.getElementById('nomeUser').textContent = nome;
             document.getElementById('nomeWelcome').textContent = nome;
-
+            document.getElementById('emailLine').textContent = u.email || '';
+            document.getElementById('inputNome').value = (u.user_metadata && u.user_metadata.nome) || '';
+            document.getElementById('infoNome').textContent = nome;
+            document.getElementById('infoEmail').textContent = u.email || '—';
+            document.getElementById('infoId').textContent = u.id || '—';
+            try {
+                document.getElementById('infoCriada').textContent = u.created_at
+                    ? new Date(u.created_at).toLocaleString('pt-BR')
+                    : '—';
+            } catch (e) {
+                document.getElementById('infoCriada').textContent = '—';
+            }
             var parts = nome.trim().split(/\s+/);
             var ini = parts.length >= 2
                 ? (parts[0][0] + parts[1][0]).toUpperCase()
                 : (parts[0][0] || 'U').toUpperCase();
             document.getElementById('avatar').textContent = ini;
+        }
+        fillUser(user);
 
-            // Perfil do quiz, se existir
-            try {
-                var key = localStorage.getItem('tourmix_perfil_quiz');
-                if (key) {
-                    key = JSON.parse(key);
-                    var labels = {
-                        natureza: { t: 'Explorador da Natureza', d: 'Trilhas, água cristalina e cenários ao ar livre combinam com você.' },
-                        praia: { t: 'Praiano Urbano', d: 'Sol, orla e energia de cidade. Ideal para destinos de litoral.' },
-                        romantico: { t: 'Romântico Fotogênico', d: 'Paisagens bonitas e momentos a dois são a sua prioridade.' },
-                        relax: { t: 'Mestre do Descanso', d: 'Resort, termas e ritmo leve — menos pressa, mais descanso.' },
-                        cultural: { t: 'Viajante Cultural', d: 'História, gastronomia e experiências locais te atraem mais.' }
-                    };
-                    var info = labels[key];
-                    if (info) {
-                        document.getElementById('perfilTitulo').textContent = info.t;
-                        document.getElementById('perfilDesc').textContent = info.d;
-                        document.getElementById('perfilBtn').textContent = 'Ver meu perfil';
-                        document.getElementById('perfilBtn').href = '/meu-perfil';
-                    }
+        // Quiz profile
+        try {
+            var key = localStorage.getItem('tourmix_perfil_quiz');
+            if (key) {
+                key = JSON.parse(key);
+                var labels = {
+                    natureza: { t: 'Explorador da Natureza', d: 'Trilhas, água cristalina e cenários ao ar livre combinam com você.' },
+                    praia: { t: 'Praiano Urbano', d: 'Sol, orla e energia de cidade. Ideal para destinos de litoral.' },
+                    romantico: { t: 'Romântico Fotogênico', d: 'Paisagens bonitas e momentos a dois são a sua prioridade.' },
+                    relax: { t: 'Mestre do Descanso', d: 'Resort, termas e ritmo leve — menos pressa, mais descanso.' },
+                    cultural: { t: 'Viajante Cultural', d: 'História, gastronomia e experiências locais te atraem mais.' }
+                };
+                var info = labels[key];
+                if (info) {
+                    document.getElementById('perfilTitulo').textContent = info.t;
+                    document.getElementById('perfilDesc').textContent = info.d;
+                    document.getElementById('perfilBtn').textContent = 'Ver meu perfil';
+                    document.getElementById('perfilBtn').href = '/meu-perfil';
                 }
-            } catch (e) {}
+            }
+        } catch (e) {}
 
-            document.getElementById('btnSair').addEventListener('click', async function () {
-                await TourmixAuth.signOut();
-                window.location.href = '/login';
-            });
-        })();
+        // Tabs
+        document.getElementById('tabs').addEventListener('click', function (e) {
+            var btn = e.target.closest('.tab');
+            if (!btn) return;
+            document.querySelectorAll('.tab').forEach(function (t) { t.classList.remove('active'); });
+            document.querySelectorAll('.panel').forEach(function (p) { p.classList.remove('active'); });
+            btn.classList.add('active');
+            document.getElementById('panel-' + btn.getAttribute('data-panel')).classList.add('active');
+        });
+
+        function showMsg(id, text, ok) {
+            var el = document.getElementById(id);
+            el.className = 'msg ' + (ok ? 'ok' : 'err');
+            el.textContent = text;
+        }
+
+        async function refreshUser() {
+            var u = await TourmixAuth.getUser();
+            if (u) {
+                user = u;
+                fillUser(u);
+            }
+        }
+
+        // Nome
+        document.getElementById('btnSalvarNome').addEventListener('click', async function () {
+            var nome = document.getElementById('inputNome').value.trim();
+            if (!nome) {
+                showMsg('msgNome', 'Digite um nome.', false);
+                return;
+            }
+            var btn = this;
+            btn.disabled = true;
+            try {
+                var sb = TourmixAuth.getClient();
+                if (!sb) throw new Error('Auth não configurado.');
+                var { error } = await sb.auth.updateUser({ data: { nome: nome } });
+                if (error) throw error;
+                await refreshUser();
+                showMsg('msgNome', 'Nome atualizado com sucesso.', true);
+            } catch (err) {
+                showMsg('msgNome', err.message || 'Não foi possível salvar o nome.', false);
+            } finally {
+                btn.disabled = false;
+            }
+        });
+
+        // E-mail
+        document.getElementById('btnSalvarEmail').addEventListener('click', async function () {
+            var email = document.getElementById('inputEmail').value.trim().toLowerCase();
+            if (!email || email.indexOf('@') < 1) {
+                showMsg('msgEmail', 'Informe um e-mail válido.', false);
+                return;
+            }
+            var btn = this;
+            btn.disabled = true;
+            try {
+                var sb = TourmixAuth.getClient();
+                if (!sb) throw new Error('Auth não configurado.');
+                var { error } = await sb.auth.updateUser({ email: email });
+                if (error) throw error;
+                showMsg('msgEmail', 'Solicitação enviada. Verifique a caixa de entrada (e spam) para confirmar o novo e-mail.', true);
+                document.getElementById('inputEmail').value = '';
+                await refreshUser();
+            } catch (err) {
+                showMsg('msgEmail', err.message || 'Não foi possível alterar o e-mail.', false);
+            } finally {
+                btn.disabled = false;
+            }
+        });
+
+        // Senha
+        document.getElementById('btnSalvarSenha').addEventListener('click', async function () {
+            var s1 = document.getElementById('inputSenha').value;
+            var s2 = document.getElementById('inputSenha2').value;
+            if (!s1 || s1.length < 6) {
+                showMsg('msgSenha', 'A senha deve ter no mínimo 6 caracteres.', false);
+                return;
+            }
+            if (s1 !== s2) {
+                showMsg('msgSenha', 'As senhas não coincidem.', false);
+                return;
+            }
+            var btn = this;
+            btn.disabled = true;
+            try {
+                var sb = TourmixAuth.getClient();
+                if (!sb) throw new Error('Auth não configurado.');
+                var { error } = await sb.auth.updateUser({ password: s1 });
+                if (error) throw error;
+                document.getElementById('inputSenha').value = '';
+                document.getElementById('inputSenha2').value = '';
+                showMsg('msgSenha', 'Senha alterada com sucesso.', true);
+            } catch (err) {
+                showMsg('msgSenha', err.message || 'Não foi possível alterar a senha.', false);
+            } finally {
+                btn.disabled = false;
+            }
+        });
+
+        async function sair() {
+            await TourmixAuth.signOut();
+            window.location.href = '/login';
+        }
+        document.getElementById('btnSair').addEventListener('click', sair);
+        document.getElementById('btnSair2').addEventListener('click', sair);
+    })();
     </script>
     <script src="theme.js"></script>
     <script src="i18n.js"></script>
