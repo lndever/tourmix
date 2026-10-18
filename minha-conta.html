@@ -401,6 +401,64 @@
     }
 
     
+    
+    .sec-item {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 0.85rem;
+      padding: 0.85rem 0;
+      border-bottom: 1px solid #f1f5f9;
+    }
+    .sec-item:last-child { border-bottom: none; }
+    .sec-item h4 {
+      font-size: 0.88rem;
+      font-weight: 800;
+      margin-bottom: 0.2rem;
+      color: var(--ink);
+    }
+    .sec-item p {
+      font-size: 0.78rem;
+      color: var(--muted);
+      line-height: 1.4;
+      margin: 0;
+    }
+    .sec-status {
+      flex-shrink: 0;
+      font-size: 0.72rem;
+      font-weight: 800;
+      padding: 0.3rem 0.65rem;
+      border-radius: 999px;
+      white-space: nowrap;
+    }
+    .sec-status.ok { background: #ecfdf5; color: #047857; }
+    .sec-status.warn { background: #fffbeb; color: #b45309; }
+    .sec-status.muted { background: #f1f5f9; color: #64748b; }
+    .sec-actions { display: flex; flex-direction: column; gap: 0.45rem; margin-top: 0.85rem; }
+    .sec-tips {
+      margin-top: 0.85rem;
+      padding: 0.85rem 1rem;
+      border-radius: 14px;
+      background: #f8fafc;
+      border: 1px solid var(--line);
+    }
+    .sec-tips strong {
+      display: block;
+      font-size: 0.8rem;
+      margin-bottom: 0.45rem;
+      color: var(--ink);
+    }
+    .sec-tips ul {
+      margin: 0;
+      padding-left: 1.1rem;
+      color: var(--muted);
+      font-size: 0.78rem;
+      line-height: 1.55;
+    }
+    [data-theme="dark"] .sec-item { border-color: #1e293b; }
+    [data-theme="dark"] .sec-tips { background: #0f172a; }
+    [data-theme="dark"] .sec-status.muted { background: #1e293b; color: #94a3b8; }
+
     /* ========== ANIMAÇÕES ========== */
     @keyframes fadeUp {
       from { opacity: 0; transform: translateY(18px); }
@@ -712,8 +770,46 @@
             <h2>Segurança</h2>
             <div class="icon">🔒</div>
           </div>
-          <p class="hint" style="margin-top:0">Sua senha é protegida pelo Supabase. Nunca compartilhe seus dados de login.</p>
-          <button type="button" class="btn btn-danger-ghost" id="btnSair2">Encerrar sessão</button>
+
+          <div class="sec-item">
+            <div>
+              <h4>E-mail da conta</h4>
+              <p id="secEmailText">Verificando status…</p>
+            </div>
+            <span class="sec-status muted" id="secEmailStatus">—</span>
+          </div>
+
+          <div class="sec-item">
+            <div>
+              <h4>Último acesso</h4>
+              <p id="secLastLogin">—</p>
+            </div>
+            <span class="sec-status muted" id="secSessionStatus">Sessão ativa</span>
+          </div>
+
+          <div class="sec-item">
+            <div>
+              <h4>Senha</h4>
+              <p>Protegida com criptografia. Troque se suspeitar de acesso indevido.</p>
+            </div>
+            <span class="sec-status ok">Ativa</span>
+          </div>
+
+          <div class="sec-tips">
+            <strong>Dicas de segurança</strong>
+            <ul>
+              <li>Use uma senha forte e exclusiva da Tourmix</li>
+              <li>Não compartilhe login em computadores públicos</li>
+              <li>Desconfie de links suspeitos pedindo sua senha</li>
+              <li>Encerre a sessão ao usar celular emprestado</li>
+            </ul>
+          </div>
+
+          <div class="sec-actions">
+            <button type="button" class="btn btn-ghost" id="btnIrSenha" style="margin-top:0">Alterar senha</button>
+            <button type="button" class="btn btn-danger-ghost" id="btnSair2" style="margin-top:0">Encerrar sessão</button>
+            <a class="btn btn-ghost" style="margin-top:0" href="https://wa.me/5511914841404?text=Olá! Preciso de ajuda com a segurança da minha conta Tourmix." target="_blank" rel="noopener">Suporte da conta</a>
+          </div>
         </section>
       </div>
     </div>
@@ -757,6 +853,47 @@
       }
     }
     fillUser(user);
+
+    // Segurança
+    (function fillSecurity(u) {
+      var emailOk = !!(u.email_confirmed_at || u.confirmed_at);
+      var st = document.getElementById('secEmailStatus');
+      var tx = document.getElementById('secEmailText');
+      if (st && tx) {
+        if (emailOk) {
+          st.textContent = 'Verificado';
+          st.className = 'sec-status ok';
+          tx.textContent = (u.email || '') + ' · confirmado';
+        } else {
+          st.textContent = 'Pendente';
+          st.className = 'sec-status warn';
+          tx.textContent = (u.email || '') + ' · aguardando confirmação';
+        }
+      }
+      var last = u.last_sign_in_at || u.created_at;
+      var el = document.getElementById('secLastLogin');
+      if (el) {
+        try {
+          el.textContent = last ? new Date(last).toLocaleString('pt-BR') : 'Não disponível';
+        } catch (e) {
+          el.textContent = 'Não disponível';
+        }
+      }
+    })(user);
+
+    var btnIrSenha = document.getElementById('btnIrSenha');
+    if (btnIrSenha) {
+      btnIrSenha.addEventListener('click', function () {
+        document.querySelectorAll('.tab').forEach(function (t) { t.classList.remove('active'); });
+        document.querySelectorAll('.panel').forEach(function (p) { p.classList.remove('active'); });
+        var tab = document.querySelector('.tab[data-panel="senha"]');
+        var panel = document.getElementById('panel-senha');
+        if (tab) tab.classList.add('active');
+        if (panel) panel.classList.add('active');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+    }
+
 
     try {
       var key = localStorage.getItem('tourmix_perfil_quiz');
