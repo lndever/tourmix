@@ -11,6 +11,94 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <link rel="canonical" href="tourmix.vercel.app" />
+
+    <style id="depoimentos-scroll-css">
+.depoimentos-scroll {
+  margin-top: 0.5rem;
+  overflow: visible;
+}
+.depoimentos-grid {
+  display: grid !important;
+  grid-template-rows: auto auto !important;
+  grid-auto-flow: column !important;
+  grid-auto-columns: min(280px, 78vw) !important;
+  gap: 1rem !important;
+  overflow-x: auto !important;
+  overflow-y: hidden !important;
+  scroll-snap-type: x mandatory;
+  scroll-padding-inline: 0.25rem;
+  padding: 0.35rem 0.15rem 1rem;
+  -webkit-overflow-scrolling: touch;
+}
+.depoimentos-grid::-webkit-scrollbar { height: 6px; }
+.depoimentos-grid::-webkit-scrollbar-thumb {
+  background: #94a3b8;
+  border-radius: 50px;
+}
+.depoimento {
+  scroll-snap-align: start;
+  display: flex !important;
+  flex-direction: column !important;
+  min-height: 210px;
+  height: 100%;
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 18px;
+  padding: 1.25rem 1.2rem;
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.06);
+}
+.depoimento-texto {
+  flex: 1;
+  color: #334155;
+  line-height: 1.55;
+  font-size: 0.95rem;
+  margin: 0.55rem 0 1rem;
+}
+.depoimento-autor {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  margin-top: auto;
+  padding-top: 0.85rem;
+  border-top: 1px solid #f1f5f9;
+}
+.depoimento-avatar {
+  width: 38px; height: 38px; border-radius: 50%;
+  display: grid; place-items: center;
+  font-weight: 800; font-size: 0.85rem;
+  color: #fff;
+  background: linear-gradient(145deg, #0e7490, #0891b2);
+  flex-shrink: 0;
+}
+.depoimento-meta strong {
+  display: block;
+  font-size: 0.9rem;
+  color: #0e7490;
+}
+.depoimento-meta span {
+  display: block;
+  font-size: 0.78rem;
+  color: #64748b;
+  margin-top: 0.1rem;
+}
+.stars { color: #eab308; letter-spacing: 0.08em; font-size: 0.95rem; }
+@media (max-width: 768px) {
+  .depoimentos-grid {
+    grid-auto-columns: min(240px, 76vw) !important;
+    gap: 0.75rem !important;
+  }
+  .depoimento { min-height: 190px; padding: 1rem; }
+  .depoimento-texto { font-size: 0.88rem; }
+}
+[data-theme="dark"] .depoimento {
+  background: #1e293b;
+  border-color: #334155;
+  color: #f1f5f9;
+}
+[data-theme="dark"] .depoimento-texto { color: #cbd5e1; }
+[data-theme="dark"] .depoimento-autor { border-top-color: #334155; }
+[data-theme="dark"] .depoimentos-grid::-webkit-scrollbar-thumb { background: #475569; }
+</style>
 </head>
 <body>
     <header class="header" id="header">
