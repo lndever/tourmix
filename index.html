@@ -30,8 +30,8 @@
   padding: 0.35rem 0.15rem 1rem;
   -webkit-overflow-scrolling: touch;
 }
-.depoimentos-grid::-webkit-scrollbar { height: 6px; }
-.depoimentos-grid::-webkit-scrollbar-thumb {
+.-grid::-webkit-scrollbar { height: 6px; }
+.-grid::-webkit-scrollbar-thumb {
   background: #94a3b8;
   border-radius: 50px;
 }
@@ -83,7 +83,7 @@
 }
 .stars { color: #eab308; letter-spacing: 0.08em; font-size: 0.95rem; }
 @media (max-width: 768px) {
-  .depoimentos-grid {
+  .-grid {
     grid-auto-columns: min(240px, 76vw) !important;
     gap: 0.75rem !important;
   }
@@ -97,7 +97,7 @@
 }
 [data-theme="dark"] .depoimento-texto { color: #cbd5e1; }
 [data-theme="dark"] .depoimento-autor { border-top-color: #334155; }
-[data-theme="dark"] .depoimentos-grid::-webkit-scrollbar-thumb { background: #475569; }
+[data-theme="dark"] .-grid::-webkit-scrollbar-thumb { background: #475569; }
 </style>
 </head>
 <body>
@@ -645,30 +645,164 @@
     </section>
 
     <section class="section depoimentos" id="depoimentos">
-        <div class="container">
-            <div class="section-header">
-                <p class="eyebrow">Depoimentos</p>
-                <h2>O que nossos clientes dizem</h2>
+  <div class="container">
+    <div class="section-header">
+      <p class="eyebrow">Depoimentos</p>
+      <h2>O que nossos clientes dizem</h2>
+      <p class="section-desc">Arraste para o lado e veja mais avaliações reais da Tourmix.</p>
+    </div>
+
+    <div class="depoimentos-scroll">
+      <div class="depoimentos-grid">
+
+        <article class="depoimento">
+          <div class="stars" aria-label="5 estrelas">★★★★★</div>
+          <p class="depoimento-texto">"Incrível, simples incrível, desde a chegada até cada etapa em cada local, já estou ansioso para o próximo."</p>
+          <div class="depoimento-autor">
+            <div class="depoimento-avatar">R</div>
+            <div class="depoimento-meta">
+              <strong>Renan</strong>
+              <span>Rota do Vinho · Tourmix BR</span>
             </div>
-            <div class="depoimentos-grid">
-                <article class="depoimento">
-                    <div class="stars">★★★★★</div>
-                    <p>"Atendimento rápido no WhatsApp e condições ótimas para Gramado. Valeu cada centavo!"</p>
-                    <footer><strong>Juliana F.</strong><span>Gramado</span></footer>
-                </article>
-                <article class="depoimento">
-                    <div class="stars">★★★★★</div>
-                    <p>"Foz do Iguaçu foi incrível. Tudo organizado e preço justo. A TOURMIX facilitou demais."</p>
-                    <footer><strong>Carlos M.</strong><span>Foz do Iguaçu</span></footer>
-                </article>
-                <article class="depoimento">
-                    <div class="stars">★★★★★</div>
-                    <p>"Caldas Novas em família foi perfeito. Resort com café e jantar inclusos. Super recomendo!"</p>
-                    <footer><strong>Fernanda R.</strong><span>Caldas Novas</span></footer>
-                </article>
+          </div>
+        </article>
+
+        <article class="depoimento">
+          <div class="stars" aria-label="5 estrelas">★★★★★</div>
+          <p class="depoimento-texto">"Foi uma experiência incrível, curti muito — ficará na memória."</p>
+          <div class="depoimento-autor">
+            <div class="depoimento-avatar">N</div>
+            <div class="depoimento-meta">
+              <strong>Nayara</strong>
+              <span>Rota do Vinho · Tourmix BR</span>
             </div>
-        </div>
-    </section>
+          </div>
+        </article>
+
+        <article class="depoimento">
+          <div class="stars" aria-label="5 estrelas">★★★★★</div>
+          <p class="depoimento-texto">"Maravilhosa, amizades fluem, a alegria está sempre presente e o acolhimento é acima da média. Parabéns aos idealizadores deste evento incrível."</p>
+          <div class="depoimento-autor">
+            <div class="depoimento-avatar">A</div>
+            <div class="depoimento-meta">
+              <strong>Alberto</strong>
+              <span>Rota do Vinho · Tourmix BR</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="depoimento">
+          <div class="stars" aria-label="5 estrelas">★★★★★</div>
+          <p class="depoimento-texto">"Eu curti tudo demais — organização, pessoas e lugares. Experiência completa!"</p>
+          <div class="depoimento-autor">
+            <div class="depoimento-avatar">C</div>
+            <div class="depoimento-meta">
+              <strong>Camila</strong>
+              <span>Rota do Vinho · Tourmix BR</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="depoimento">
+          <div class="stars" aria-label="5 estrelas">★★★★★</div>
+          <p class="depoimento-texto">"Foi maravilhosa, a equipe foi muito atenciosa, cada momento maravilhoso."</p>
+          <div class="depoimento-autor">
+            <div class="depoimento-avatar">N</div>
+            <div class="depoimento-meta">
+              <strong>Nayra</strong>
+              <span>Rota do Vinho · Tourmix BR</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="depoimento">
+          <div class="stars" aria-label="5 estrelas">★★★★★</div>
+          <p class="depoimento-texto">"Foi incrível!!! Já conhecia uma parte do roteiro, mas com o pessoal ficou ainda mais divertido."</p>
+          <div class="depoimento-autor">
+            <div class="depoimento-avatar">L</div>
+            <div class="depoimento-meta">
+              <strong>Laiane</strong>
+              <span>Rota do Vinho · Tourmix BR</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="depoimento">
+          <div class="stars" aria-label="5 estrelas">★★★★★</div>
+          <p class="depoimento-texto">"Amei amei amei — bora pras próximas que já tô ansiosa!"</p>
+          <div class="depoimento-autor">
+            <div class="depoimento-avatar">R</div>
+            <div class="depoimento-meta">
+              <strong>Roberta</strong>
+              <span>Rota do Vinho · Tourmix BR</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="depoimento">
+          <div class="stars" aria-label="5 estrelas">★★★★★</div>
+          <p class="depoimento-texto">"Foi incrível. Atendimento rápido e viagem muito bem organizada."</p>
+          <div class="depoimento-autor">
+            <div class="depoimento-avatar">L</div>
+            <div class="depoimento-meta">
+              <strong>Lucinelia</strong>
+              <span>Rota do Vinho · Tourmix BR</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="depoimento">
+          <div class="stars" aria-label="5 estrelas">★★★★★</div>
+          <p class="depoimento-texto">"Atendimento rápido no WhatsApp e condições ótimas para Gramado. Valeu cada centavo!"</p>
+          <div class="depoimento-autor">
+            <div class="depoimento-avatar">J</div>
+            <div class="depoimento-meta">
+              <strong>Juliana F.</strong>
+              <span>Gramado</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="depoimento">
+          <div class="stars" aria-label="5 estrelas">★★★★★</div>
+          <p class="depoimento-texto">"Caldas Novas em família foi perfeito. Resort com café e jantar inclusos. Super recomendo!"</p>
+          <div class="depoimento-autor">
+            <div class="depoimento-avatar">F</div>
+            <div class="depoimento-meta">
+              <strong>Fernanda R.</strong>
+              <span>Caldas Novas</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="depoimento">
+          <div class="stars" aria-label="5 estrelas">★★★★★</div>
+          <p class="depoimento-texto">"Foz do Iguaçu foi incrível. Tudo organizado e preço justo. A TOURMIX facilitou demais."</p>
+          <div class="depoimento-autor">
+            <div class="depoimento-avatar">C</div>
+            <div class="depoimento-meta">
+              <strong>Carlos M.</strong>
+              <span>Foz do Iguaçu</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="depoimento">
+          <div class="stars" aria-label="5 estrelas">★★★★★</div>
+          <p class="depoimento-texto">"Excelente experiência com a Tourmix. Recomendo de olhos fechados para a próxima viagem."</p>
+          <div class="depoimento-autor">
+            <div class="depoimento-avatar">M</div>
+            <div class="depoimento-meta">
+              <strong>Mariana S.</strong>
+              <span>Tourmix BR</span>
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </div>
+</section>
 
     <section class="section contato" id="contato">
         <div class="container contato-grid">
