@@ -58,55 +58,91 @@
     (tags || []).forEach(function (t) {
       if (list.indexOf(t) === -1) list.push(t);
     });
-    if (list.length > 16) list = list.slice(-16);
-    localStorage.setItem(INTERESSES_KEY, JSON.stringify(list));
+    localStorage.setItem(INTERESSES_KEY, JSON.stringify(list.slice(-40)));
   }
 
   function trackPage() {
-    var p = location.pathname || '/';
-    var sig = PAGE_SIGNALS[p] || PAGE_SIGNALS[p.replace(/\/$/, '')];
-    if (sig) {
-      var scores = loadScores();
-      Object.keys(sig).forEach(function (k) {
-        if (k === 'tags') return;
-        scores[k] = (scores[k] || 0) + sig[k];
-      });
-      saveScores(scores);
-      if (sig.tags) addInteresses(sig.tags);
-    }
+    var p = (location.pathname || '/').toLowerCase();
+    var sig = PAGE_SIGNALS[p];
+    if (!sig) return;
+    var scores = loadScores();
+    Object.keys(sig).forEach(function (k) {
+      if (k === 'tags') return;
+      scores[k] = (scores[k] || 0) + sig[k];
+    });
+    saveScores(scores);
+    if (sig.tags) addInteresses(sig.tags);
     try {
       var hist = JSON.parse(localStorage.getItem(HISTORICO_KEY) || '[]');
-      hist.push({ path: p, at: Date.now() });
-      if (hist.length > 40) hist = hist.slice(-40);
-      localStorage.setItem(HISTORICO_KEY, JSON.stringify(hist));
+      hist.unshift({ path: p, at: Date.now() });
+      localStorage.setItem(HISTORICO_KEY, JSON.stringify(hist.slice(0, 30)));
     } catch (e) {}
   }
 
-  trackPage();
+  try { trackPage(); } catch (e) {}
 
-  // CSS do botão — acima do WhatsApp
+  // ---- UI: botão flutuante com contorno RGB animado ----
   var css = document.createElement('style');
-  css.id = 'tourmix-fab-css';
   css.textContent = [
-    '#tourmix-fab-wrap{position:fixed;right:20px;bottom:92px;z-index:9998;font-family:Montserrat,system-ui,sans-serif}',
-    '#tourmix-fab{width:58px;height:58px;border-radius:50%;border:none;cursor:pointer;padding:0;',
-    'display:flex;align-items:center;justify-content:center;',
-    'background:linear-gradient(145deg,#0e7490 0%,#0a2e38 100%);',
-    'box-shadow:0 10px 28px rgba(14,116,144,.45);transition:transform .2s,box-shadow .2s;',
-    '-webkit-tap-highlight-color:transparent}',
-    '#tourmix-fab:hover{transform:scale(1.07);box-shadow:0 14px 32px rgba(14,116,144,.55)}',
-    '#tourmix-fab img{width:32px;height:32px;object-fit:contain;border-radius:8px;background:#fff;padding:3px}',
-    '#tourmix-fab .fab-fallback{color:#eab308;font-weight:800;font-size:14px;letter-spacing:-.5px}',
-    '#tourmix-fab-tip{position:absolute;right:68px;top:50%;transform:translateY(-50%);',
-    'background:#0a2e38;color:#fff;font-size:.75rem;font-weight:700;padding:.45rem .7rem;border-radius:10px;',
-    'white-space:nowrap;opacity:0;pointer-events:none;transition:opacity .2s;box-shadow:0 6px 16px rgba(0,0,0,.2)}',
+    '#tourmix-fab-wrap{position:fixed;right:20px;bottom:92px;z-index:99980;',
+    'font-family:Montserrat,system-ui,sans-serif}',
+    '#tourmix-fab{',
+    'position:relative;width:60px;height:60px;border-radius:50%;border:none;',
+    'padding:0;cursor:pointer;display:grid;place-items:center;',
+    'background:transparent;isolation:isolate;',
+    '-webkit-tap-highlight-color:transparent;',
+    'transition:transform .22s ease}',
+    '#tourmix-fab::before{',
+    'content:"";position:absolute;inset:-3px;border-radius:50%;z-index:-2;',
+    'background:conic-gradient(from var(--tmx-angle,0deg),',
+    '#ff006e,#ffbe0b,#3a86ff,#00f5d4,#8338ec,#ff006e);',
+    'animation:tmxRgbSpin 3s linear infinite}',
+    '#tourmix-fab::after{',
+    'content:"";position:absolute;inset:2px;border-radius:50%;z-index:-1;',
+    'background:rgba(15,23,42,.88);',
+    'backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);',
+    'border:1px solid rgba(255,255,255,.08);',
+    'box-shadow:0 10px 28px rgba(0,0,0,.28)}',
+    '#tourmix-fab:hover{transform:scale(1.08)}',
+    '#tourmix-fab:hover::before{filter:brightness(1.15)}',
+    '#tourmix-fab img{',
+    'width:30px;height:30px;object-fit:contain;border-radius:8px;',
+    'position:relative;z-index:1;pointer-events:none}',
+    '#tourmix-fab .fab-fallback{',
+    'position:relative;z-index:1;color:#eab308;font-weight:800;',
+    'font-size:14px;letter-spacing:-.5px}',
+    '#tourmix-fab-tip{',
+    'position:absolute;right:72px;top:50%;transform:translateY(-50%);',
+    'background:rgba(15,23,42,.92);color:#fff;font-size:.75rem;font-weight:700;',
+    'padding:.45rem .75rem;border-radius:10px;white-space:nowrap;',
+    'opacity:0;pointer-events:none;transition:opacity .2s;',
+    'border:1px solid rgba(255,255,255,.1);',
+    'box-shadow:0 8px 20px rgba(0,0,0,.25)}',
     '#tourmix-fab-wrap:hover #tourmix-fab-tip{opacity:1}',
-    '#tourmix-fab-tip::after{content:"";position:absolute;right:-6px;top:50%;transform:translateY(-50%);',
-    'border:6px solid transparent;border-left-color:#0a2e38}',
-    '#tourmix-fab-dot{position:absolute;top:2px;right:2px;width:12px;height:12px;border-radius:50%;',
-    'background:#eab308;border:2px solid #0a2e38;box-shadow:0 0 0 0 rgba(234,179,8,.5);animation:tourmixPulse 2s infinite}',
-    '@keyframes tourmixPulse{0%{box-shadow:0 0 0 0 rgba(234,179,8,.55)}70%{box-shadow:0 0 0 10px rgba(234,179,8,0)}100%{box-shadow:0 0 0 0 rgba(234,179,8,0)}}',
-    '@media (max-width:600px){#tourmix-fab{width:54px;height:54px}#tourmix-fab img{width:28px;height:28px}#tourmix-fab-tip{display:none}}'
+    '#tourmix-fab-tip::after{',
+    'content:"";position:absolute;right:-6px;top:50%;transform:translateY(-50%);',
+    'border:6px solid transparent;border-left-color:rgba(15,23,42,.92)}',
+    '#tourmix-fab-dot{',
+    'position:absolute;top:3px;right:3px;width:11px;height:11px;border-radius:50%;',
+    'background:#eab308;border:2px solid rgba(15,23,42,.9);z-index:2;',
+    'box-shadow:0 0 0 0 rgba(234,179,8,.5);animation:tourmixPulse 2s infinite}',
+    '@property --tmx-angle{syntax:"<angle>";inherits:false;initial-value:0deg}',
+    '@keyframes tmxRgbSpin{to{--tmx-angle:360deg}}',
+    /* fallback se @property não existir: gira o gradiente via transform no pseudo */
+    '@supports not (background: conic-gradient(from var(--a), red, blue)){',
+    '#tourmix-fab::before{animation:tmxRgbRotate 3s linear infinite}}',
+    '@keyframes tmxRgbRotate{to{transform:rotate(360deg)}}',
+    '@keyframes tourmixPulse{',
+    '0%{box-shadow:0 0 0 0 rgba(234,179,8,.55)}',
+    '70%{box-shadow:0 0 0 10px rgba(234,179,8,0)}',
+    '100%{box-shadow:0 0 0 0 rgba(234,179,8,0)}}',
+    '@media (max-width:600px){',
+    '#tourmix-fab{width:54px;height:54px}',
+    '#tourmix-fab img{width:26px;height:26px}',
+    '#tourmix-fab-tip{display:none}}',
+    '@media (prefers-reduced-motion:reduce){',
+    '#tourmix-fab::before{animation:none}',
+    '#tourmix-fab-dot{animation:none}}'
   ].join('');
   document.head.appendChild(css);
 
@@ -132,4 +168,14 @@
     span.textContent = 'IA';
     document.getElementById('tourmix-fab').appendChild(span);
   };
+
+  // Fallback animação RGB em browsers sem @property
+  if (typeof CSS === 'undefined' || !CSS.registerProperty) {
+    var fab = document.getElementById('tourmix-fab');
+    var angle = 0;
+    setInterval(function () {
+      angle = (angle + 3) % 360;
+      fab.style.setProperty('--tmx-angle', angle + 'deg');
+    }, 30);
+  }
 })();
