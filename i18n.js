@@ -1,6 +1,6 @@
 /**
  * TOURMIX — tradução completa PT / EN / ES
- * Preços (12x, R$) não traduzem.
+ * Preços (12x, R$) e NOMES dos pacotes/destinos não traduzem.
  * Volta para PT limpa cookies do Google e recarrega a página original.
  * <script src="i18n.js"></script> antes de </body>
  */
@@ -55,32 +55,61 @@
     }
   }
 
+  function markNoTranslate(el) {
+    if (!el || !el.classList) return;
+    el.classList.add('notranslate');
+    el.setAttribute('translate', 'no');
+  }
+
+  /** Preços + nomes de pacotes/destinos NÃO traduzem */
   function protectPrices() {
     var selectors = [
       '.price', '.package-price', '.pacote-footer', '.pacote-footer strong',
-      '.preco', '.valor', '[class*="price"]', '[class*="preco"]'
+      '.preco', '.valor', '[class*="price"]', '[class*="preco"]',
+      '.pacote-card h2', '.pacote-card h3', '.pacote-card h4',
+      '.pacote-card .pacote-nome', '.pacote-card .nome',
+      '.package-card h2', '.package-card h3',
+      '.card-pacote h2', '.card-pacote h3',
+      '.destino-card h2', '.destino-card h3',
+      '.destinos-grid h3', '.destinos-grid h2',
+      '.excursao-card h2', '.excursao-card h3',
+      '.pacote-hero h1', '.hero-pacote h1',
+      'article.pacote h1', 'article.pacote h2',
+      '.package-title', '.pacote-titulo', '.pacote-title',
+      '[data-pacote-nome]', '.notranslate-nome',
+      'main h1', '.conteudo-pacote h1', '.info-box h1',
+      '.page-hero h1', '.hero-content h1',
+      '.badge', '.pacote-badge', '.etiqueta'
     ];
     selectors.forEach(function (sel) {
-      document.querySelectorAll(sel).forEach(function (el) {
-        el.classList.add('notranslate');
-        el.setAttribute('translate', 'no');
-      });
+      try {
+        document.querySelectorAll(sel).forEach(markNoTranslate);
+      } catch (e) {}
     });
 
-    var re = /(\d+\s*x\b|\bR\$\s*\d|\b12x\b|\b10x\b|\b6x\b|\b4x\b|\b3x\b|\b2x\b)/i;
+    var rePrice = /(\d+\s*x\b|\bR\$\s*\d|\b12x\b|\b10x\b|\b6x\b|\b4x\b|\b3x\b|\b2x\b)/i;
+    var reNome = /\b(Foz do Iguaçu|Foz do Iguacu|Balneário Camboriú|Balneario Camboriu|Gramado|Bonito|Caldas Novas|Florianópolis|Florianopolis|Santiago do Chile|Santiago|Buenos Aires|Holambra|Natal na Toca do Cupim|Toca do Cupim|Rota do Vinho|Templo Zu Lai|Patagônia|Patagonia|Maldivas|Itália Clássica|Italia Classica|Tourmix|TOURMIX)\b/i;
+
     var walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, null);
     var node;
     var toProtect = [];
     while ((node = walker.nextNode())) {
       var t = node.nodeValue || '';
-      if (re.test(t)) {
+      if (!t.trim()) continue;
+      if (rePrice.test(t) || reNome.test(t)) {
         var el = node.parentElement;
-        if (el && el.closest && !el.closest('script,style')) toProtect.push(el);
+        if (el && el.closest && !el.closest('script,style,noscript')) {
+          toProtect.push(el);
+          var cardTitle = el.closest('h1,h2,h3,h4,.pacote-nome,.package-title,.pacote-titulo');
+          if (cardTitle) toProtect.push(cardTitle);
+        }
       }
     }
-    toProtect.forEach(function (el) {
-      el.classList.add('notranslate');
-      el.setAttribute('translate', 'no');
+    toProtect.forEach(markNoTranslate);
+
+    document.querySelectorAll('img[alt]').forEach(function (img) {
+      var a = img.getAttribute('alt') || '';
+      if (reNome.test(a)) markNoTranslate(img);
     });
   }
 
@@ -244,7 +273,14 @@
     protectPrices();
     injectUI();
     loadGoogle();
-    setTimeout(protectPrices, 500);
+    setTimeout(protectPrices, 400);
+    setTimeout(protectPrices, 1200);
+    setTimeout(protectPrices, 2500);
+    try {
+      var obs = new MutationObserver(function () { protectPrices(); });
+      obs.observe(document.body, { childList: true, subtree: true });
+      setTimeout(function () { try { obs.disconnect(); } catch (e) {} }, 8000);
+    } catch (e) {}
   }
 
   if (document.readyState === 'loading') {
