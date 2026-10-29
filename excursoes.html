@@ -61,65 +61,99 @@
         .excursao-section.alt { background: #f0f9ff; }
 
         .excursao-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 1.5rem;
+            display: grid !important;
+            grid-template-columns: repeat(3, 1fr) !important;
+            gap: 1.5rem !important;
+            align-items: stretch;
         }
 
         .excursao-card {
-            background: white;
-            border-radius: 14px;
+            background: #fff;
+            border-radius: 16px;
             overflow: hidden;
             box-shadow: 0 8px 25px rgba(14,116,144,0.1);
             border: 1px solid #e2e8f0;
             transition: 0.3s ease;
-            display: flex;
-            flex-direction: column;
+            display: flex !important;
+            flex-direction: column !important;
+            height: 100%;
+            max-width: none !important;
+            width: 100% !important;
         }
         .excursao-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 16px 35px rgba(14,116,144,0.15);
+            transform: translateY(-6px);
+            box-shadow: 0 20px 40px rgba(14,116,144,0.15);
         }
-        .excursao-card img {
-            width: 100%;
-            height: 160px !important;
-            max-height: 160px !important;
+
+        /* igual .pacote-img da aba Pacotes */
+        .excursao-img {
+            position: relative;
+            height: 190px;
+            flex-shrink: 0;
+            overflow: hidden;
+            background: #e2e8f0;
+        }
+        .excursao-img img,
+        .excursao-card > img {
+            width: 100% !important;
+            height: 100% !important;
+            max-height: none !important;
             object-fit: cover !important;
             object-position: center;
             display: block;
         }
-        .excursao-card {
-            max-width: 100%;
+        /* se a img estiver direta no card (sem wrapper), força altura */
+        .excursao-card > img {
+            height: 190px !important;
+            flex-shrink: 0;
         }
-        .excursao-card-body .btn,
-        .excursao-card-body a.btn {
-            width: auto;
-            align-self: flex-start;
-            padding: 0.55rem 1.2rem;
-            border-radius: 999px;
-        }
+
         .excursao-card-body {
-            padding: 1.3rem;
+            padding: 1.25rem 1.3rem 1.35rem;
             flex: 1;
             display: flex;
             flex-direction: column;
-        }
-        .excursao-card-body h3 {
-            color: #0e7490;
-            font-size: 1.15rem;
-            margin-bottom: 0.5rem;
-        }
-        .excursao-card-body p {
-            color: #64748b;
-            font-size: 0.9rem;
-            margin-bottom: 1.2rem;
-            flex: 1;
+            background: #fff;
         }
         .excursao-meta {
             font-size: 0.8rem;
             color: #94a3b8;
-            margin-bottom: 0.6rem;
+            margin-bottom: 0.45rem;
+            font-weight: 600;
         }
+        .excursao-card-body h3 {
+            color: #0e7490;
+            font-size: 1.15rem;
+            margin: 0 0 0.45rem;
+            line-height: 1.3;
+        }
+        .excursao-card-body p {
+            color: #64748b;
+            font-size: 0.9rem;
+            margin: 0 0 1.1rem;
+            flex: 1;
+            line-height: 1.5;
+        }
+        .excursao-card-body .btn,
+        .excursao-card-body a.btn,
+        .excursao-card-body a.btn-sm {
+            width: auto !important;
+            align-self: flex-start;
+            padding: 0.55rem 1.2rem !important;
+            border-radius: 999px !important;
+            margin-top: auto;
+        }
+
+        [data-theme="dark"] .excursao-card {
+            background: #1e293b;
+            border-color: #334155;
+        }
+        [data-theme="dark"] .excursao-card-body {
+            background: #1e293b;
+        }
+        [data-theme="dark"] .excursao-card-body h3 { color: #67e8f9; }
+        [data-theme="dark"] .excursao-card-body p { color: #94a3b8; }
+
 
         /* PORTFÓLIO */
         .portfolio-intro {
@@ -212,16 +246,19 @@
                 grid-template-columns: repeat(2, 1fr);
             }
         }
+        @media (max-width: 900px) {
+            .excursao-grid {
+                grid-template-columns: repeat(2, 1fr) !important;
+            }
+        }
         @media (max-width: 600px) {
             .excursao-grid,
             .portfolio-grid {
-                grid-template-columns: 1fr;
+                grid-template-columns: 1fr !important;
             }
             .page-hero { height: 28vh; min-height: 180px; }
-            .excursao-card img {
-                height: 140px !important;
-                max-height: 140px !important;
-            }
+            .excursao-img { height: 160px; }
+            .excursao-card > img { height: 160px !important; }
         }
     </style>
 </head>
@@ -258,40 +295,40 @@
                 <h2 style="color:#0e7490;">Excursões em destaque</h2>
                 <p class="section-desc">Confira algumas opções. Em breve mais destinos e datas.</p>
             </div>
-            
-            <article class="excursao-card">
-    <img src="holambra01.jpg" alt="Holambra - Cidade das Flores">
-    <div class="excursao-card-body">
-        <div class="excursao-meta">1 dia · 24 de outubro</div>
-        <h3>Holambra</h3>
-        <p>Cidade das Flores. Portal, Moinho Gigante, Rua dos Guarda-Chuvas e Parque Van Gogh.</p>
-        <a href="/holambra" class="btn btn-sm">Ver detalhes</a>
-    </div>
-</article>
-            <article class="excursao-card">
-    <img src="https://images.pexels.com/photos/261102/pexels-photo-261102.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Natal na Toca do Cupim">
-    <div class="excursao-card-body">
-        <div class="excursao-meta">1 dia · 13 de dezembro</div>
-        <h3>Natal na Toca do Cupim</h3>
-        <p>Lazer, música, zumba, piscina e gastronomia à vontade no domingo de Natal.</p>
-        <a href="/natal-toca-cupim" class="btn btn-sm">Ver detalhes</a>
-    </div>
-</article>
 
-<article class="excursao-card">
-    <img src="templo.png" alt="Templo Zu Lai + Rota do Vinho">
-    <div class="excursao-card-body">
-        <div class="excursao-meta">1 dia · 05 de dezembro</div>
-        <h3>Templo Zu Lai + Rota do Vinho</h3>
-        <p>Templo, vinícolas em São Roque e gastronomia em um roteiro especial.</p>
-        <a href="/rota-do-vinho" class="btn btn-sm">Ver detalhes</a>
-    </div>
-</article>
-            
-            </article>
             <div class="excursao-grid">
                 <article class="excursao-card">
-                    <img src="https://images.pexels.com/photos/2583852/pexels-photo-2583852.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Excursão Foz do Iguaçu">
+                    <div class="excursao-img"><img src="holambra01.jpg" alt="Holambra - Cidade das Flores"></div>
+                    <div class="excursao-card-body">
+                        <div class="excursao-meta">1 dia · 24 de outubro</div>
+                        <h3>Holambra</h3>
+                        <p>Cidade das Flores. Portal, Moinho Gigante, Rua dos Guarda-Chuvas e Parque Van Gogh.</p>
+                        <a href="/holambra" class="btn btn-sm">Ver detalhes</a>
+                    </div>
+                </article>
+
+                <article class="excursao-card">
+                    <div class="excursao-img"><img src="https://images.pexels.com/photos/261102/pexels-photo-261102.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Natal na Toca do Cupim"></div>
+                    <div class="excursao-card-body">
+                        <div class="excursao-meta">1 dia · 13 de dezembro</div>
+                        <h3>Natal na Toca do Cupim</h3>
+                        <p>Lazer, música, zumba, piscina e gastronomia à vontade no domingo de Natal.</p>
+                        <a href="/natal-toca-cupim" class="btn btn-sm">Ver detalhes</a>
+                    </div>
+                </article>
+
+                <article class="excursao-card">
+                    <div class="excursao-img"><img src="templo-zu-lai-banner.jpg" alt="Templo Zu Lai + Rota do Vinho" onerror="this.onerror=null;this.src='templo.png'"></div>
+                    <div class="excursao-card-body">
+                        <div class="excursao-meta">1 dia · 05 de dezembro</div>
+                        <h3>Templo Zu Lai + Rota do Vinho</h3>
+                        <p>Templo, vinícolas em São Roque e gastronomia em um roteiro especial.</p>
+                        <a href="/rota-do-vinho" class="btn btn-sm">Ver detalhes</a>
+                    </div>
+                </article>
+
+                <article class="excursao-card">
+                    <div class="excursao-img"><img src="https://images.pexels.com/photos/2583852/pexels-photo-2583852.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Excursão Foz do Iguaçu"></div>
                     <div class="excursao-card-body">
                         <div class="excursao-meta">Grupo · Saídas programadas</div>
                         <h3>Foz do Iguaçu</h3>
@@ -301,7 +338,7 @@
                 </article>
 
                 <article class="excursao-card">
-                    <img src="https://images.pexels.com/photos/338504/pexels-photo-338504.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Excursão Gramado">
+                    <div class="excursao-img"><img src="https://images.pexels.com/photos/338504/pexels-photo-338504.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Excursão Gramado"></div>
                     <div class="excursao-card-body">
                         <div class="excursao-meta">Grupo · Serra Gaúcha</div>
                         <h3>Gramado e Canela</h3>
@@ -309,9 +346,9 @@
                         <a href="https://wa.me/5511914841404?text=Olá! Quero saber sobre a excursão para Gramado" target="_blank" class="btn btn-sm">Quero saber mais</a>
                     </div>
                 </article>
-                
+
                 <article class="excursao-card">
-                    <img src="https://images.pexels.com/photos/1174732/pexels-photo-1174732.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Excursão Balneário">
+                    <div class="excursao-img"><img src="https://images.pexels.com/photos/1174732/pexels-photo-1174732.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Excursão Balneário"></div>
                     <div class="excursao-card-body">
                         <div class="excursao-meta">Grupo · Litoral</div>
                         <h3>Balneário Camboriú</h3>
