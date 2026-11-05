@@ -9,136 +9,149 @@
 <link rel="stylesheet" href="style.css">
 <style>
 :root{
-  --tmx:#0e7490;--tmx2:#0891b2;--gold:#eab308;--bg:#f1f5f9;--card:#fff;
-  --text:#0f172a;--muted:#64748b;--line:#e2e8f0;--soft:#ecfeff;
+  --tmx:#0e7490;--tmx2:#0891b2;--gold:#eab308;--bg:#0b1220;--card:#1e293b;
+  --text:#f1f5f9;--muted:#94a3b8;--line:#334155;--soft:#164e63;
 }
 *{box-sizing:border-box}
-body{margin:0;font-family:Montserrat,system-ui,sans-serif;background:var(--bg);color:var(--text)}
-.page-wrap{max-width:1080px;margin:0 auto;padding:1.1rem 1rem 4.5rem}
+body{margin:0;font-family:Montserrat,system-ui,sans-serif;background:#0b1220;color:var(--text)}
+/* evita header cobrindo conteúdo */
+.page-wrap{max-width:1100px;margin:0 auto;padding:5.5rem 1rem 4.5rem}
+
 .hero-pass{
-  background:linear-gradient(135deg,#0e7490 0%,#0a2e38 55%,#164e63 100%);
-  color:#fff;border-radius:22px;padding:1.6rem 1.35rem 1.45rem;margin-bottom:1.25rem;
-  box-shadow:0 16px 40px rgba(14,116,144,.22);position:relative;overflow:hidden;
+  background:linear-gradient(135deg,#0e7490 0%,#0a2e38 60%,#164e63 100%);
+  color:#fff;border-radius:20px;padding:1.35rem 1.25rem 1.25rem;margin-bottom:1.15rem;
+  box-shadow:0 14px 36px rgba(0,0,0,.25);position:relative;z-index:1;
 }
-.hero-pass::after{content:"";position:absolute;right:-40px;top:-40px;width:180px;height:180px;border-radius:50%;background:rgba(234,179,8,.12)}
-.hero-pass h1{margin:0 0 .35rem;font-size:clamp(1.35rem,3vw,1.85rem);position:relative;z-index:1}
-.hero-pass p{margin:0;opacity:.92;font-size:.92rem;max-width:560px;position:relative;z-index:1;line-height:1.5}
-.note-cambio{font-size:.75rem;opacity:.8;margin-top:.55rem;position:relative;z-index:1}
+.hero-pass h1{margin:0 0 .35rem;font-size:clamp(1.25rem,2.8vw,1.7rem)}
+.hero-pass p{margin:0;opacity:.92;font-size:.9rem;max-width:620px;line-height:1.5}
+.note-cambio{font-size:.72rem;opacity:.8;margin-top:.5rem}
 
-.filtros{display:flex;flex-wrap:wrap;gap:.45rem;margin:0 0 1.1rem}
+.filtros{display:flex;flex-wrap:wrap;gap:.4rem;margin:0 0 1rem;position:relative;z-index:2}
 .filtros button{
-  border:1px solid var(--line);background:#fff;border-radius:999px;padding:.5rem 1.05rem;
-  font-weight:700;font-size:.8rem;cursor:pointer;font-family:inherit;color:var(--text);transition:.15s;
+  border:1px solid var(--line);background:#1e293b;border-radius:999px;padding:.45rem .95rem;
+  font-weight:700;font-size:.78rem;cursor:pointer;font-family:inherit;color:var(--text);
 }
-.filtros button:hover{border-color:#99f6e4}
-.filtros button.active{background:var(--tmx);color:#fff;border-color:var(--tmx);box-shadow:0 6px 16px rgba(14,116,144,.25)}
+.filtros button.active{background:var(--tmx);border-color:var(--tmx);color:#fff}
 
-.dest-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}
+.dest-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:.9rem}
 @media(max-width:900px){.dest-grid{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:600px){.dest-grid{grid-template-columns:1fr}}
 
 .dest-card{
-  background:var(--card);border:1px solid var(--line);border-radius:18px;overflow:hidden;cursor:pointer;
-  transition:.22s;display:flex;flex-direction:column;box-shadow:0 4px 14px rgba(15,23,42,.04);
+  background:var(--card);border:1px solid var(--line);border-radius:16px;overflow:hidden;cursor:pointer;
+  transition:.2s;display:flex;flex-direction:column;
 }
-.dest-card:hover{transform:translateY(-5px);box-shadow:0 16px 32px rgba(14,116,144,.14);border-color:#a5f3fc}
-.dest-card img{width:100%;height:148px;object-fit:cover}
-.dest-body{padding:1rem 1.05rem 1.15rem;flex:1;display:flex;flex-direction:column}
-.dest-body .tag{font-size:.7rem;font-weight:800;color:var(--tmx);text-transform:uppercase;letter-spacing:.04em}
-.dest-body h3{margin:.3rem 0 .3rem;font-size:1.08rem;color:#0f172a}
-.dest-body p{margin:0 0 .7rem;font-size:.8rem;color:var(--muted);flex:1;line-height:1.45}
-.dest-body .desde{font-weight:800;font-size:1.08rem;color:var(--tmx)}
-.dest-body .desde small{font-weight:600;font-size:.75rem;color:var(--muted)}
+.dest-card:hover{transform:translateY(-4px);border-color:#22d3ee;box-shadow:0 12px 28px rgba(0,0,0,.25)}
+.dest-card img{width:100%;height:130px;object-fit:cover}
+.dest-body{padding:.9rem 1rem 1rem;flex:1;display:flex;flex-direction:column}
+.dest-body .tag{font-size:.68rem;font-weight:800;color:#67e8f9;text-transform:uppercase;letter-spacing:.03em}
+.dest-body h3{margin:.25rem 0 .3rem;font-size:1.02rem;color:#fff}
+.dest-body p{margin:0 0 .55rem;font-size:.78rem;color:var(--muted);flex:1;line-height:1.4}
+.dest-body .desde{font-weight:800;font-size:1rem;color:#fbbf24}
+.dest-body .desde small{font-weight:600;font-size:.72rem;color:var(--muted)}
 
 .step{display:none}
 .step.on{display:block}
 
-.panel{
-  background:#fff;border:1px solid var(--line);border-radius:20px;padding:1.15rem 1.2rem 1.35rem;
-  box-shadow:0 10px 30px rgba(15,23,42,.05);
-}
 .back-btn{
-  border:none;background:#f1f5f9;color:var(--tmx);font-weight:700;cursor:pointer;font-family:inherit;
-  margin-bottom:1rem;padding:.45rem .9rem;border-radius:999px;font-size:.82rem;
+  border:none;background:#1e293b;color:#67e8f9;font-weight:700;cursor:pointer;font-family:inherit;
+  margin-bottom:.85rem;padding:.4rem .85rem;border-radius:999px;font-size:.8rem;border:1px solid var(--line);
 }
-.back-btn:hover{background:#e2e8f0}
-.panel-title{margin:0 0 .15rem;font-size:1.2rem;color:var(--tmx)}
-.panel-sub{margin:0 0 1.1rem;font-size:.85rem;color:var(--muted)}
 
-.search-row{display:grid;grid-template-columns:1.2fr 1fr auto;gap:.65rem;margin-bottom:1rem}
+/* layout destino selecionado */
+.dest-hero{
+  display:grid;grid-template-columns:1.1fr 1fr;gap:1rem;margin-bottom:1rem;
+}
+@media(max-width:800px){.dest-hero{grid-template-columns:1fr}}
+.dest-hero-photo{
+  border-radius:16px;overflow:hidden;min-height:180px;background:#0f172a;border:1px solid var(--line);
+  position:relative;
+}
+.dest-hero-photo img{width:100%;height:100%;object-fit:cover;min-height:180px;max-height:220px}
+.dest-hero-info{
+  background:var(--card);border:1px solid var(--line);border-radius:16px;padding:1rem 1.1rem;
+}
+.dest-hero-info h2{margin:0 0 .35rem;font-size:1.25rem;color:#67e8f9}
+.dest-hero-info .lead{margin:0 0 .75rem;font-size:.85rem;color:var(--muted);line-height:1.45}
+.pontos{display:flex;flex-wrap:wrap;gap:.4rem;margin:0;padding:0;list-style:none}
+.pontos li{
+  background:#0f172a;border:1px solid var(--line);border-radius:999px;padding:.35rem .7rem;
+  font-size:.72rem;font-weight:700;color:#e2e8f0;
+}
+
+.panel{
+  background:var(--card);border:1px solid var(--line);border-radius:16px;padding:1rem 1rem 1.15rem;
+}
+.panel-title{margin:0 0 .15rem;font-size:1rem;color:#fff}
+.panel-sub{margin:0 0 .85rem;font-size:.8rem;color:var(--muted)}
+
+.search-row{display:grid;grid-template-columns:1.1fr 1fr auto;gap:.55rem;margin-bottom:.75rem}
 @media(max-width:700px){.search-row{grid-template-columns:1fr}}
-.field label{display:block;font-size:.72rem;font-weight:700;color:var(--muted);margin-bottom:.3rem;text-transform:uppercase;letter-spacing:.03em}
-.field select,.field input{
-  width:100%;border:1px solid var(--line);border-radius:12px;padding:.7rem .85rem;font-family:inherit;
-  font-size:.9rem;font-weight:600;background:#f8fafc;color:var(--text);outline:none;
+.field label{display:block;font-size:.68rem;font-weight:700;color:var(--muted);margin-bottom:.25rem;text-transform:uppercase}
+.field select{
+  width:100%;border:1px solid var(--line);border-radius:10px;padding:.55rem .7rem;font-family:inherit;
+  font-size:.85rem;font-weight:600;background:#0f172a;color:var(--text);outline:none;
 }
-.field select:focus,.field input:focus{border-color:var(--tmx);box-shadow:0 0 0 3px rgba(14,116,144,.12);background:#fff}
 .btn-buscar{
-  align-self:end;border:none;background:var(--tmx);color:#fff;font-weight:800;font-family:inherit;
-  border-radius:12px;padding:.75rem 1.2rem;cursor:pointer;font-size:.88rem;white-space:nowrap;
+  align-self:end;border:1px solid var(--line);background:#0f172a;color:#e2e8f0;font-weight:700;font-family:inherit;
+  border-radius:10px;padding:.55rem .9rem;cursor:pointer;font-size:.8rem;
 }
-.btn-buscar:hover{background:var(--tmx2)}
 
-.mes-nav{display:flex;align-items:center;justify-content:space-between;gap:.5rem;margin:0 0 .85rem}
-.mes-nav h3{margin:0;font-size:1rem;color:#0f172a}
+.mes-nav{display:flex;align-items:center;justify-content:space-between;gap:.4rem;margin:0 0 .55rem}
+.mes-nav h3{margin:0;font-size:.92rem;color:#fff}
 .mes-nav button{
-  width:38px;height:38px;border-radius:50%;border:1px solid var(--line);background:#fff;
-  cursor:pointer;font-size:1.1rem;color:var(--tmx);font-weight:700;
+  width:32px;height:32px;border-radius:50%;border:1px solid var(--line);background:#0f172a;
+  cursor:pointer;font-size:1rem;color:#67e8f9;font-weight:700;
 }
-.mes-nav button:disabled{opacity:.35;cursor:default}
+.mes-nav button:disabled{opacity:.3;cursor:default}
 
-.cal{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}
-.cal .dow{text-align:center;font-size:.68rem;font-weight:800;color:var(--muted);padding:.25rem 0}
+/* calendário compacto */
+.cal-wrap{max-width:340px;margin:0 auto .85rem}
+.cal{display:grid;grid-template-columns:repeat(7,1fr);gap:4px}
+.cal .dow{text-align:center;font-size:.62rem;font-weight:800;color:var(--muted);padding:.15rem 0}
 .cal .day{
-  aspect-ratio:1;border:1px solid transparent;border-radius:12px;background:#f8fafc;display:flex;flex-direction:column;
-  align-items:center;justify-content:center;cursor:default;font-size:.82rem;font-weight:600;color:#94a3b8;min-height:48px;
+  aspect-ratio:1;border:1px solid transparent;border-radius:8px;background:#0f172a;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;cursor:default;font-size:.72rem;font-weight:600;color:#475569;min-height:34px;
 }
 .cal .day.has{
-  background:#fff;border-color:var(--line);color:var(--text);cursor:pointer;box-shadow:0 2px 6px rgba(15,23,42,.04);
+  background:#1e293b;border-color:#334155;color:#f1f5f9;cursor:pointer;
 }
-.cal .day.has:hover{border-color:var(--tmx);background:var(--soft)}
-.cal .day.has .price{font-size:.62rem;font-weight:800;color:var(--tmx);margin-top:1px;line-height:1}
+.cal .day.has:hover{border-color:#22d3ee;background:#164e63}
+.cal .day.has .price{font-size:.55rem;font-weight:800;color:#fbbf24;margin-top:1px;line-height:1}
 .cal .day.active{background:var(--tmx)!important;color:#fff!important;border-color:var(--tmx)!important}
 .cal .day.active .price{color:#fde68a!important}
 .cal .day.empty{background:transparent;border:none}
 
-.results-head{display:flex;justify-content:space-between;align-items:center;gap:.5rem;margin:1.15rem 0 .65rem;flex-wrap:wrap}
-.results-head h4{margin:0;font-size:.95rem;color:#0f172a}
-.results-head span{font-size:.78rem;color:var(--muted);font-weight:600}
+.results-head{display:flex;justify-content:space-between;align-items:center;gap:.5rem;margin:.85rem 0 .55rem;flex-wrap:wrap}
+.results-head h4{margin:0;font-size:.9rem;color:#fff}
+.results-head span{font-size:.75rem;color:var(--muted);font-weight:600}
 
-.voo-list{display:flex;flex-direction:column;gap:.7rem}
+.voo-list{display:flex;flex-direction:column;gap:.6rem}
 .voo-card{
-  background:linear-gradient(180deg,#fff,#f8fafc);border:1px solid var(--line);border-radius:16px;
-  padding:1rem 1.05rem;display:grid;grid-template-columns:1fr auto;gap:.7rem 1rem;align-items:center;
-  transition:.15s;
+  background:#0f172a;border:1px solid var(--line);border-radius:14px;
+  padding:.85rem .95rem;display:grid;grid-template-columns:1fr auto;gap:.55rem .85rem;align-items:center;
 }
-.voo-card:hover{border-color:#67e8f9;box-shadow:0 8px 22px rgba(14,116,144,.08)}
-.rota{font-weight:800;font-size:.92rem;color:var(--tmx)}
-.cia{font-size:.75rem;color:var(--muted);font-weight:600;margin-top:2px}
-.horarios{display:flex;flex-wrap:wrap;gap:.65rem;margin-top:.55rem}
-.horario-box{background:#fff;border:1px solid var(--line);border-radius:12px;padding:.5rem .7rem;min-width:124px}
-.horario-box .lbl{font-size:.65rem;font-weight:800;color:var(--muted);text-transform:uppercase}
-.horario-box .h{font-size:1.05rem;font-weight:800;margin-top:1px}
-.horario-box .sub{font-size:.72rem;color:var(--muted)}
+.voo-card:hover{border-color:#22d3ee}
+.rota{font-weight:800;font-size:.88rem;color:#67e8f9}
+.cia{font-size:.72rem;color:var(--muted);font-weight:600;margin-top:2px}
+.horarios{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:.45rem}
+.horario-box{background:#1e293b;border:1px solid var(--line);border-radius:10px;padding:.4rem .55rem;min-width:110px}
+.horario-box .lbl{font-size:.6rem;font-weight:800;color:var(--muted);text-transform:uppercase}
+.horario-box .h{font-size:.95rem;font-weight:800;margin-top:1px}
+.horario-box .sub{font-size:.68rem;color:var(--muted)}
 .preco-box{text-align:right}
-.preco-box .val{font-size:1.3rem;font-weight:800;color:#0f172a}
-.preco-box .tax{font-size:.72rem;color:var(--muted)}
-.preco-box .ass{font-size:.72rem;color:#b45309;font-weight:700;margin-top:.2rem}
+.preco-box .val{font-size:1.15rem;font-weight:800;color:#fbbf24}
+.preco-box .tax{font-size:.68rem;color:var(--muted)}
+.preco-box .ass{font-size:.68rem;color:#fbbf24;font-weight:700;margin-top:.15rem}
 .btn-sel{
-  display:inline-block;margin-top:.45rem;background:var(--gold);color:#111;border:none;border-radius:999px;
-  padding:.55rem 1.15rem;font-weight:800;font-size:.8rem;cursor:pointer;font-family:inherit;text-decoration:none;
+  display:inline-block;margin-top:.35rem;background:var(--gold);color:#111;border:none;border-radius:999px;
+  padding:.45rem 1rem;font-weight:800;font-size:.75rem;cursor:pointer;font-family:inherit;text-decoration:none;
 }
-.btn-sel:hover{filter:brightness(1.05)}
-.empty{padding:1.5rem;text-align:center;color:var(--muted);font-size:.9rem}
-.badge-conv{display:inline-block;font-size:.65rem;font-weight:700;background:#fef3c7;color:#92400e;padding:.15rem .4rem;border-radius:6px;margin-left:.35rem}
+.empty{padding:1.1rem;text-align:center;color:var(--muted);font-size:.85rem}
+.badge-conv{display:inline-block;font-size:.6rem;font-weight:700;background:#422006;color:#fde68a;padding:.12rem .35rem;border-radius:5px;margin-left:.3rem}
 
-[data-theme="dark"] body{background:#0b1220;color:#f1f5f9}
-[data-theme="dark"] .panel,[data-theme="dark"] .dest-card,[data-theme="dark"] .voo-card,[data-theme="dark"] .horario-box,
-[data-theme="dark"] .field select,[data-theme="dark"] .field input,[data-theme="dark"] .filtros button,
-[data-theme="dark"] .mes-nav button,[data-theme="dark"] .cal .day.has{background:#1e293b;border-color:#334155;color:#f1f5f9}
-[data-theme="dark"] .cal .day{background:#0f172a}
-[data-theme="dark"] .dest-body h3,[data-theme="dark"] .preco-box .val,[data-theme="dark"] .mes-nav h3,[data-theme="dark"] .results-head h4{color:#f8fafc}
-[data-theme="dark"] .back-btn{background:#1e293b;color:#67e8f9}
+/* header do site: garantir que não cubra */
+header.header{position:relative;z-index:20}
 </style>
 </head>
 <body>
@@ -149,7 +162,7 @@ body{margin:0;font-family:Montserrat,system-ui,sans-serif;background:var(--bg);c
       <a href="/">Início</a>
       <a href="/#pacotes">Pacotes</a>
       <a href="/excursoes">Excursões</a>
-      <a href="/passagens" style="font-weight:800;color:#0e7490">Passagens</a>
+      <a href="/passagens" style="font-weight:800;color:#67e8f9">Passagens</a>
       <a href="/#contato" class="btn-nav">Fale Conosco</a>
     </nav>
   </div>
@@ -173,9 +186,19 @@ body{margin:0;font-family:Montserrat,system-ui,sans-serif;background:var(--bg);c
 
   <div id="step-data" class="step">
     <button type="button" class="back-btn" id="backDest">← Voltar aos destinos</button>
+
+    <div class="dest-hero" id="destHero">
+      <div class="dest-hero-photo"><img id="destPhoto" alt=""></div>
+      <div class="dest-hero-info">
+        <h2 id="tituloDest">Destino</h2>
+        <p class="lead" id="destLead">Escolha a data no calendário compacto ao lado dos horários disponíveis.</p>
+        <ul class="pontos" id="destPontos"></ul>
+      </div>
+    </div>
+
     <div class="panel">
-      <h2 class="panel-title" id="tituloDest">Destino</h2>
-      <p class="panel-sub">Use o mês e o calendário para achar a data. Só aparecem dias com voo disponível.</p>
+      <h3 class="panel-title">Buscar data</h3>
+      <p class="panel-sub">Só os dias com voo ficam ativos. Toque no dia para ver os horários.</p>
 
       <div class="search-row">
         <div class="field">
@@ -198,10 +221,10 @@ body{margin:0;font-family:Montserrat,system-ui,sans-serif;background:var(--bg);c
         <h3 id="mesLabel">—</h3>
         <button type="button" id="mesNext" aria-label="Próximo mês">›</button>
       </div>
-      <div class="cal" id="cal"></div>
+      <div class="cal-wrap"><div class="cal" id="cal"></div></div>
 
       <div class="results-head">
-        <h4 id="resultsTitle">Selecione uma data no calendário</h4>
+        <h4 id="resultsTitle">Selecione uma data</h4>
         <span id="resultsCount"></span>
       </div>
       <div class="voo-list" id="vooList"></div>
@@ -210,16 +233,17 @@ body{margin:0;font-family:Montserrat,system-ui,sans-serif;background:var(--bg);c
 </div>
 
 <script>
-const IMGS = {"POA": "https://images.pexels.com/photos/2104742/pexels-photo-2104742.jpeg?auto=compress&cs=tinysrgb&w=800", "SSA": "https://images.pexels.com/photos/3586966/pexels-photo-3586966.jpeg?auto=compress&cs=tinysrgb&w=800", "REC": "https://images.pexels.com/photos/3155666/pexels-photo-3155666.jpeg?auto=compress&cs=tinysrgb&w=800", "FOR": "https://images.pexels.com/photos/3889855/pexels-photo-3889855.jpeg?auto=compress&cs=tinysrgb&w=800", "BPS": "https://images.pexels.com/photos/1174732/pexels-photo-1174732.jpeg?auto=compress&cs=tinysrgb&w=800", "NVT": "https://images.pexels.com/photos/1008155/pexels-photo-1008155.jpeg?auto=compress&cs=tinysrgb&w=800", "SCL": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d7/Skyline_of_Santiago%2C_Chile.jpg/1280px-Skyline_of_Santiago%2C_Chile.jpg", "IGU": "https://images.pexels.com/photos/2583852/pexels-photo-2583852.jpeg?auto=compress&cs=tinysrgb&w=800", "NAT": "https://images.pexels.com/photos/1487010/pexels-photo-1487010.jpeg?auto=compress&cs=tinysrgb&w=800", "MCZ": "https://images.pexels.com/photos/1174732/pexels-photo-1174732.jpeg?auto=compress&cs=tinysrgb&w=800", "JPA": "https://images.pexels.com/photos/1487010/pexels-photo-1487010.jpeg?auto=compress&cs=tinysrgb&w=800", "CLV": "https://images.pexels.com/photos/261102/pexels-photo-261102.jpeg?auto=compress&cs=tinysrgb&w=800", "FLN": "https://images.pexels.com/photos/1008155/pexels-photo-1008155.jpeg?auto=compress&cs=tinysrgb&w=800", "USH": "https://images.pexels.com/photos/417074/pexels-photo-417074.jpeg?auto=compress&cs=tinysrgb&w=800", "BRC": "https://images.pexels.com/photos/417074/pexels-photo-417074.jpeg?auto=compress&cs=tinysrgb&w=800", "AEP": "https://images.pexels.com/photos/466685/pexels-photo-466685.jpeg?auto=compress&cs=tinysrgb&w=800", "EZE": "https://images.pexels.com/photos/466685/pexels-photo-466685.jpeg?auto=compress&cs=tinysrgb&w=800", "MDZ": "https://images.pexels.com/photos/1123260/pexels-photo-1123260.jpeg?auto=compress&cs=tinysrgb&w=800", "AJU": "https://images.pexels.com/photos/3586966/pexels-photo-3586966.jpeg?auto=compress&cs=tinysrgb&w=800", "JJD": "https://images.pexels.com/photos/1174732/pexels-photo-1174732.jpeg?auto=compress&cs=tinysrgb&w=800", "MAO": "https://images.pexels.com/photos/2583852/pexels-photo-2583852.jpeg?auto=compress&cs=tinysrgb&w=800"};
-const DEFAULT_IMG = "https://images.pexels.com/photos/358319/pexels-photo-358319.jpeg?auto=compress&cs=tinysrgb&w=800";
+const META = {"AJU": {"img": "https://images.pexels.com/photos/258154/pexels-photo-258154.jpeg?auto=compress&cs=tinysrgb&w=1200", "pontos": ["Orla de Atalaia", "Oceanário de Aracaju", "Mercado Municipal", "Cânion do Xingó"]}, "CLV": {"img": "https://images.pexels.com/photos/261102/pexels-photo-261102.jpeg?auto=compress&cs=tinysrgb&w=1200", "pontos": ["Parques aquáticos", "Águas termais", "Hot Park", "Lagoa Quente"]}, "FLN": {"img": "https://images.pexels.com/photos/1008155/pexels-photo-1008155.jpeg?auto=compress&cs=tinysrgb&w=1200", "pontos": ["Praia da Joaquina", "Lagoa da Conceção", "Ponte Hercílio Luz", "Centro histórico"]}, "FOR": {"img": "https://images.pexels.com/photos/3889855/pexels-photo-3889855.jpeg?auto=compress&cs=tinysrgb&w=1200", "pontos": ["Praia do Futuro", "Beach Park", "Centro Dragão do Mar", "Mercado Central"]}, "IGU": {"img": "https://images.pexels.com/photos/2583852/pexels-photo-2583852.jpeg?auto=compress&cs=tinysrgb&w=1200", "pontos": ["Cataratas do Iguaçu", "Parque das Aves", "Usina de Itaipu", "Marco das Três Fronteiras"]}, "IOS": {"img": "https://images.pexels.com/photos/1174732/pexels-photo-1174732.jpeg?auto=compress&cs=tinysrgb&w=1200", "pontos": ["Centro histórico", "Praia do Cristo", "Morro de São Paulo (próx.)", "Cacau e fazendas"]}, "JJD": {"img": "https://images.pexels.com/photos/1174732/pexels-photo-1174732.jpeg?auto=compress&cs=tinysrgb&w=1200", "pontos": ["Dunas de Jericoacoara", "Pedra Furada", "Lagoa do Paraíso", "Pôr do sol na praia"]}, "JPA": {"img": "https://images.pexels.com/photos/1487010/pexels-photo-1487010.jpeg?auto=compress&cs=tinysrgb&w=1200", "pontos": ["Praia de Tambaú", "Jacaré e pôr do sol", "Centro Histórico", "Poço de Jacaré"]}, "MCZ": {"img": "https://images.pexels.com/photos/1174732/pexels-photo-1174732.jpeg?auto=compress&cs=tinysrgb&w=1200", "pontos": ["Pajuçara e jangadas", "Praia do Francês", "Gunga", "Centro de Maceió"]}, "NAT": {"img": "https://images.pexels.com/photos/1487010/pexels-photo-1487010.jpeg?auto=compress&cs=tinysrgb&w=1200", "pontos": ["Pipa", "Genipabu", "Via Costeira", "Parrachos de Maracajaú"]}, "NVT": {"img": "https://images.pexels.com/photos/1008155/pexels-photo-1008155.jpeg?auto=compress&cs=tinysrgb&w=1200", "pontos": ["Balneário Camboriú", "Praia Central", "Unipraias", "Betos Carrero (próx.)"]}, "POA": {"img": "https://images.pexels.com/photos/2104742/pexels-photo-2104742.jpeg?auto=compress&cs=tinysrgb&w=1200", "pontos": ["Orla do Guaíba", "Mercado Público", "Gasômetro", "Vinhos do Vale dos Vinhedos"]}, "REC": {"img": "https://images.pexels.com/photos/3155666/pexels-photo-3155666.jpeg?auto=compress&cs=tinysrgb&w=1200", "pontos": ["Marco Zero", "Praia de Boa Viagem", "Instituto Ricardo Brennand", "Olinda (próx.)"]}, "SSA": {"img": "https://images.pexels.com/photos/3586966/pexels-photo-3586966.jpeg?auto=compress&cs=tinysrgb&w=1200", "pontos": ["Pelourinho", "Elevador Lacerda", "Farol da Barra", "Mercado Modelo"]}, "BPS": {"img": "https://images.pexels.com/photos/1174732/pexels-photo-1174732.jpeg?auto=compress&cs=tinysrgb&w=1200", "pontos": ["Passarela do Álcool", "Praia do Espelho", "Trancoso", "Arraial d'Ajuda"]}, "SCL": {"img": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d7/Skyline_of_Santiago%2C_Chile.jpg/1280px-Skyline_of_Santiago%2C_Chile.jpg", "pontos": ["Cerro San Cristóbal", "Plaza de Armas", "Valle Nevado", "Vinícolas do Maipo"]}, "BRC": {"img": "https://images.pexels.com/photos/417074/pexels-photo-417074.jpeg?auto=compress&cs=tinysrgb&w=1200", "pontos": ["Lago Nahuel Huapi", "Cerro Catedral", "Centro Cívico", "Rota dos Sete Lagos"]}, "USH": {"img": "https://images.pexels.com/photos/417074/pexels-photo-417074.jpeg?auto=compress&cs=tinysrgb&w=1200", "pontos": ["Canal Beagle", "Trem do Fim do Mundo", "Parque Nacional", "Farol Les Éclaireurs"]}, "AEP": {"img": "https://images.pexels.com/photos/466685/pexels-photo-466685.jpeg?auto=compress&cs=tinysrgb&w=1200", "pontos": ["Casa Rosada", "Caminito", "Teatro Colón", "Recoleta"]}, "EZE": {"img": "https://images.pexels.com/photos/466685/pexels-photo-466685.jpeg?auto=compress&cs=tinysrgb&w=1200", "pontos": ["Buenos Aires", "Palermo", "Puerto Madero", "San Telmo"]}, "MDZ": {"img": "https://images.pexels.com/photos/1123260/pexels-photo-1123260.jpeg?auto=compress&cs=tinysrgb&w=1200", "pontos": ["Vinícolas", "Cordilheira dos Andes", "Praça Independência", "Alta montanha"]}, "MAO": {"img": "https://images.pexels.com/photos/2583852/pexels-photo-2583852.jpeg?auto=compress&cs=tinysrgb&w=1200", "pontos": ["Teatro Amazonas", "Encontro das Águas", "Mercado Municipal", "Floresta"]}, "PMW": {"img": "https://images.pexels.com/photos/2104742/pexels-photo-2104742.jpeg?auto=compress&cs=tinysrgb&w=1200", "pontos": ["Palmas", "Praia da Graciosa", "Jalapão (próx.)", "Parque Cesamar"]}, "SDU": {"img": "https://images.pexels.com/photos/287240/pexels-photo-287240.jpeg?auto=compress&cs=tinysrgb&w=1200", "pontos": ["Cristo Redentor", "Pão de Açúcar", "Copacabana", "Centro histórico"]}, "GIG": {"img": "https://images.pexels.com/photos/287240/pexels-photo-287240.jpeg?auto=compress&cs=tinysrgb&w=1200", "pontos": ["Rio de Janeiro", "Praias", "Cristo", "Lapa"]}};
+const DEFAULT_META = {"img": "https://images.pexels.com/photos/358319/pexels-photo-358319.jpeg?auto=compress&cs=tinysrgb&w=1200", "pontos": ["Experiências locais", "Gastronomia", "Passeios", "Cultura"]};
 const MESES = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
 let DATA = null;
 let filtro = 'todos';
 let destSel = null;
 let dataSel = null;
-let mesAtual = null; // {y,m} m=0-11
+let mesAtual = null;
 let mesesDisp = [];
 
+function meta(code){ return META[code] || DEFAULT_META; }
 function money(v){
   const n = Number(v)||0;
   return 'R$ ' + n.toLocaleString('pt-BR',{minimumFractionDigits:0, maximumFractionDigits:0});
@@ -240,17 +264,18 @@ function renderDestinos(){
   const grid = document.getElementById('destGrid');
   const list = (DATA.destinos||[]).filter(d => filtro==='todos' || d.tipo===filtro);
   if(!list.length){ grid.innerHTML = '<div class="empty">Nenhum destino neste filtro.</div>'; return; }
-  grid.innerHTML = list.map(d => `
-    <article class="dest-card" data-code="${d.code}">
-      <img src="${IMGS[d.code]||DEFAULT_IMG}" alt="${d.nome}" loading="lazy">
+  grid.innerHTML = list.map(d => {
+    const m = meta(d.code);
+    return `<article class="dest-card" data-code="${d.code}">
+      <img src="${m.img}" alt="${d.nome}" loading="lazy">
       <div class="dest-body">
         <span class="tag">${d.tipo==='nacional'?'Nacional':'América do Sul'} · ${d.qtd} opções</span>
         <h3 class="notranslate" translate="no">${d.nome}</h3>
-        <p>Vários embarques. Clique e busque a melhor data no calendário.</p>
+        <p>${(m.pontos||[]).slice(0,2).join(' · ')}</p>
         <div class="desde notranslate" translate="no">a partir de ${money(d.desde)} <small>/ pessoa</small></div>
       </div>
-    </article>
-  `).join('');
+    </article>`;
+  }).join('');
   grid.querySelectorAll('.dest-card').forEach(el => {
     el.addEventListener('click', () => openDest(el.getAttribute('data-code')));
   });
@@ -260,24 +285,25 @@ function openDest(code){
   destSel = (DATA.destinos||[]).find(d => d.code===code);
   if(!destSel) return;
   dataSel = null;
+  const m = meta(code);
   document.getElementById('step-dest').classList.remove('on');
   document.getElementById('step-data').classList.add('on');
   document.getElementById('tituloDest').textContent = destSel.nome;
-  document.getElementById('resultsTitle').textContent = 'Selecione uma data no calendário';
+  document.getElementById('destPhoto').src = m.img;
+  document.getElementById('destPhoto').alt = destSel.nome;
+  document.getElementById('destLead').textContent = 'A partir de ' + money(destSel.desde) + ' por pessoa · ' + destSel.qtd + ' opções de voo. Veja pontos turísticos e escolha a melhor data.';
+  document.getElementById('destPontos').innerHTML = (m.pontos||[]).map(p => '<li>'+p+'</li>').join('');
+  document.getElementById('resultsTitle').textContent = 'Selecione uma data';
   document.getElementById('resultsCount').textContent = '';
-  document.getElementById('vooList').innerHTML = '';
+  document.getElementById('vooList').innerHTML = '<div class="empty">Toque em um dia com preço no calendário.</div>';
 
   const set = new Set(destSel.opcoes.map(o => o.data_ida).filter(Boolean));
+  const seen = new Set();
   mesesDisp = [...set].map(iso => {
     const [y,m] = iso.split('-').map(Number);
     return {y, m:m-1, key: y+'-'+m};
-  });
-  // unique months sorted
-  const seen = new Set();
-  mesesDisp = mesesDisp.filter(x => {
-    if(seen.has(x.key)) return false;
-    seen.add(x.key); return true;
-  }).sort((a,b)=> a.y-b.y || a.m-b.m);
+  }).filter(x => { if(seen.has(x.key)) return false; seen.add(x.key); return true; })
+    .sort((a,b)=> a.y-b.y || a.m-b.m);
 
   const sel = document.getElementById('selMes');
   sel.innerHTML = mesesDisp.map((x,i)=>`<option value="${i}">${MESES[x.m]} ${x.y}</option>`).join('');
@@ -299,7 +325,6 @@ function renderCal(){
   document.getElementById('mesPrev').disabled = idx <= 0;
   document.getElementById('mesNext').disabled = idx >= mesesDisp.length-1;
 
-  // price map for days
   const byDay = {};
   destSel.opcoes.forEach(o => {
     if(!o.data_ida) return;
@@ -309,7 +334,7 @@ function renderCal(){
   });
 
   const first = new Date(y,m,1);
-  const startPad = first.getDay(); // 0 sun
+  const startPad = first.getDay();
   const daysInMonth = new Date(y,m+1,0).getDate();
   const cal = document.getElementById('cal');
   let html = ['Dom','Seg','Ter','Qua','Qui','Sex','Sáb'].map(d=>`<div class="dow">${d}</div>`).join('');
@@ -340,8 +365,8 @@ function renderCal(){
 function renderVoos(){
   const list = document.getElementById('vooList');
   if(!destSel || !dataSel){
-    list.innerHTML = '<div class="empty">Escolha um dia destacado no calendário para ver os horários.</div>';
-    document.getElementById('resultsTitle').textContent = 'Selecione uma data no calendário';
+    list.innerHTML = '<div class="empty">Toque em um dia com preço no calendário.</div>';
+    document.getElementById('resultsTitle').textContent = 'Selecione uma data';
     document.getElementById('resultsCount').textContent = '';
     return;
   }
@@ -375,7 +400,6 @@ function renderVoos(){
             <div class="sub">${fmtDateBR(o.data_volta)} · voo ${o.voo_volta||'—'}</div>
           </div>
         </div>
-        <div style="margin-top:.4rem;font-size:.75rem;color:#64748b">${o.campanha||''}</div>
       </div>
       <div class="preco-box">
         <div class="val notranslate" translate="no">${money(o.total)}</div>
