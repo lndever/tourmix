@@ -8,59 +8,137 @@
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 <style>
-:root{--tmx:#0e7490;--tmx2:#0891b2;--gold:#eab308;--bg:#f8fafc;--card:#fff;--text:#0f172a;--muted:#64748b;--line:#e2e8f0}
+:root{
+  --tmx:#0e7490;--tmx2:#0891b2;--gold:#eab308;--bg:#f1f5f9;--card:#fff;
+  --text:#0f172a;--muted:#64748b;--line:#e2e8f0;--soft:#ecfeff;
+}
 *{box-sizing:border-box}
 body{margin:0;font-family:Montserrat,system-ui,sans-serif;background:var(--bg);color:var(--text)}
-.page-wrap{max-width:1100px;margin:0 auto;padding:1.25rem 1rem 4rem}
-.hero-pass{background:linear-gradient(135deg,#0e7490,#0a2e38);color:#fff;border-radius:20px;padding:1.75rem 1.4rem;margin-bottom:1.5rem}
-.hero-pass h1{margin:0 0 .4rem;font-size:clamp(1.4rem,3vw,1.9rem)}
-.hero-pass p{margin:0;opacity:.9;font-size:.95rem}
-.filtros{display:flex;flex-wrap:wrap;gap:.5rem;margin:1rem 0 1.25rem}
-.filtros button{border:1px solid var(--line);background:#fff;border-radius:999px;padding:.45rem 1rem;font-weight:700;font-size:.82rem;cursor:pointer;font-family:inherit;color:var(--text)}
-.filtros button.active{background:var(--tmx);color:#fff;border-color:var(--tmx)}
+.page-wrap{max-width:1080px;margin:0 auto;padding:1.1rem 1rem 4.5rem}
+.hero-pass{
+  background:linear-gradient(135deg,#0e7490 0%,#0a2e38 55%,#164e63 100%);
+  color:#fff;border-radius:22px;padding:1.6rem 1.35rem 1.45rem;margin-bottom:1.25rem;
+  box-shadow:0 16px 40px rgba(14,116,144,.22);position:relative;overflow:hidden;
+}
+.hero-pass::after{content:"";position:absolute;right:-40px;top:-40px;width:180px;height:180px;border-radius:50%;background:rgba(234,179,8,.12)}
+.hero-pass h1{margin:0 0 .35rem;font-size:clamp(1.35rem,3vw,1.85rem);position:relative;z-index:1}
+.hero-pass p{margin:0;opacity:.92;font-size:.92rem;max-width:560px;position:relative;z-index:1;line-height:1.5}
+.note-cambio{font-size:.75rem;opacity:.8;margin-top:.55rem;position:relative;z-index:1}
+
+.filtros{display:flex;flex-wrap:wrap;gap:.45rem;margin:0 0 1.1rem}
+.filtros button{
+  border:1px solid var(--line);background:#fff;border-radius:999px;padding:.5rem 1.05rem;
+  font-weight:700;font-size:.8rem;cursor:pointer;font-family:inherit;color:var(--text);transition:.15s;
+}
+.filtros button:hover{border-color:#99f6e4}
+.filtros button.active{background:var(--tmx);color:#fff;border-color:var(--tmx);box-shadow:0 6px 16px rgba(14,116,144,.25)}
+
 .dest-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}
 @media(max-width:900px){.dest-grid{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:600px){.dest-grid{grid-template-columns:1fr}}
-.dest-card{background:var(--card);border:1px solid var(--line);border-radius:16px;overflow:hidden;cursor:pointer;transition:.2s;display:flex;flex-direction:column}
-.dest-card:hover{transform:translateY(-4px);box-shadow:0 12px 28px rgba(14,116,144,.12)}
-.dest-card img{width:100%;height:140px;object-fit:cover}
+
+.dest-card{
+  background:var(--card);border:1px solid var(--line);border-radius:18px;overflow:hidden;cursor:pointer;
+  transition:.22s;display:flex;flex-direction:column;box-shadow:0 4px 14px rgba(15,23,42,.04);
+}
+.dest-card:hover{transform:translateY(-5px);box-shadow:0 16px 32px rgba(14,116,144,.14);border-color:#a5f3fc}
+.dest-card img{width:100%;height:148px;object-fit:cover}
 .dest-body{padding:1rem 1.05rem 1.15rem;flex:1;display:flex;flex-direction:column}
-.dest-body .tag{font-size:.72rem;font-weight:700;color:var(--tmx);text-transform:uppercase;letter-spacing:.04em}
-.dest-body h3{margin:.25rem 0 .35rem;font-size:1.05rem;color:var(--tmx)}
-.dest-body p{margin:0 0 .75rem;font-size:.82rem;color:var(--muted);flex:1}
-.dest-body .desde{font-weight:800;font-size:1.05rem;color:#0f172a}
-.dest-body .desde small{font-weight:600;font-size:.78rem;color:var(--muted)}
+.dest-body .tag{font-size:.7rem;font-weight:800;color:var(--tmx);text-transform:uppercase;letter-spacing:.04em}
+.dest-body h3{margin:.3rem 0 .3rem;font-size:1.08rem;color:#0f172a}
+.dest-body p{margin:0 0 .7rem;font-size:.8rem;color:var(--muted);flex:1;line-height:1.45}
+.dest-body .desde{font-weight:800;font-size:1.08rem;color:var(--tmx)}
+.dest-body .desde small{font-weight:600;font-size:.75rem;color:var(--muted)}
+
 .step{display:none}
 .step.on{display:block}
-.back-btn{border:none;background:transparent;color:var(--tmx);font-weight:700;cursor:pointer;font-family:inherit;margin-bottom:.75rem;padding:0}
-.datas{display:flex;flex-wrap:wrap;gap:.5rem;margin:0 0 1.25rem}
-.data-chip{border:1px solid var(--line);background:#fff;border-radius:12px;padding:.65rem .9rem;cursor:pointer;font-family:inherit;text-align:left;min-width:120px}
-.data-chip strong{display:block;font-size:.88rem}
-.data-chip span{font-size:.75rem;color:var(--muted)}
-.data-chip.active{border-color:var(--tmx);background:#ecfeff;box-shadow:0 0 0 2px rgba(14,116,144,.15)}
-.voo-list{display:flex;flex-direction:column;gap:.75rem}
-.voo-card{background:#fff;border:1px solid var(--line);border-radius:16px;padding:1rem 1.1rem;display:grid;grid-template-columns:1fr auto;gap:.75rem 1rem;align-items:center}
-.voo-card:hover{border-color:#99f6e4}
-.rota{font-weight:800;font-size:.95rem;color:var(--tmx)}
-.horarios{display:flex;flex-wrap:wrap;gap:1rem;margin-top:.45rem}
-.horario-box{background:#f8fafc;border-radius:12px;padding:.55rem .75rem;min-width:130px}
-.horario-box .lbl{font-size:.68rem;font-weight:700;color:var(--muted);text-transform:uppercase}
-.horario-box .h{font-size:1.05rem;font-weight:800}
-.horario-box .sub{font-size:.75rem;color:var(--muted)}
+
+.panel{
+  background:#fff;border:1px solid var(--line);border-radius:20px;padding:1.15rem 1.2rem 1.35rem;
+  box-shadow:0 10px 30px rgba(15,23,42,.05);
+}
+.back-btn{
+  border:none;background:#f1f5f9;color:var(--tmx);font-weight:700;cursor:pointer;font-family:inherit;
+  margin-bottom:1rem;padding:.45rem .9rem;border-radius:999px;font-size:.82rem;
+}
+.back-btn:hover{background:#e2e8f0}
+.panel-title{margin:0 0 .15rem;font-size:1.2rem;color:var(--tmx)}
+.panel-sub{margin:0 0 1.1rem;font-size:.85rem;color:var(--muted)}
+
+.search-row{display:grid;grid-template-columns:1.2fr 1fr auto;gap:.65rem;margin-bottom:1rem}
+@media(max-width:700px){.search-row{grid-template-columns:1fr}}
+.field label{display:block;font-size:.72rem;font-weight:700;color:var(--muted);margin-bottom:.3rem;text-transform:uppercase;letter-spacing:.03em}
+.field select,.field input{
+  width:100%;border:1px solid var(--line);border-radius:12px;padding:.7rem .85rem;font-family:inherit;
+  font-size:.9rem;font-weight:600;background:#f8fafc;color:var(--text);outline:none;
+}
+.field select:focus,.field input:focus{border-color:var(--tmx);box-shadow:0 0 0 3px rgba(14,116,144,.12);background:#fff}
+.btn-buscar{
+  align-self:end;border:none;background:var(--tmx);color:#fff;font-weight:800;font-family:inherit;
+  border-radius:12px;padding:.75rem 1.2rem;cursor:pointer;font-size:.88rem;white-space:nowrap;
+}
+.btn-buscar:hover{background:var(--tmx2)}
+
+.mes-nav{display:flex;align-items:center;justify-content:space-between;gap:.5rem;margin:0 0 .85rem}
+.mes-nav h3{margin:0;font-size:1rem;color:#0f172a}
+.mes-nav button{
+  width:38px;height:38px;border-radius:50%;border:1px solid var(--line);background:#fff;
+  cursor:pointer;font-size:1.1rem;color:var(--tmx);font-weight:700;
+}
+.mes-nav button:disabled{opacity:.35;cursor:default}
+
+.cal{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}
+.cal .dow{text-align:center;font-size:.68rem;font-weight:800;color:var(--muted);padding:.25rem 0}
+.cal .day{
+  aspect-ratio:1;border:1px solid transparent;border-radius:12px;background:#f8fafc;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;cursor:default;font-size:.82rem;font-weight:600;color:#94a3b8;min-height:48px;
+}
+.cal .day.has{
+  background:#fff;border-color:var(--line);color:var(--text);cursor:pointer;box-shadow:0 2px 6px rgba(15,23,42,.04);
+}
+.cal .day.has:hover{border-color:var(--tmx);background:var(--soft)}
+.cal .day.has .price{font-size:.62rem;font-weight:800;color:var(--tmx);margin-top:1px;line-height:1}
+.cal .day.active{background:var(--tmx)!important;color:#fff!important;border-color:var(--tmx)!important}
+.cal .day.active .price{color:#fde68a!important}
+.cal .day.empty{background:transparent;border:none}
+
+.results-head{display:flex;justify-content:space-between;align-items:center;gap:.5rem;margin:1.15rem 0 .65rem;flex-wrap:wrap}
+.results-head h4{margin:0;font-size:.95rem;color:#0f172a}
+.results-head span{font-size:.78rem;color:var(--muted);font-weight:600}
+
+.voo-list{display:flex;flex-direction:column;gap:.7rem}
+.voo-card{
+  background:linear-gradient(180deg,#fff,#f8fafc);border:1px solid var(--line);border-radius:16px;
+  padding:1rem 1.05rem;display:grid;grid-template-columns:1fr auto;gap:.7rem 1rem;align-items:center;
+  transition:.15s;
+}
+.voo-card:hover{border-color:#67e8f9;box-shadow:0 8px 22px rgba(14,116,144,.08)}
+.rota{font-weight:800;font-size:.92rem;color:var(--tmx)}
+.cia{font-size:.75rem;color:var(--muted);font-weight:600;margin-top:2px}
+.horarios{display:flex;flex-wrap:wrap;gap:.65rem;margin-top:.55rem}
+.horario-box{background:#fff;border:1px solid var(--line);border-radius:12px;padding:.5rem .7rem;min-width:124px}
+.horario-box .lbl{font-size:.65rem;font-weight:800;color:var(--muted);text-transform:uppercase}
+.horario-box .h{font-size:1.05rem;font-weight:800;margin-top:1px}
+.horario-box .sub{font-size:.72rem;color:var(--muted)}
 .preco-box{text-align:right}
-.preco-box .val{font-size:1.25rem;font-weight:800;color:#0f172a}
-.preco-box .tax{font-size:.75rem;color:var(--muted)}
-.preco-box .ass{font-size:.72rem;color:#b45309;font-weight:700;margin-top:.25rem}
-.btn-sel{display:inline-block;margin-top:.5rem;background:var(--gold);color:#111;border:none;border-radius:999px;padding:.55rem 1.1rem;font-weight:800;font-size:.82rem;cursor:pointer;font-family:inherit;text-decoration:none}
+.preco-box .val{font-size:1.3rem;font-weight:800;color:#0f172a}
+.preco-box .tax{font-size:.72rem;color:var(--muted)}
+.preco-box .ass{font-size:.72rem;color:#b45309;font-weight:700;margin-top:.2rem}
+.btn-sel{
+  display:inline-block;margin-top:.45rem;background:var(--gold);color:#111;border:none;border-radius:999px;
+  padding:.55rem 1.15rem;font-weight:800;font-size:.8rem;cursor:pointer;font-family:inherit;text-decoration:none;
+}
 .btn-sel:hover{filter:brightness(1.05)}
-.resumo{background:#fff;border:1px solid var(--line);border-radius:16px;padding:1.1rem;margin-bottom:1rem}
-.resumo h3{margin:0 0 .5rem;color:var(--tmx)}
-.empty{padding:2rem;text-align:center;color:var(--muted)}
+.empty{padding:1.5rem;text-align:center;color:var(--muted);font-size:.9rem}
+.badge-conv{display:inline-block;font-size:.65rem;font-weight:700;background:#fef3c7;color:#92400e;padding:.15rem .4rem;border-radius:6px;margin-left:.35rem}
+
 [data-theme="dark"] body{background:#0b1220;color:#f1f5f9}
-[data-theme="dark"] .dest-card,[data-theme="dark"] .voo-card,[data-theme="dark"] .data-chip,[data-theme="dark"] .resumo,[data-theme="dark"] .filtros button{background:#1e293b;border-color:#334155;color:#f1f5f9}
-[data-theme="dark"] .horario-box{background:#0f172a}
-[data-theme="dark"] .dest-body .desde,[data-theme="dark"] .preco-box .val{color:#f8fafc}
-header.header{margin-bottom:0}
+[data-theme="dark"] .panel,[data-theme="dark"] .dest-card,[data-theme="dark"] .voo-card,[data-theme="dark"] .horario-box,
+[data-theme="dark"] .field select,[data-theme="dark"] .field input,[data-theme="dark"] .filtros button,
+[data-theme="dark"] .mes-nav button,[data-theme="dark"] .cal .day.has{background:#1e293b;border-color:#334155;color:#f1f5f9}
+[data-theme="dark"] .cal .day{background:#0f172a}
+[data-theme="dark"] .dest-body h3,[data-theme="dark"] .preco-box .val,[data-theme="dark"] .mes-nav h3,[data-theme="dark"] .results-head h4{color:#f8fafc}
+[data-theme="dark"] .back-btn{background:#1e293b;color:#67e8f9}
 </style>
 </head>
 <body>
@@ -71,7 +149,7 @@ header.header{margin-bottom:0}
       <a href="/">Início</a>
       <a href="/#pacotes">Pacotes</a>
       <a href="/excursoes">Excursões</a>
-      <a href="/passagens" style="color:var(--tmx);font-weight:800">Passagens</a>
+      <a href="/passagens" style="font-weight:800;color:#0e7490">Passagens</a>
       <a href="/#contato" class="btn-nav">Fale Conosco</a>
     </nav>
   </div>
@@ -80,7 +158,8 @@ header.header{margin-bottom:0}
 <div class="page-wrap">
   <div class="hero-pass">
     <h1>Passagens em promoção</h1>
-    <p>Voos nacionais e América do Sul com bloqueios exclusivos. Escolha o destino, a data e o horário — no estilo das grandes OTAs.</p>
+    <p>Voos nacionais e América do Sul. Escolha o destino, busque a melhor data no calendário e reserve no horário ideal.</p>
+    <div class="note-cambio">Preços em reais (R$). Valores em dólar convertidos pela cotação do dia.</div>
   </div>
 
   <div id="step-dest" class="step on">
@@ -94,26 +173,56 @@ header.header{margin-bottom:0}
 
   <div id="step-data" class="step">
     <button type="button" class="back-btn" id="backDest">← Voltar aos destinos</button>
-    <h2 id="tituloDest" style="margin:.2rem 0 1rem;font-size:1.25rem;color:var(--tmx)"></h2>
-    <p style="color:var(--muted);font-size:.9rem;margin:0 0 .75rem">1. Escolha a data de embarque</p>
-    <div class="datas" id="datas"></div>
-    <p style="color:var(--muted);font-size:.9rem;margin:0 0 .75rem">2. Escolha o horário / voo</p>
-    <div class="voo-list" id="vooList"></div>
+    <div class="panel">
+      <h2 class="panel-title" id="tituloDest">Destino</h2>
+      <p class="panel-sub">Use o mês e o calendário para achar a data. Só aparecem dias com voo disponível.</p>
+
+      <div class="search-row">
+        <div class="field">
+          <label>Mês</label>
+          <select id="selMes"></select>
+        </div>
+        <div class="field">
+          <label>Ordenar voos</label>
+          <select id="selOrd">
+            <option value="preco">Menor preço</option>
+            <option value="hora">Horário de ida</option>
+            <option value="assentos">Mais assentos</option>
+          </select>
+        </div>
+        <button type="button" class="btn-buscar" id="btnLimparData">Limpar data</button>
+      </div>
+
+      <div class="mes-nav">
+        <button type="button" id="mesPrev" aria-label="Mês anterior">‹</button>
+        <h3 id="mesLabel">—</h3>
+        <button type="button" id="mesNext" aria-label="Próximo mês">›</button>
+      </div>
+      <div class="cal" id="cal"></div>
+
+      <div class="results-head">
+        <h4 id="resultsTitle">Selecione uma data no calendário</h4>
+        <span id="resultsCount"></span>
+      </div>
+      <div class="voo-list" id="vooList"></div>
+    </div>
   </div>
 </div>
 
 <script>
 const IMGS = {"POA": "https://images.pexels.com/photos/2104742/pexels-photo-2104742.jpeg?auto=compress&cs=tinysrgb&w=800", "SSA": "https://images.pexels.com/photos/3586966/pexels-photo-3586966.jpeg?auto=compress&cs=tinysrgb&w=800", "REC": "https://images.pexels.com/photos/3155666/pexels-photo-3155666.jpeg?auto=compress&cs=tinysrgb&w=800", "FOR": "https://images.pexels.com/photos/3889855/pexels-photo-3889855.jpeg?auto=compress&cs=tinysrgb&w=800", "BPS": "https://images.pexels.com/photos/1174732/pexels-photo-1174732.jpeg?auto=compress&cs=tinysrgb&w=800", "NVT": "https://images.pexels.com/photos/1008155/pexels-photo-1008155.jpeg?auto=compress&cs=tinysrgb&w=800", "SCL": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d7/Skyline_of_Santiago%2C_Chile.jpg/1280px-Skyline_of_Santiago%2C_Chile.jpg", "IGU": "https://images.pexels.com/photos/2583852/pexels-photo-2583852.jpeg?auto=compress&cs=tinysrgb&w=800", "NAT": "https://images.pexels.com/photos/1487010/pexels-photo-1487010.jpeg?auto=compress&cs=tinysrgb&w=800", "MCZ": "https://images.pexels.com/photos/1174732/pexels-photo-1174732.jpeg?auto=compress&cs=tinysrgb&w=800", "JPA": "https://images.pexels.com/photos/1487010/pexels-photo-1487010.jpeg?auto=compress&cs=tinysrgb&w=800", "CLV": "https://images.pexels.com/photos/261102/pexels-photo-261102.jpeg?auto=compress&cs=tinysrgb&w=800", "FLN": "https://images.pexels.com/photos/1008155/pexels-photo-1008155.jpeg?auto=compress&cs=tinysrgb&w=800", "USH": "https://images.pexels.com/photos/417074/pexels-photo-417074.jpeg?auto=compress&cs=tinysrgb&w=800", "BRC": "https://images.pexels.com/photos/417074/pexels-photo-417074.jpeg?auto=compress&cs=tinysrgb&w=800", "AEP": "https://images.pexels.com/photos/466685/pexels-photo-466685.jpeg?auto=compress&cs=tinysrgb&w=800", "EZE": "https://images.pexels.com/photos/466685/pexels-photo-466685.jpeg?auto=compress&cs=tinysrgb&w=800", "MDZ": "https://images.pexels.com/photos/1123260/pexels-photo-1123260.jpeg?auto=compress&cs=tinysrgb&w=800", "AJU": "https://images.pexels.com/photos/3586966/pexels-photo-3586966.jpeg?auto=compress&cs=tinysrgb&w=800", "JJD": "https://images.pexels.com/photos/1174732/pexels-photo-1174732.jpeg?auto=compress&cs=tinysrgb&w=800", "MAO": "https://images.pexels.com/photos/2583852/pexels-photo-2583852.jpeg?auto=compress&cs=tinysrgb&w=800"};
 const DEFAULT_IMG = "https://images.pexels.com/photos/358319/pexels-photo-358319.jpeg?auto=compress&cs=tinysrgb&w=800";
+const MESES = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
 let DATA = null;
 let filtro = 'todos';
 let destSel = null;
 let dataSel = null;
+let mesAtual = null; // {y,m} m=0-11
+let mesesDisp = [];
 
-function money(v, moeda){
+function money(v){
   const n = Number(v)||0;
-  if((moeda||'').includes('US')) return 'US$ ' + n.toLocaleString('en-US',{minimumFractionDigits:0});
-  return 'R$ ' + n.toLocaleString('pt-BR',{minimumFractionDigits:0});
+  return 'R$ ' + n.toLocaleString('pt-BR',{minimumFractionDigits:0, maximumFractionDigits:0});
 }
 function fmtDateBR(iso){
   if(!iso) return '';
@@ -122,6 +231,9 @@ function fmtDateBR(iso){
   const dt = new Date(+y, +m-1, +d);
   const dias = ['Dom','Seg','Ter','Qua','Qui','Sex','Sáb'];
   return dias[dt.getDay()] + ', ' + d + '/' + m + '/' + y;
+}
+function isoKey(y,m,d){
+  return y + '-' + String(m+1).padStart(2,'0') + '-' + String(d).padStart(2,'0');
 }
 
 function renderDestinos(){
@@ -134,8 +246,8 @@ function renderDestinos(){
       <div class="dest-body">
         <span class="tag">${d.tipo==='nacional'?'Nacional':'América do Sul'} · ${d.qtd} opções</span>
         <h3 class="notranslate" translate="no">${d.nome}</h3>
-        <p>Vários embarques e horários. Clique para escolher data e voo.</p>
-        <div class="desde notranslate" translate="no">a partir de ${money(d.desde,d.moeda)} <small>/ pessoa</small></div>
+        <p>Vários embarques. Clique e busque a melhor data no calendário.</p>
+        <div class="desde notranslate" translate="no">a partir de ${money(d.desde)} <small>/ pessoa</small></div>
       </div>
     </article>
   `).join('');
@@ -150,61 +262,123 @@ function openDest(code){
   dataSel = null;
   document.getElementById('step-dest').classList.remove('on');
   document.getElementById('step-data').classList.add('on');
-  document.getElementById('tituloDest').textContent = destSel.nome + ' — escolha data e horário';
-  // unique dates
-  const dates = [...new Set(destSel.opcoes.map(o => o.data_ida))].sort();
-  const box = document.getElementById('datas');
-  box.innerHTML = dates.map((dt,i) => {
-    const opts = destSel.opcoes.filter(o => o.data_ida===dt);
-    const desde = Math.min(...opts.map(o=>o.total));
-    return `<button type="button" class="data-chip" data-dt="${dt}">
-      <strong>${fmtDateBR(dt)}</strong>
-      <span>${opts.length} voo(s) · desde ${money(desde, opts[0].moeda)}</span>
-    </button>`;
-  }).join('');
-  box.querySelectorAll('.data-chip').forEach(ch => {
-    ch.addEventListener('click', () => {
-      box.querySelectorAll('.data-chip').forEach(x=>x.classList.remove('active'));
-      ch.classList.add('active');
-      dataSel = ch.getAttribute('data-dt');
+  document.getElementById('tituloDest').textContent = destSel.nome;
+  document.getElementById('resultsTitle').textContent = 'Selecione uma data no calendário';
+  document.getElementById('resultsCount').textContent = '';
+  document.getElementById('vooList').innerHTML = '';
+
+  const set = new Set(destSel.opcoes.map(o => o.data_ida).filter(Boolean));
+  mesesDisp = [...set].map(iso => {
+    const [y,m] = iso.split('-').map(Number);
+    return {y, m:m-1, key: y+'-'+m};
+  });
+  // unique months sorted
+  const seen = new Set();
+  mesesDisp = mesesDisp.filter(x => {
+    if(seen.has(x.key)) return false;
+    seen.add(x.key); return true;
+  }).sort((a,b)=> a.y-b.y || a.m-b.m);
+
+  const sel = document.getElementById('selMes');
+  sel.innerHTML = mesesDisp.map((x,i)=>`<option value="${i}">${MESES[x.m]} ${x.y}</option>`).join('');
+  mesAtual = mesesDisp[0] ? {y:mesesDisp[0].y,m:mesesDisp[0].m} : null;
+  if(mesAtual){
+    const idx = mesesDisp.findIndex(x => x.y===mesAtual.y && x.m===mesAtual.m);
+    sel.value = String(Math.max(0,idx));
+  }
+  renderCal();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function renderCal(){
+  if(!destSel || !mesAtual) return;
+  const {y,m} = mesAtual;
+  document.getElementById('mesLabel').textContent = MESES[m] + ' ' + y;
+  const idx = mesesDisp.findIndex(x => x.y===y && x.m===m);
+  document.getElementById('selMes').value = String(Math.max(0,idx));
+  document.getElementById('mesPrev').disabled = idx <= 0;
+  document.getElementById('mesNext').disabled = idx >= mesesDisp.length-1;
+
+  // price map for days
+  const byDay = {};
+  destSel.opcoes.forEach(o => {
+    if(!o.data_ida) return;
+    const [yy,mm,dd] = o.data_ida.split('-').map(Number);
+    if(yy!==y || mm!==m+1) return;
+    if(!byDay[dd] || o.total < byDay[dd]) byDay[dd] = o.total;
+  });
+
+  const first = new Date(y,m,1);
+  const startPad = first.getDay(); // 0 sun
+  const daysInMonth = new Date(y,m+1,0).getDate();
+  const cal = document.getElementById('cal');
+  let html = ['Dom','Seg','Ter','Qua','Qui','Sex','Sáb'].map(d=>`<div class="dow">${d}</div>`).join('');
+  for(let i=0;i<startPad;i++) html += `<div class="day empty"></div>`;
+  for(let d=1;d<=daysInMonth;d++){
+    const iso = isoKey(y,m,d);
+    const has = byDay[d] != null;
+    const active = dataSel === iso;
+    if(has){
+      html += `<button type="button" class="day has${active?' active':''}" data-iso="${iso}">
+        <span>${d}</span>
+        <span class="price">${money(byDay[d])}</span>
+      </button>`;
+    } else {
+      html += `<div class="day">${d}</div>`;
+    }
+  }
+  cal.innerHTML = html;
+  cal.querySelectorAll('.day.has').forEach(btn => {
+    btn.addEventListener('click', () => {
+      dataSel = btn.getAttribute('data-iso');
+      renderCal();
       renderVoos();
     });
   });
-  // auto select first date
-  const first = box.querySelector('.data-chip');
-  if(first) first.click();
-  window.scrollTo({top:0,behavior:'smooth'});
 }
 
 function renderVoos(){
   const list = document.getElementById('vooList');
-  if(!destSel || !dataSel){ list.innerHTML=''; return; }
-  const opts = destSel.opcoes
-    .filter(o => o.data_ida===dataSel)
-    .sort((a,b)=>a.total-b.total || (a.hora_ida||'').localeCompare(b.hora_ida||''));
+  if(!destSel || !dataSel){
+    list.innerHTML = '<div class="empty">Escolha um dia destacado no calendário para ver os horários.</div>';
+    document.getElementById('resultsTitle').textContent = 'Selecione uma data no calendário';
+    document.getElementById('resultsCount').textContent = '';
+    return;
+  }
+  const ord = document.getElementById('selOrd').value;
+  let opts = destSel.opcoes.filter(o => o.data_ida === dataSel);
+  if(ord==='preco') opts.sort((a,b)=>a.total-b.total || (a.hora_ida||'').localeCompare(b.hora_ida||''));
+  else if(ord==='hora') opts.sort((a,b)=>(a.hora_ida||'').localeCompare(b.hora_ida||'') || a.total-b.total);
+  else opts.sort((a,b)=>(b.assentos||0)-(a.assentos||0) || a.total-b.total);
+
+  document.getElementById('resultsTitle').textContent = 'Voos em ' + fmtDateBR(dataSel);
+  document.getElementById('resultsCount').textContent = opts.length + ' opção(ões)';
+
   list.innerHTML = opts.map(o => {
     const msg = encodeURIComponent(
-      `Olá! Quero reservar a passagem:\n${o.orig_nome} (${o.orig}) → ${o.dest_nome} (${o.dest})\nIda: ${fmtDateBR(o.data_ida)} ${o.hora_ida} voo ${o.voo_ida}\nVolta: ${fmtDateBR(o.data_volta)} ${o.hora_volta} voo ${o.voo_volta}\n${o.cia} · ${money(o.total,o.moeda)} (tarifa+taxas)\nCampanha: ${o.campanha}`
+      `Olá! Quero reservar a passagem:\n${o.orig_nome} (${o.orig}) → ${o.dest_nome} (${o.dest})\nIda: ${fmtDateBR(o.data_ida)} ${o.hora_ida} voo ${o.voo_ida}\nVolta: ${fmtDateBR(o.data_volta)} ${o.hora_volta} voo ${o.voo_volta}\n${o.cia} · ${money(o.total)} (tarifa+taxas)\nCampanha: ${o.campanha}`
     );
+    const badge = o.convertido ? '<span class="badge-conv">convertido p/ R$</span>' : '';
     return `<article class="voo-card">
       <div>
-        <div class="rota notranslate" translate="no">${o.orig} → ${o.dest} · ${o.cia}</div>
+        <div class="rota notranslate" translate="no">${o.orig} → ${o.dest}</div>
+        <div class="cia">${o.cia||''} ${badge}</div>
         <div class="horarios">
           <div class="horario-box">
-            <div class="lbl">Ida · embarque</div>
+            <div class="lbl">Ida</div>
             <div class="h notranslate" translate="no">${o.hora_ida||'—'}</div>
             <div class="sub">${fmtDateBR(o.data_ida)} · voo ${o.voo_ida||'—'}</div>
           </div>
           <div class="horario-box">
-            <div class="lbl">Volta · embarque</div>
+            <div class="lbl">Volta</div>
             <div class="h notranslate" translate="no">${o.hora_volta||'—'}</div>
             <div class="sub">${fmtDateBR(o.data_volta)} · voo ${o.voo_volta||'—'}</div>
           </div>
         </div>
-        <div class="sub" style="margin-top:.45rem;font-size:.78rem;color:#64748b">${o.campanha||''}</div>
+        <div style="margin-top:.4rem;font-size:.75rem;color:#64748b">${o.campanha||''}</div>
       </div>
       <div class="preco-box">
-        <div class="val notranslate" translate="no">${money(o.total,o.moeda)}</div>
+        <div class="val notranslate" translate="no">${money(o.total)}</div>
         <div class="tax">tarifa + taxas · por pessoa</div>
         <div class="ass">${o.assentos||0} assento(s)</div>
         <a class="btn-sel" target="_blank" href="https://wa.me/5511914841404?text=${msg}">Reservar</a>
@@ -225,12 +399,32 @@ document.getElementById('filtros').addEventListener('click', (e) => {
   b.classList.add('active');
   renderDestinos();
 });
+document.getElementById('selMes').addEventListener('change', function(){
+  const i = +this.value;
+  if(!mesesDisp[i]) return;
+  mesAtual = {y:mesesDisp[i].y, m:mesesDisp[i].m};
+  dataSel = null;
+  renderCal();
+  renderVoos();
+});
+document.getElementById('mesPrev').addEventListener('click', () => {
+  const idx = mesesDisp.findIndex(x => x.y===mesAtual.y && x.m===mesAtual.m);
+  if(idx>0){ mesAtual={y:mesesDisp[idx-1].y,m:mesesDisp[idx-1].m}; dataSel=null; renderCal(); renderVoos(); }
+});
+document.getElementById('mesNext').addEventListener('click', () => {
+  const idx = mesesDisp.findIndex(x => x.y===mesAtual.y && x.m===mesAtual.m);
+  if(idx<mesesDisp.length-1){ mesAtual={y:mesesDisp[idx+1].y,m:mesesDisp[idx+1].m}; dataSel=null; renderCal(); renderVoos(); }
+});
+document.getElementById('selOrd').addEventListener('change', renderVoos);
+document.getElementById('btnLimparData').addEventListener('click', () => {
+  dataSel = null; renderCal(); renderVoos();
+});
 
 fetch('voos-bloqueios.json')
   .then(r => r.json())
   .then(j => { DATA = j; renderDestinos(); })
   .catch(() => {
-    document.getElementById('destGrid').innerHTML = '<div class="empty">Não foi possível carregar as passagens. Tente de novo em instantes.</div>';
+    document.getElementById('destGrid').innerHTML = '<div class="empty">Não foi possível carregar as passagens.</div>';
   });
 </script>
 <script src="theme.js"></script>
