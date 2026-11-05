@@ -1,3 +1,118 @@
 {
-  "cleanUrls": true
+  "cleanUrls": true,
+  "trailingSlash": false,
+  "rewrites": [
+    {
+      "source": "/passagens",
+      "destination": "/passagens.html"
+    },
+    {
+      "source": "/foz-iguacu",
+      "destination": "/pages/pacotes/foz-iguacu.html"
+    },
+    {
+      "source": "/balneario-camboriu",
+      "destination": "/pages/pacotes/balneario-camboriu.html"
+    },
+    {
+      "source": "/gramado",
+      "destination": "/pages/pacotes/gramado.html"
+    },
+    {
+      "source": "/bonito",
+      "destination": "/pages/pacotes/bonito.html"
+    },
+    {
+      "source": "/caldas-novas",
+      "destination": "/pages/pacotes/caldas-novas.html"
+    },
+    {
+      "source": "/florianopolis",
+      "destination": "/pages/pacotes/florianopolis.html"
+    },
+    {
+      "source": "/santiago-chile",
+      "destination": "/pages/pacotes/santiago-chile.html"
+    },
+    {
+      "source": "/buenos-aires",
+      "destination": "/pages/pacotes/buenos-aires.html"
+    },
+    {
+      "source": "/holambra",
+      "destination": "/pages/excursoes/holambra.html"
+    },
+    {
+      "source": "/natal-toca-cupim",
+      "destination": "/pages/excursoes/natal-toca-cupim.html"
+    },
+    {
+      "source": "/rota-do-vinho",
+      "destination": "/pages/excursoes/rota-do-vinho.html"
+    },
+    {
+      "source": "/excursoes",
+      "destination": "/pages/excursoes.html"
+    },
+    {
+      "source": "/pagamento",
+      "destination": "/pages/pagamento.html"
+    },
+    {
+      "source": "/assistente",
+      "destination": "/pages/assistente.html"
+    },
+    {
+      "source": "/admin",
+      "destination": "/admin/index.html"
+    },
+    {
+      "source": "/admin.html",
+      "destination": "/admin/index.html"
+    },
+    {
+      "source": "/foz-iguacu.html",
+      "destination": "/pages/pacotes/foz-iguacu.html"
+    },
+    {
+      "source": "/balneario-camboriu.html",
+      "destination": "/pages/pacotes/balneario-camboriu.html"
+    },
+    {
+      "source": "/gramado.html",
+      "destination": "/pages/pacotes/gramado.html"
+    },
+    {
+      "source": "/bonito.html",
+      "destination": "/pages/pacotes/bonito.html"
+    },
+    {
+      "source": "/caldas-novas.html",
+      "destination": "/pages/pacotes/caldas-novas.html"
+    },
+    {
+      "source": "/florianopolis.html",
+      "destination": "/pages/pacotes/florianopolis.html"
+    },
+    {
+      "source": "/santiago-chile.html",
+      "destination": "/pages/pacotes/santiago-chile.html"
+    },
+    {
+      "source": "/buenos-aires.html",
+      "destination": "/pages/pacotes/buenos-aires.html"
+    },
+    {
+      "source": "/holambra.html",
+      "destination": "/pages/excursoes/holambra.html"
+    },
+    {
+      "source": "/natal-toca-cupim.html",
+      "destination": "/pages/excursoes/natal-toca-cupim.html"
+    },
+    {
+      "source": "/rota-do-vinho.html",
+      "destination": "/pages/excursoes/rota-do-vinho.html"
+    }
+  ]
 }

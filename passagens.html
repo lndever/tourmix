@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Passagens em promoção | TOURMIX</title>
+<link rel="icon" type="image/png" href="LOGO-05.png">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+:root{--tmx:#0e7490;--tmx2:#0891b2;--gold:#eab308;--bg:#f8fafc;--card:#fff;--text:#0f172a;--muted:#64748b;--line:#e2e8f0}
+*{box-sizing:border-box}
+body{margin:0;font-family:Montserrat,system-ui,sans-serif;background:var(--bg);color:var(--text)}
+.page-wrap{max-width:1100px;margin:0 auto;padding:1.25rem 1rem 4rem}
+.hero-pass{background:linear-gradient(135deg,#0e7490,#0a2e38);color:#fff;border-radius:20px;padding:1.75rem 1.4rem;margin-bottom:1.5rem}
+.hero-pass h1{margin:0 0 .4rem;font-size:clamp(1.4rem,3vw,1.9rem)}
+.hero-pass p{margin:0;opacity:.9;font-size:.95rem}
+.filtros{display:flex;flex-wrap:wrap;gap:.5rem;margin:1rem 0 1.25rem}
+.filtros button{border:1px solid var(--line);background:#fff;border-radius:999px;padding:.45rem 1rem;font-weight:700;font-size:.82rem;cursor:pointer;font-family:inherit;color:var(--text)}
+.filtros button.active{background:var(--tmx);color:#fff;border-color:var(--tmx)}
+.dest-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}
+@media(max-width:900px){.dest-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:600px){.dest-grid{grid-template-columns:1fr}}
+.dest-card{background:var(--card);border:1px solid var(--line);border-radius:16px;overflow:hidden;cursor:pointer;transition:.2s;display:flex;flex-direction:column}
+.dest-card:hover{transform:translateY(-4px);box-shadow:0 12px 28px rgba(14,116,144,.12)}
+.dest-card img{width:100%;height:140px;object-fit:cover}
+.dest-body{padding:1rem 1.05rem 1.15rem;flex:1;display:flex;flex-direction:column}
+.dest-body .tag{font-size:.72rem;font-weight:700;color:var(--tmx);text-transform:uppercase;letter-spacing:.04em}
+.dest-body h3{margin:.25rem 0 .35rem;font-size:1.05rem;color:var(--tmx)}
+.dest-body p{margin:0 0 .75rem;font-size:.82rem;color:var(--muted);flex:1}
+.dest-body .desde{font-weight:800;font-size:1.05rem;color:#0f172a}
+.dest-body .desde small{font-weight:600;font-size:.78rem;color:var(--muted)}
+.step{display:none}
+.step.on{display:block}
+.back-btn{border:none;background:transparent;color:var(--tmx);font-weight:700;cursor:pointer;font-family:inherit;margin-bottom:.75rem;padding:0}
+.datas{display:flex;flex-wrap:wrap;gap:.5rem;margin:0 0 1.25rem}
+.data-chip{border:1px solid var(--line);background:#fff;border-radius:12px;padding:.65rem .9rem;cursor:pointer;font-family:inherit;text-align:left;min-width:120px}
+.data-chip strong{display:block;font-size:.88rem}
+.data-chip span{font-size:.75rem;color:var(--muted)}
+.data-chip.active{border-color:var(--tmx);background:#ecfeff;box-shadow:0 0 0 2px rgba(14,116,144,.15)}
+.voo-list{display:flex;flex-direction:column;gap:.75rem}
+.voo-card{background:#fff;border:1px solid var(--line);border-radius:16px;padding:1rem 1.1rem;display:grid;grid-template-columns:1fr auto;gap:.75rem 1rem;align-items:center}
+.voo-card:hover{border-color:#99f6e4}
+.rota{font-weight:800;font-size:.95rem;color:var(--tmx)}
+.horarios{display:flex;flex-wrap:wrap;gap:1rem;margin-top:.45rem}
+.horario-box{background:#f8fafc;border-radius:12px;padding:.55rem .75rem;min-width:130px}
+.horario-box .lbl{font-size:.68rem;font-weight:700;color:var(--muted);text-transform:uppercase}
+.horario-box .h{font-size:1.05rem;font-weight:800}
+.horario-box .sub{font-size:.75rem;color:var(--muted)}
+.preco-box{text-align:right}
+.preco-box .val{font-size:1.25rem;font-weight:800;color:#0f172a}
+.preco-box .tax{font-size:.75rem;color:var(--muted)}
+.preco-box .ass{font-size:.72rem;color:#b45309;font-weight:700;margin-top:.25rem}
+.btn-sel{display:inline-block;margin-top:.5rem;background:var(--gold);color:#111;border:none;border-radius:999px;padding:.55rem 1.1rem;font-weight:800;font-size:.82rem;cursor:pointer;font-family:inherit;text-decoration:none}
+.btn-sel:hover{filter:brightness(1.05)}
+.resumo{background:#fff;border:1px solid var(--line);border-radius:16px;padding:1.1rem;margin-bottom:1rem}
+.resumo h3{margin:0 0 .5rem;color:var(--tmx)}
+.empty{padding:2rem;text-align:center;color:var(--muted)}
+[data-theme="dark"] body{background:#0b1220;color:#f1f5f9}
+[data-theme="dark"] .dest-card,[data-theme="dark"] .voo-card,[data-theme="dark"] .data-chip,[data-theme="dark"] .resumo,[data-theme="dark"] .filtros button{background:#1e293b;border-color:#334155;color:#f1f5f9}
+[data-theme="dark"] .horario-box{background:#0f172a}
+[data-theme="dark"] .dest-body .desde,[data-theme="dark"] .preco-box .val{color:#f8fafc}
+header.header{margin-bottom:0}
+</style>
+</head>
+<body>
+<header class="header" id="header">
+  <div class="container header-inner">
+    <a href="/" class="logo"><img src="LOGO-05.png" alt="TOURMIX" class="logo-img" onerror="this.style.display='none'"></a>
+    <nav class="nav" id="nav">
+      <a href="/">Início</a>
+      <a href="/#pacotes">Pacotes</a>
+      <a href="/excursoes">Excursões</a>
+      <a href="/passagens" style="color:var(--tmx);font-weight:800">Passagens</a>
+      <a href="/#contato" class="btn-nav">Fale Conosco</a>
+    </nav>
+  </div>
+</header>
+
+<div class="page-wrap">
+  <div class="hero-pass">
+    <h1>Passagens em promoção</h1>
+    <p>Voos nacionais e América do Sul com bloqueios exclusivos. Escolha o destino, a data e o horário — no estilo das grandes OTAs.</p>
+  </div>
+
+  <div id="step-dest" class="step on">
+    <div class="filtros" id="filtros">
+      <button type="button" data-f="todos" class="active">Todos</button>
+      <button type="button" data-f="nacional">Nacional</button>
+      <button type="button" data-f="america-sul">América do Sul</button>
+    </div>
+    <div class="dest-grid" id="destGrid"></div>
+  </div>
+
+  <div id="step-data" class="step">
+    <button type="button" class="back-btn" id="backDest">← Voltar aos destinos</button>
+    <h2 id="tituloDest" style="margin:.2rem 0 1rem;font-size:1.25rem;color:var(--tmx)"></h2>
+    <p style="color:var(--muted);font-size:.9rem;margin:0 0 .75rem">1. Escolha a data de embarque</p>
+    <div class="datas" id="datas"></div>
+    <p style="color:var(--muted);font-size:.9rem;margin:0 0 .75rem">2. Escolha o horário / voo</p>
+    <div class="voo-list" id="vooList"></div>
+  </div>
+</div>
+
+<script>
+const IMGS = {"POA": "https://images.pexels.com/photos/2104742/pexels-photo-2104742.jpeg?auto=compress&cs=tinysrgb&w=800", "SSA": "https://images.pexels.com/photos/3586966/pexels-photo-3586966.jpeg?auto=compress&cs=tinysrgb&w=800", "REC": "https://images.pexels.com/photos/3155666/pexels-photo-3155666.jpeg?auto=compress&cs=tinysrgb&w=800", "FOR": "https://images.pexels.com/photos/3889855/pexels-photo-3889855.jpeg?auto=compress&cs=tinysrgb&w=800", "BPS": "https://images.pexels.com/photos/1174732/pexels-photo-1174732.jpeg?auto=compress&cs=tinysrgb&w=800", "NVT": "https://images.pexels.com/photos/1008155/pexels-photo-1008155.jpeg?auto=compress&cs=tinysrgb&w=800", "SCL": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d7/Skyline_of_Santiago%2C_Chile.jpg/1280px-Skyline_of_Santiago%2C_Chile.jpg", "IGU": "https://images.pexels.com/photos/2583852/pexels-photo-2583852.jpeg?auto=compress&cs=tinysrgb&w=800", "NAT": "https://images.pexels.com/photos/1487010/pexels-photo-1487010.jpeg?auto=compress&cs=tinysrgb&w=800", "MCZ": "https://images.pexels.com/photos/1174732/pexels-photo-1174732.jpeg?auto=compress&cs=tinysrgb&w=800", "JPA": "https://images.pexels.com/photos/1487010/pexels-photo-1487010.jpeg?auto=compress&cs=tinysrgb&w=800", "CLV": "https://images.pexels.com/photos/261102/pexels-photo-261102.jpeg?auto=compress&cs=tinysrgb&w=800", "FLN": "https://images.pexels.com/photos/1008155/pexels-photo-1008155.jpeg?auto=compress&cs=tinysrgb&w=800", "USH": "https://images.pexels.com/photos/417074/pexels-photo-417074.jpeg?auto=compress&cs=tinysrgb&w=800", "BRC": "https://images.pexels.com/photos/417074/pexels-photo-417074.jpeg?auto=compress&cs=tinysrgb&w=800", "AEP": "https://images.pexels.com/photos/466685/pexels-photo-466685.jpeg?auto=compress&cs=tinysrgb&w=800", "EZE": "https://images.pexels.com/photos/466685/pexels-photo-466685.jpeg?auto=compress&cs=tinysrgb&w=800", "MDZ": "https://images.pexels.com/photos/1123260/pexels-photo-1123260.jpeg?auto=compress&cs=tinysrgb&w=800", "AJU": "https://images.pexels.com/photos/3586966/pexels-photo-3586966.jpeg?auto=compress&cs=tinysrgb&w=800", "JJD": "https://images.pexels.com/photos/1174732/pexels-photo-1174732.jpeg?auto=compress&cs=tinysrgb&w=800", "MAO": "https://images.pexels.com/photos/2583852/pexels-photo-2583852.jpeg?auto=compress&cs=tinysrgb&w=800"};
+const DEFAULT_IMG = "https://images.pexels.com/photos/358319/pexels-photo-358319.jpeg?auto=compress&cs=tinysrgb&w=800";
+let DATA = null;
+let filtro = 'todos';
+let destSel = null;
+let dataSel = null;
+
+function money(v, moeda){
+  const n = Number(v)||0;
+  if((moeda||'').includes('US')) return 'US$ ' + n.toLocaleString('en-US',{minimumFractionDigits:0});
+  return 'R$ ' + n.toLocaleString('pt-BR',{minimumFractionDigits:0});
+}
+function fmtDateBR(iso){
+  if(!iso) return '';
+  const [y,m,d] = iso.split('-');
+  if(!d) return iso;
+  const dt = new Date(+y, +m-1, +d);
+  const dias = ['Dom','Seg','Ter','Qua','Qui','Sex','Sáb'];
+  return dias[dt.getDay()] + ', ' + d + '/' + m + '/' + y;
+}
+
+function renderDestinos(){
+  const grid = document.getElementById('destGrid');
+  const list = (DATA.destinos||[]).filter(d => filtro==='todos' || d.tipo===filtro);
+  if(!list.length){ grid.innerHTML = '<div class="empty">Nenhum destino neste filtro.</div>'; return; }
+  grid.innerHTML = list.map(d => `
+    <article class="dest-card" data-code="${d.code}">
+      <img src="${IMGS[d.code]||DEFAULT_IMG}" alt="${d.nome}" loading="lazy">
+      <div class="dest-body">
+        <span class="tag">${d.tipo==='nacional'?'Nacional':'América do Sul'} · ${d.qtd} opções</span>
+        <h3 class="notranslate" translate="no">${d.nome}</h3>
+        <p>Vários embarques e horários. Clique para escolher data e voo.</p>
+        <div class="desde notranslate" translate="no">a partir de ${money(d.desde,d.moeda)} <small>/ pessoa</small></div>
+      </div>
+    </article>
+  `).join('');
+  grid.querySelectorAll('.dest-card').forEach(el => {
+    el.addEventListener('click', () => openDest(el.getAttribute('data-code')));
+  });
+}
+
+function openDest(code){
+  destSel = (DATA.destinos||[]).find(d => d.code===code);
+  if(!destSel) return;
+  dataSel = null;
+  document.getElementById('step-dest').classList.remove('on');
+  document.getElementById('step-data').classList.add('on');
+  document.getElementById('tituloDest').textContent = destSel.nome + ' — escolha data e horário';
+  // unique dates
+  const dates = [...new Set(destSel.opcoes.map(o => o.data_ida))].sort();
+  const box = document.getElementById('datas');
+  box.innerHTML = dates.map((dt,i) => {
+    const opts = destSel.opcoes.filter(o => o.data_ida===dt);
+    const desde = Math.min(...opts.map(o=>o.total));
+    return `<button type="button" class="data-chip" data-dt="${dt}">
+      <strong>${fmtDateBR(dt)}</strong>
+      <span>${opts.length} voo(s) · desde ${money(desde, opts[0].moeda)}</span>
+    </button>`;
+  }).join('');
+  box.querySelectorAll('.data-chip').forEach(ch => {
+    ch.addEventListener('click', () => {
+      box.querySelectorAll('.data-chip').forEach(x=>x.classList.remove('active'));
+      ch.classList.add('active');
+      dataSel = ch.getAttribute('data-dt');
+      renderVoos();
+    });
+  });
+  // auto select first date
+  const first = box.querySelector('.data-chip');
+  if(first) first.click();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function renderVoos(){
+  const list = document.getElementById('vooList');
+  if(!destSel || !dataSel){ list.innerHTML=''; return; }
+  const opts = destSel.opcoes
+    .filter(o => o.data_ida===dataSel)
+    .sort((a,b)=>a.total-b.total || (a.hora_ida||'').localeCompare(b.hora_ida||''));
+  list.innerHTML = opts.map(o => {
+    const msg = encodeURIComponent(
+      `Olá! Quero reservar a passagem:\n${o.orig_nome} (${o.orig}) → ${o.dest_nome} (${o.dest})\nIda: ${fmtDateBR(o.data_ida)} ${o.hora_ida} voo ${o.voo_ida}\nVolta: ${fmtDateBR(o.data_volta)} ${o.hora_volta} voo ${o.voo_volta}\n${o.cia} · ${money(o.total,o.moeda)} (tarifa+taxas)\nCampanha: ${o.campanha}`
+    );
+    return `<article class="voo-card">
+      <div>
+        <div class="rota notranslate" translate="no">${o.orig} → ${o.dest} · ${o.cia}</div>
+        <div class="horarios">
+          <div class="horario-box">
+            <div class="lbl">Ida · embarque</div>
+            <div class="h notranslate" translate="no">${o.hora_ida||'—'}</div>
+            <div class="sub">${fmtDateBR(o.data_ida)} · voo ${o.voo_ida||'—'}</div>
+          </div>
+          <div class="horario-box">
+            <div class="lbl">Volta · embarque</div>
+            <div class="h notranslate" translate="no">${o.hora_volta||'—'}</div>
+            <div class="sub">${fmtDateBR(o.data_volta)} · voo ${o.voo_volta||'—'}</div>
+          </div>
+        </div>
+        <div class="sub" style="margin-top:.45rem;font-size:.78rem;color:#64748b">${o.campanha||''}</div>
+      </div>
+      <div class="preco-box">
+        <div class="val notranslate" translate="no">${money(o.total,o.moeda)}</div>
+        <div class="tax">tarifa + taxas · por pessoa</div>
+        <div class="ass">${o.assentos||0} assento(s)</div>
+        <a class="btn-sel" target="_blank" href="https://wa.me/5511914841404?text=${msg}">Reservar</a>
+      </div>
+    </article>`;
+  }).join('');
+}
+
+document.getElementById('backDest').addEventListener('click', () => {
+  document.getElementById('step-data').classList.remove('on');
+  document.getElementById('step-dest').classList.add('on');
+});
+document.getElementById('filtros').addEventListener('click', (e) => {
+  const b = e.target.closest('button[data-f]');
+  if(!b) return;
+  filtro = b.getAttribute('data-f');
+  document.querySelectorAll('#filtros button').forEach(x=>x.classList.remove('active'));
+  b.classList.add('active');
+  renderDestinos();
+});
+
+fetch('voos-bloqueios.json')
+  .then(r => r.json())
+  .then(j => { DATA = j; renderDestinos(); })
+  .catch(() => {
+    document.getElementById('destGrid').innerHTML = '<div class="empty">Não foi possível carregar as passagens. Tente de novo em instantes.</div>';
+  });
+</script>
+<script src="theme.js"></script>
+<script src="i18n.js"></script>
+<script src="assistente-widget.js"></script>
+</body>
+</html>
