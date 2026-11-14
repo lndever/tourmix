@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Confirmar e-mail | TOURMIX</title>
+<link rel="icon" type="image/png" href="LOGO-05.png">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --tmx:#0e7490; --tmx2:#0891b2; --gold:#eab308;
+  --bg:#0b1220; --card:#111827; --line:#1f2937; --text:#f8fafc; --muted:#94a3b8;
+}
+*{box-sizing:border-box}
+body{
+  margin:0; min-height:100vh; font-family:Montserrat,system-ui,sans-serif;
+  background:
+    radial-gradient(900px 420px at 10% -10%, rgba(14,116,144,.28), transparent 55%),
+    radial-gradient(700px 380px at 100% 0%, rgba(234,179,8,.12), transparent 50%),
+    var(--bg);
+  color:var(--text);
+  display:flex; align-items:center; justify-content:center; padding:1.5rem;
+}
+.card{
+  width:100%; max-width:440px; background:linear-gradient(180deg,rgba(255,255,255,.04),transparent),var(--card);
+  border:1px solid var(--line); border-radius:24px; padding:2rem 1.6rem 1.7rem;
+  box-shadow:0 24px 60px rgba(0,0,0,.4); text-align:center;
+}
+.logo{width:64px;height:64px;object-fit:contain;margin:0 auto 1rem;display:block}
+.badge{
+  display:inline-flex; align-items:center; gap:.4rem;
+  background:rgba(14,116,144,.15); color:#67e8f9; border:1px solid rgba(103,232,249,.25);
+  border-radius:999px; padding:.3rem .75rem; font-size:.72rem; font-weight:800; letter-spacing:.04em;
+  text-transform:uppercase; margin-bottom:.9rem;
+}
+h1{margin:0 0 .5rem; font-size:1.45rem; font-weight:800}
+p{margin:0 0 1rem; color:var(--muted); font-size:.92rem; line-height:1.55}
+.status{
+  min-height:48px; display:flex; align-items:center; justify-content:center;
+  margin:1rem 0 1.25rem; padding:.85rem 1rem; border-radius:14px; font-size:.88rem; font-weight:600;
+}
+.status.loading{background:rgba(148,163,184,.08); color:#cbd5e1}
+.status.ok{background:rgba(16,185,129,.12); color:#6ee7b7; border:1px solid rgba(16,185,129,.25)}
+.status.err{background:rgba(248,113,113,.1); color:#fecaca; border:1px solid rgba(248,113,113,.25)}
+.spinner{
+  width:22px;height:22px;border:3px solid rgba(255,255,255,.15);border-top-color:#22d3ee;
+  border-radius:50%; animation:spin .8s linear infinite; margin-right:.55rem;
+}
+@keyframes spin{to{transform:rotate(360deg)}}
+.actions{display:flex; flex-direction:column; gap:.55rem; margin-top:.5rem}
+.btn{
+  display:inline-flex; align-items:center; justify-content:center; gap:.4rem;
+  border:none; border-radius:999px; padding:.75rem 1.2rem; font-weight:800; font-size:.9rem;
+  font-family:inherit; text-decoration:none; cursor:pointer; transition:.15s;
+}
+.btn-primary{background:linear-gradient(135deg,#fbbf24,#eab308); color:#111}
+.btn-primary:hover{filter:brightness(1.05)}
+.btn-ghost{background:rgba(255,255,255,.04); color:#e2e8f0; border:1px solid var(--line)}
+.btn-ghost:hover{background:rgba(255,255,255,.07)}
+.foot{margin-top:1.25rem; font-size:.75rem; color:#64748b}
+.check{
+  width:64px;height:64px;border-radius:50%; margin:0 auto .85rem;
+  display:grid; place-items:center; background:rgba(16,185,129,.15); border:1px solid rgba(16,185,129,.3);
+  font-size:1.8rem;
+}
+</style>
+</head>
+<body>
+  <div class="card">
+    <img class="logo" src="LOGO-05.png" alt="TOURMIX" onerror="this.style.display='none'">
+    <div class="badge">TOURMIX · Conta</div>
+    <h1 id="title">Confirmando seu e-mail…</h1>
+    <p id="desc">Aguarde um instante enquanto validamos o link de confirmação.</p>
+    <div class="status loading" id="status">
+      <span class="spinner" aria-hidden="true"></span>
+      <span>Validando link…</span>
+    </div>
+    <div class="actions" id="actions" style="display:none"></div>
+    <div class="foot">Se você não criou uma conta na TOURMIX, pode ignorar este e-mail.</div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="auth-config.js"></script>
+  <script src="auth.js"></script>
+  <script>
+  (async function () {
+    var title = document.getElementById('title');
+    var desc = document.getElementById('desc');
+    var status = document.getElementById('status');
+    var actions = document.getElementById('actions');
+
+    function showOk(user) {
+      var nome = (window.TourmixAuth && TourmixAuth.displayName(user)) || 'viajante';
+      title.textContent = 'E-mail confirmado!';
+      desc.textContent = 'Olá, ' + nome + '. Sua conta está ativa. Você já pode entrar e explorar os pacotes.';
+      status.className = 'status ok';
+      status.innerHTML = '<div class="check" style="width:40px;height:40px;font-size:1.2rem;margin:0 .5rem 0 0">✓</div><span>Conta verificada com sucesso</span>';
+      actions.style.display = 'flex';
+      actions.innerHTML =
+        '<a class="btn btn-primary" href="/minha-conta">Ir para Minha Conta</a>' +
+        '<a class="btn btn-ghost" href="/">Voltar ao início</a>';
+      // limpa tokens da URL
+      try { history.replaceState({}, document.title, '/confirmar-email'); } catch (e) {}
+    }
+
+    function showErr(msg) {
+      title.textContent = 'Não foi possível confirmar';
+      desc.textContent = msg || 'O link pode ter expirado. Faça login ou crie a conta novamente.';
+      status.className = 'status err';
+      status.textContent = msg || 'Link inválido ou expirado';
+      actions.style.display = 'flex';
+      actions.innerHTML =
+        '<a class="btn btn-primary" href="/login">Ir para o login</a>' +
+        '<a class="btn btn-ghost" href="/">Voltar ao início</a>';
+    }
+
+    if (!window.TourmixAuth || !TourmixAuth.configOk()) {
+      showErr('Configuração de autenticação incompleta. Avise a equipe TOURMIX.');
+      return;
+    }
+
+    try {
+      var res = await TourmixAuth.handleEmailConfirmation();
+      if (res && res.ok) {
+        showOk(res.user);
+      } else {
+        showErr((res && res.error) || 'Não foi possível validar o e-mail.');
+      }
+    } catch (err) {
+      showErr((err && err.message) || 'Erro inesperado ao confirmar.');
+    }
+  })();
+  </script>
+</body>
+</html>

@@ -3,6 +3,10 @@
   "trailingSlash": false,
   "rewrites": [
     {
+      "source": "/confirmar-email",
+      "destination": "/confirmar-email.html"
+    },
+    {
       "source": "/passagens",
       "destination": "/passagens.html"
     },
