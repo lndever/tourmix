@@ -10,8 +10,6 @@
  */
 window.TOURMIX_AUTH = {
   supabaseUrl: 'https://hzxkugznxopvtazmuypo.supabase.co',
-  // COLE AQUI a chave "anon" "public" (começa com eyJ... e no JWT tem "role":"anon")
-  supabaseAnonKey: 'COLE_AQUI_A_CHAVE_ANON_PUBLIC',
-  /** URL pública do site (sem barra no final) */
+  supabaseAnonKey: 'sb_publishable_F-bVAnC9WXSPbZADpyFm6A_mnHVN8Bc',
   siteUrl: 'https://tourmix.vercel.app'
 };
