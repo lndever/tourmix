@@ -34,6 +34,9 @@ body{
   text-transform:uppercase; margin-bottom:.9rem;
 }
 h1{margin:0 0 .5rem; font-size:1.45rem; font-weight:800}
+.hello{
+  margin:0 0 .75rem; font-size:1.15rem; font-weight:700; color:#fbbf24;
+}
 p{margin:0 0 1rem; color:var(--muted); font-size:.92rem; line-height:1.55}
 .status{
   min-height:48px; display:flex; align-items:center; justify-content:center;
@@ -70,6 +73,7 @@ p{margin:0 0 1rem; color:var(--muted); font-size:.92rem; line-height:1.55}
     <img class="logo" src="LOGO-05.png" alt="TOURMIX" onerror="this.style.display='none'">
     <div class="badge">TOURMIX · Conta</div>
     <h1 id="title">Confirmando seu e-mail…</h1>
+    <p class="hello" id="hello" style="display:none"></p>
     <p id="desc">Aguarde um instante enquanto validamos o link de confirmação.</p>
     <div class="status loading" id="status">
       <span class="spinner" aria-hidden="true"></span>
@@ -85,26 +89,59 @@ p{margin:0 0 1rem; color:var(--muted); font-size:.92rem; line-height:1.55}
   <script>
   (async function () {
     var title = document.getElementById('title');
+    var hello = document.getElementById('hello');
     var desc = document.getElementById('desc');
     var status = document.getElementById('status');
     var actions = document.getElementById('actions');
 
+    function pickName(user) {
+      if (!user) return '';
+      var meta = user.user_metadata || user.raw_user_meta_data || {};
+      var n = (meta.nome || meta.full_name || meta.name || meta.display_name || '').trim();
+      if (n) return n;
+      if (window.TourmixAuth && TourmixAuth.displayName) {
+        var d = TourmixAuth.displayName(user);
+        if (d && d !== 'Usuário') return d;
+      }
+      if (user.email) return user.email.split('@')[0];
+      return '';
+    }
+
+    async function resolveUser(user) {
+      // tenta enriquecer com getUser() se metadata vier vazia
+      if (user && pickName(user)) return user;
+      try {
+        if (window.TourmixAuth && TourmixAuth.getUser) {
+          var u2 = await TourmixAuth.getUser();
+          if (u2) return u2;
+        }
+      } catch (e) {}
+      return user;
+    }
+
     function showOk(user) {
-      var nome = (window.TourmixAuth && TourmixAuth.displayName(user)) || 'viajante';
+      var nome = pickName(user);
       title.textContent = 'E-mail confirmado!';
-      desc.textContent = 'Olá, ' + nome + '. Sua conta está ativa. Você já pode entrar e explorar os pacotes.';
+      if (nome) {
+        hello.style.display = 'block';
+        hello.textContent = 'Olá, ' + nome + '!';
+        desc.textContent = 'Sua conta está ativa. Você já pode entrar e explorar os pacotes da TOURMIX.';
+      } else {
+        hello.style.display = 'none';
+        desc.textContent = 'Olá! Sua conta está ativa. Você já pode entrar e explorar os pacotes da TOURMIX.';
+      }
       status.className = 'status ok';
       status.innerHTML = '<div class="check" style="width:40px;height:40px;font-size:1.2rem;margin:0 .5rem 0 0">✓</div><span>Conta verificada com sucesso</span>';
       actions.style.display = 'flex';
       actions.innerHTML =
         '<a class="btn btn-primary" href="/minha-conta">Ir para Minha Conta</a>' +
         '<a class="btn btn-ghost" href="/">Voltar ao início</a>';
-      // limpa tokens da URL
       try { history.replaceState({}, document.title, '/confirmar-email'); } catch (e) {}
     }
 
     function showErr(msg) {
       title.textContent = 'Não foi possível confirmar';
+      hello.style.display = 'none';
       desc.textContent = msg || 'O link pode ter expirado. Faça login ou crie a conta novamente.';
       status.className = 'status err';
       status.textContent = msg || 'Link inválido ou expirado';
@@ -122,7 +159,8 @@ p{margin:0 0 1rem; color:var(--muted); font-size:.92rem; line-height:1.55}
     try {
       var res = await TourmixAuth.handleEmailConfirmation();
       if (res && res.ok) {
-        showOk(res.user);
+        var user = await resolveUser(res.user);
+        showOk(user);
       } else {
         showErr((res && res.error) || 'Não foi possível validar o e-mail.');
       }
