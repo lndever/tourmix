@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Assistente TOURMIX</title>
-<link rel="icon" type="image/png" href="/assets/img/LOGO-05.png">
+<link rel="icon" type="image/png" href="LOGO-05.png">
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 :root{
@@ -190,41 +190,23 @@ a:hover{text-decoration:underline}
 .msg.user a{color:#fff;text-decoration:underline}
 
 .sugestoes{
-  display:flex;flex-wrap:nowrap;gap:.45rem;
-  padding:.55rem 1rem .7rem;
-  border-top:1px solid rgba(226,232,240,.65);
-  background:rgba(255,255,255,.55);
-  backdrop-filter:blur(14px);
-  -webkit-backdrop-filter:blur(14px);
-  overflow-x:auto;
-  scrollbar-width:none;
-  -ms-overflow-style:none;
+  display:flex;flex-wrap:wrap;gap:.4rem;
+  padding:.35rem 1.15rem .65rem;
+  border-top:1px solid var(--line);
+  background:#fafbfc;
 }
-.sugestoes::-webkit-scrollbar{display:none}
 .sugestoes button{
   font-family:inherit;
-  font-size:.72rem;font-weight:600;
+  font-size:.75rem;font-weight:600;
   color:var(--primary);
-  background:rgba(255,255,255,.72);
-  border:1px solid rgba(14,116,144,.22);
+  background:#fff;
+  border:1px solid #cbd5e1;
   border-radius:50px;
-  padding:.42rem .85rem;
+  padding:.4rem .8rem;
   cursor:pointer;
-  transition:.18s;
-  white-space:nowrap;
-  flex-shrink:0;
-  box-shadow:0 4px 14px rgba(15,23,42,.04);
+  transition:.15s;
 }
-.sugestoes button:hover{
-  border-color:var(--primary);
-  background:rgba(240,249,255,.95);
-  transform:translateY(-1px);
-  box-shadow:0 6px 16px rgba(14,116,144,.12);
-}
-.sugestoes-label{
-  font-size:.65rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase;
-  color:var(--muted);align-self:center;padding:0 .15rem 0 .25rem;white-space:nowrap;flex-shrink:0;
-}
+.sugestoes button:hover{border-color:var(--primary);background:#f0f9ff}
 
 .composer{
   display:flex;gap:.55rem;
@@ -281,20 +263,8 @@ a:hover{text-decoration:underline}
 [data-theme="dark"] .hist-item{color:#94a3b8;border-color:#334155}
 [data-theme="dark"] .chat-wrap,[data-theme="dark"] .messages{background:#0f172a}
 [data-theme="dark"] .msg.bot{background:#1e293b;border-color:#334155;color:#f1f5f9}
-[data-theme="dark"] .sugestoes{
-  background:rgba(15,23,42,.55);
-  border-color:rgba(51,65,85,.7);
-  backdrop-filter:blur(16px);
-  -webkit-backdrop-filter:blur(16px);
-}
-[data-theme="dark"] .sugestoes button{
-  background:rgba(30,41,59,.75);
-  border-color:rgba(103,232,249,.25);
-  color:#67e8f9;
-  box-shadow:0 4px 14px rgba(0,0,0,.2);
-}
-[data-theme="dark"] .sugestoes button:hover{background:rgba(30,41,59,.95);border-color:#67e8f9}
-[data-theme="dark"] .sugestoes-label{color:#94a3b8}
+[data-theme="dark"] .sugestoes{background:#0b1220;border-color:#1e293b}
+[data-theme="dark"] .sugestoes button{background:#1e293b;border-color:#334155;color:#67e8f9}
 [data-theme="dark"] .composer{background:#0f172a;border-color:#1e293b}
 [data-theme="dark"] .composer input{background:#1e293b;border-color:#334155;color:#f1f5f9}
   .msg.bot a.pkg-link {
@@ -312,7 +282,7 @@ a:hover{text-decoration:underline}
 <body>
 <header class="topbar">
   <a href="/" class="brand">
-    <img src="/assets/img/LOGO-05.png" alt="TOURMIX" onerror="this.style.display='none'">
+    <img src="LOGO-05.png" alt="TOURMIX" onerror="this.style.display='none'">
     <div class="brand-text">
       <strong>Assistente TOURMIX</strong>
       <span>Consultoria de viagens</span>
@@ -364,22 +334,17 @@ a:hover{text-decoration:underline}
     <div class="messages" id="messages" aria-live="polite"></div>
 
     <div class="sugestoes" id="sugestoes">
-      <span class="sugestoes-label">Sugestões</span>
-      <button type="button" data-q="Oi! Quero uma dica de viagem">Conversar</button>
       <button type="button" data-q="Me mostra um destino em promoção">Em promoção</button>
-      <button type="button" data-q="Me indica algo no meu estilo">Me indica</button>
-      <button type="button" data-q="Quais pacotes vocês têm agora?">Ver pacotes</button>
-      <button type="button" data-q="O que está incluso no pacote de Caldas Novas?">Incluso em Caldas</button>
-      <button type="button" data-q="O Wi-Fi está incluso na viagem para Caldas Novas?">Wi-Fi em Caldas</button>
-      <button type="button" data-q="Posso levar bebida ou comida no pacote de Gramado?">Comida/bebida</button>
-      <button type="button" data-q="Gestante pode viajar nos pacotes da Tourmix?">Gestante</button>
-      <button type="button" data-q="Monte um roteiro para Foz do Iguaçu">Roteiro Foz</button>
+      <button type="button" data-q="Me indica algo no meu estilo">Me indica algo</button>
+      <button type="button" data-q="Quais pacotes vocês têm?">Ver pacotes</button>
+      <button type="button" data-q="Quanto custa Holambra?">Holambra</button>
+      <button type="button" data-q="Tô afim de natureza">Natureza</button>
       <button type="button" data-q="Quero praia">Praia</button>
-      <button type="button" data-q="Qual meu perfil de viajante?">Meu perfil</button>
+      <button type="button" data-q="Qual meu perfil?">Meu perfil</button>
     </div>
 
     <form class="composer" id="form">
-      <input type="text" id="input" placeholder="Pergunte como se estivesse no WhatsApp: preço, Wi-Fi, incluso, roteiro…" autocomplete="off" required>
+      <input type="text" id="input" placeholder="Pergunte sobre valores, destinos ou dicas…" autocomplete="off" required>
       <button type="submit">Enviar</button>
     </form>
   </div>
@@ -766,7 +731,7 @@ else addMsg('Opa! Bora achar sua próxima viagem? ✈️<br><br>Se fizer o <a hr
 })();
 </script>
 
-<script src="/assets/js/theme.js"></script>
-<script src="/assets/js/i18n.js"></script>
+<script src="theme.js"></script>
+<script src="i18n.js"></script>
 </body>
 </html>
