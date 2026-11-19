@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Assistente TOURMIX</title>
-<link rel="icon" type="image/png" href="LOGO-05.png">
+<link rel="icon" type="image/png" href="/assets/img/LOGO-05.png">
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 :root{
@@ -190,23 +190,41 @@ a:hover{text-decoration:underline}
 .msg.user a{color:#fff;text-decoration:underline}
 
 .sugestoes{
-  display:flex;flex-wrap:wrap;gap:.4rem;
-  padding:.35rem 1.15rem .65rem;
-  border-top:1px solid var(--line);
-  background:#fafbfc;
+  display:flex;flex-wrap:nowrap;gap:.45rem;
+  padding:.55rem 1rem .7rem;
+  border-top:1px solid rgba(226,232,240,.65);
+  background:rgba(255,255,255,.55);
+  backdrop-filter:blur(14px);
+  -webkit-backdrop-filter:blur(14px);
+  overflow-x:auto;
+  scrollbar-width:none;
+  -ms-overflow-style:none;
 }
+.sugestoes::-webkit-scrollbar{display:none}
 .sugestoes button{
   font-family:inherit;
-  font-size:.75rem;font-weight:600;
+  font-size:.72rem;font-weight:600;
   color:var(--primary);
-  background:#fff;
-  border:1px solid #cbd5e1;
+  background:rgba(255,255,255,.72);
+  border:1px solid rgba(14,116,144,.22);
   border-radius:50px;
-  padding:.4rem .8rem;
+  padding:.42rem .85rem;
   cursor:pointer;
-  transition:.15s;
+  transition:.18s;
+  white-space:nowrap;
+  flex-shrink:0;
+  box-shadow:0 4px 14px rgba(15,23,42,.04);
 }
-.sugestoes button:hover{border-color:var(--primary);background:#f0f9ff}
+.sugestoes button:hover{
+  border-color:var(--primary);
+  background:rgba(240,249,255,.95);
+  transform:translateY(-1px);
+  box-shadow:0 6px 16px rgba(14,116,144,.12);
+}
+.sugestoes-label{
+  font-size:.65rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase;
+  color:var(--muted);align-self:center;padding:0 .15rem 0 .25rem;white-space:nowrap;flex-shrink:0;
+}
 
 .composer{
   display:flex;gap:.55rem;
@@ -263,8 +281,20 @@ a:hover{text-decoration:underline}
 [data-theme="dark"] .hist-item{color:#94a3b8;border-color:#334155}
 [data-theme="dark"] .chat-wrap,[data-theme="dark"] .messages{background:#0f172a}
 [data-theme="dark"] .msg.bot{background:#1e293b;border-color:#334155;color:#f1f5f9}
-[data-theme="dark"] .sugestoes{background:#0b1220;border-color:#1e293b}
-[data-theme="dark"] .sugestoes button{background:#1e293b;border-color:#334155;color:#67e8f9}
+[data-theme="dark"] .sugestoes{
+  background:rgba(15,23,42,.55);
+  border-color:rgba(51,65,85,.7);
+  backdrop-filter:blur(16px);
+  -webkit-backdrop-filter:blur(16px);
+}
+[data-theme="dark"] .sugestoes button{
+  background:rgba(30,41,59,.75);
+  border-color:rgba(103,232,249,.25);
+  color:#67e8f9;
+  box-shadow:0 4px 14px rgba(0,0,0,.2);
+}
+[data-theme="dark"] .sugestoes button:hover{background:rgba(30,41,59,.95);border-color:#67e8f9}
+[data-theme="dark"] .sugestoes-label{color:#94a3b8}
 [data-theme="dark"] .composer{background:#0f172a;border-color:#1e293b}
 [data-theme="dark"] .composer input{background:#1e293b;border-color:#334155;color:#f1f5f9}
   .msg.bot a.pkg-link {
@@ -282,7 +312,7 @@ a:hover{text-decoration:underline}
 <body>
 <header class="topbar">
   <a href="/" class="brand">
-    <img src="LOGO-05.png" alt="TOURMIX" onerror="this.style.display='none'">
+    <img src="/assets/img/LOGO-05.png" alt="TOURMIX" onerror="this.style.display='none'">
     <div class="brand-text">
       <strong>Assistente TOURMIX</strong>
       <span>Consultoria de viagens</span>
@@ -334,17 +364,22 @@ a:hover{text-decoration:underline}
     <div class="messages" id="messages" aria-live="polite"></div>
 
     <div class="sugestoes" id="sugestoes">
+      <span class="sugestoes-label">Sugestões</span>
+      <button type="button" data-q="Oi! Quero uma dica de viagem">Conversar</button>
       <button type="button" data-q="Me mostra um destino em promoção">Em promoção</button>
-      <button type="button" data-q="Me indica algo no meu estilo">Me indica algo</button>
-      <button type="button" data-q="Quais pacotes vocês têm?">Ver pacotes</button>
-      <button type="button" data-q="Quanto custa Holambra?">Holambra</button>
-      <button type="button" data-q="Tô afim de natureza">Natureza</button>
+      <button type="button" data-q="Me indica algo no meu estilo">Me indica</button>
+      <button type="button" data-q="Quais pacotes vocês têm agora?">Ver pacotes</button>
+      <button type="button" data-q="O que está incluso no pacote de Caldas Novas?">Incluso em Caldas</button>
+      <button type="button" data-q="O Wi-Fi está incluso na viagem para Caldas Novas?">Wi-Fi em Caldas</button>
+      <button type="button" data-q="Posso levar bebida ou comida no pacote de Gramado?">Comida/bebida</button>
+      <button type="button" data-q="Gestante pode viajar nos pacotes da Tourmix?">Gestante</button>
+      <button type="button" data-q="Monte um roteiro para Foz do Iguaçu">Roteiro Foz</button>
       <button type="button" data-q="Quero praia">Praia</button>
-      <button type="button" data-q="Qual meu perfil?">Meu perfil</button>
+      <button type="button" data-q="Qual meu perfil de viajante?">Meu perfil</button>
     </div>
 
     <form class="composer" id="form">
-      <input type="text" id="input" placeholder="Pergunte sobre valores, destinos ou dicas…" autocomplete="off" required>
+      <input type="text" id="input" placeholder="Pergunte como se estivesse no WhatsApp: preço, Wi-Fi, incluso, roteiro…" autocomplete="off" required>
       <button type="submit">Enviar</button>
     </form>
   </div>
@@ -354,20 +389,21 @@ a:hover{text-decoration:underline}
 var PERFIL_KEY='tourmix_perfil_quiz',SCORES_KEY='tourmix_perfil_scores',INTERESSES_KEY='tourmix_interesses',HISTORICO_KEY='tourmix_historico_nav';
 var PERFIS={
 natureza:{emoji:'🌿',titulo:'Explorador da Natureza',desc:'Trilha, rio cristalino e vento no rosto. Cidade grande até cansa você rapidinho.',destinos:['bonito','foz'],badge:'PERFIL NATUREZA'},
-praia:{emoji:'🏖️',titulo:'Praiano Urbano',desc:'Sol, orla e energia de cidade que não para. Chinelo sempre na mala.',destinos:['camboriu','foz'],badge:'PERFIL SOLZÃO'},
+praia:{emoji:'🏖️',titulo:'Praiano Urbano',desc:'Sol, orla e energia de cidade que não para. Chinelo sempre na mala.',destinos:['floripa','camboriu'],badge:'PERFIL SOLZÃO'},
 romantico:{emoji:'🌷',titulo:'Romântico Fotogênico',desc:'Você viaja pra colecionar momentos (e umas 200 fotos). Flores e ruas charmosas te conquistam fácil.',destinos:['holambra','gramado'],badge:'PERFIL CHARME'},
 relax:{emoji:'♨️',titulo:'Mestre do Descanso',desc:'Modo avião ligado. Termas, piscina e zero culpa por não fazer nada.',destinos:['caldas','gramado'],badge:'PERFIL ZEN'},
 cultural:{emoji:'🏛️',titulo:'Viajante Cultural',desc:'Você quer sentir o lugar: comida boa, história e aquele café com cara de filme.',destinos:['gramado','foz'],badge:'PERFIL CURIOUS'}
 };
 var CATALOGO=[
-{id:'holambra',nome:'Holambra',tipo:'Excursão 1 dia',tags:['flores','romantico','foto','holambra','promocao','barato','excursao'],resumo:'Um dia na Cidade das Flores — Portal, Moinho, Guarda-Chuvas, Deck do Amor e Parque Van Gogh.',data:'25 de outubro (domingo)',preco:'R$ 159,90 à vista ou 2x de R$ 80 no PIX (reserva 30%)',inclui:'Micro-ônibus executivo, guia credenciado, seguro Hero, kit Tourmix e sorteios',embarque:'Itaquaquecetuba 6h20 · Barra Funda 7h30',link:'/holambra'},
-{id:'foz',nome:'Foz do Iguaçu',tipo:'Pacote 4 noites',tags:['natureza','cataratas','foz','promocao','barato','familia'],resumo:'Cataratas + cidade. Hotel San Juan com café. Aéreo saindo de SP.',data:'Saídas OUT/NOV/DEZ (ex.: 03 e 17/OUT)',preco:'A partir de 12x de R$ 115 · 3% off à vista',inclui:'Aéreo SP, Hotel San Juan (café), transfer e seguro · taxas de embarque não inclusas',link:'/foz-iguacu'},
-{id:'camboriu',nome:'Balneário Camboriú',tipo:'Pacote 4 noites',tags:['praia','mar','camboriu','promocao','sol'],resumo:'Orla famosa, praia e cidade completa. Hotel Rosenbrock com café.',data:'Saídas OUT/NOV/DEZ',preco:'A partir de 12x de R$ 115 · 3% off à vista',inclui:'Aéreo SP, Hotel Rosenbrock (café), transfer e seguro · taxas de embarque não inclusas',link:'/balneario-camboriu'},
-{id:'gramado',nome:'Gramado',tipo:'Pacote 4 noites',tags:['serra','gramado','romantico','cultural','promocao','chocolate'],resumo:'Serra com charme, gastronomia e clima de cinema. Life Hotel Infinity com café.',data:'Saídas SET/OUT/NOV/DEZ',preco:'A partir de 12x de R$ 115 · 3% off à vista',inclui:'Aéreo SP, Life Hotel Infinity (café), transfer e seguro · taxas de embarque não inclusas',link:'/gramado'},
-{id:'bonito',nome:'Bonito',tipo:'Pacote 5 noites',tags:['natureza','bonito','aventura','rio','promocao'],resumo:'Águas cristalinas e ecoturismo no MS. Hotel Bonito Ecotel com café.',data:'Saídas NOV/DEZ',preco:'A partir de 12x de R$ 167 · 3% off à vista',inclui:'Aéreo SP, Bonito Ecotel (café), transfer e seguro · taxas de embarque não inclusas',link:'/bonito'},
-{id:'caldas',nome:'Caldas Novas',tipo:'Pacote 5 noites',tags:['termas','relax','caldas','resort','familia','promocao'],resumo:'Resort Encontro das Águas com café e jantar. Ideal pra desligar.',data:'Saídas OUT/NOV',preco:'A partir de 12x de R$ 145 · 3% off à vista',inclui:'Aéreo SP, resort (café e jantar), transfer e seguro · taxas de embarque não inclusas',link:'/caldas-novas'}
-,{id:'santiago',nome:'Santiago do Chile',tipo:'Réveillon 4 noites',tags:['santiago','chile','reveillon','ano novo','internacional','promocao','romantico'],resumo:'Réveillon 2026/2027 em Santiago. Hotel Panamericano com café, city tour, aéreo de SP.',data:'Saída 30/DEZ',preco:'A partir de 10x de R$ 397 · 3% off à vista',inclui:'Aéreo SP, Hotel Panamericano (café), transfer, city tour e seguro · taxas de embarque não inclusas',link:'/santiago-chile'}
-,{id:'buenosaires',nome:'Buenos Aires',tipo:'Réveillon 4 noites',tags:['buenos aires','argentina','reveillon','ano novo','internacional','promocao','romantico','cultural'],resumo:'Réveillon 2026/2027 em Buenos Aires. Hotel El Conquistador com café, city tour, aéreo de SP.',data:'Saída 30/DEZ',preco:'A partir de 10x de R$ 374 · 3% off à vista',inclui:'Aéreo SP, Hotel El Conquistador (café), transfer, city tour e seguro · taxas de embarque não inclusas',link:'/buenos-aires'}
+{id:'holambra',nome:'Holambra',tipo:'Excursão 1 dia',tags:['flores','romantico','foto','holambra','promocao','barato','excursao'],resumo:'Um dia na Cidade das Flores — Portal, Moinho, Guarda-Chuvas, Deck do Amor e Parque Van Gogh.',data:'Consulte datas no WhatsApp',preco:'R$ 159,90 à vista ou 2x de R$ 80 no PIX (reserva 30%)',inclui:'Micro-ônibus executivo, guia credenciado, seguro Hero, kit Tourmix e sorteios',embarque:'Pontos informados na reserva',link:'/holambra'},
+{id:'foz',nome:'Foz do Iguaçu',tipo:'Pacote 4 noites',tags:['natureza','cataratas','foz','promocao','barato','familia','ferias','janeiro'],resumo:'Cataratas + cidade. Hotel com café. Aéreo saindo de SP. Férias Janeiro 2027.',data:'Saídas 09 a 27/JAN',preco:'A partir de 10x de R$ 178 · 3% off à vista',inclui:'Aéreo SP, hotel (café), transfer e seguro · taxas de embarque não inclusas',link:'/foz-iguacu'},
+{id:'camboriu',nome:'Balneário Camboriú',tipo:'Pacote 4 noites',tags:['praia','mar','camboriu','promocao','sol','ferias','janeiro'],resumo:'Orla famosa, praia e cidade completa. Hotel com café. Férias Janeiro 2027.',data:'Saídas 10 a 24/JAN',preco:'A partir de 10x de R$ 184 · 3% off à vista',inclui:'Aéreo SP, hotel (café), transfer e seguro · taxas de embarque não inclusas',link:'/balneario-camboriu'},
+{id:'gramado',nome:'Gramado',tipo:'Pacote 4 noites',tags:['serra','gramado','romantico','cultural','promocao','chocolate','ferias','janeiro'],resumo:'Serra com charme e gastronomia. Life Hotel Infinity com café + Bustour 1 dia. Férias Janeiro 2027.',data:'Saídas 03 a 20/JAN',preco:'A partir de 10x de R$ 181 · 3% off à vista',inclui:'Aéreo SP, Life Hotel Infinity (café), transfer, Bustour 1 dia e seguro · taxas de embarque não inclusas',link:'/gramado'},
+{id:'bonito',nome:'Bonito',tipo:'Pacote 5 noites',tags:['natureza','bonito','aventura','rio','promocao','ferias','janeiro'],resumo:'Águas cristalinas e ecoturismo no MS. Hotel com café. Férias Janeiro 2027.',data:'Saídas 10, 17 e 24/JAN',preco:'A partir de 10x de R$ 253 · 3% off à vista',inclui:'Aéreo SP voo direto, hotel (café), transfer e seguro · taxas de embarque não inclusas',link:'/bonito'},
+{id:'caldas',nome:'Caldas Novas',tipo:'Pacote 4 noites',tags:['termas','relax','caldas','resort','familia','promocao','ferias','janeiro'],resumo:'Resort Encontro das Águas Thermas com café. Ideal pra desligar. Férias Janeiro 2027.',data:'Saídas 03, 10, 17 e 24/JAN',preco:'A partir de 10x de R$ 186 · 3% off à vista',inclui:'Aéreo SP voo direto, Encontro das Águas Thermas (café), transfer e seguro · taxas de embarque não inclusas',link:'/caldas-novas'},
+{id:'floripa',nome:'Florianópolis',tipo:'Pacote 4 noites',tags:['praia','mar','floripa','florianopolis','ilha','promocao','sol','ferias','janeiro'],resumo:'Ilha da Magia. Porto da Ilha Hotel com café da manhã. Aéreo de SP. Férias Janeiro 2027.',data:'Saídas 13, 20 e 27/JAN',preco:'A partir de 10x de R$ 186 · 3% off à vista',inclui:'Aéreo SP, Porto da Ilha Hotel (café), transfer e seguro · taxas de embarque não inclusas',link:'/florianopolis'},
+{id:'santiago',nome:'Santiago do Chile',tipo:'Réveillon 4 noites',tags:['santiago','chile','reveillon','ano novo','internacional','promocao','romantico'],resumo:'Réveillon 2026/2027 em Santiago. Hotel Panamericano com café, city tour, aéreo de SP.',data:'Saída 30/DEZ',preco:'A partir de 10x de R$ 397 · 3% off à vista',inclui:'Aéreo SP, Hotel Panamericano (café), transfer, city tour e seguro · taxas de embarque não inclusas',link:'/santiago-chile'},
+{id:'buenosaires',nome:'Buenos Aires',tipo:'Réveillon 4 noites',tags:['buenos aires','argentina','reveillon','ano novo','internacional','promocao','romantico','cultural'],resumo:'Réveillon 2026/2027 em Buenos Aires. Hotel El Conquistador com café, city tour, aéreo de SP.',data:'Saída 30/DEZ',preco:'A partir de 10x de R$ 374 · 3% off à vista',inclui:'Aéreo SP, Hotel El Conquistador (café), transfer, city tour e seguro · taxas de embarque não inclusas',link:'/buenos-aires'}
 ];
 var FAQ_EXTRA={
 whatsapp:'WhatsApp oficial: (11) 91484-1404 — https://wa.me/5511914841404',
@@ -375,7 +411,7 @@ pix:'PIX (CNPJ): 65.063.425/0001-95',
 horario:'Atendimento: seg a sex, 9h às 18h',
 empresa:'TOURMIX / Tourmix Br — CNPJ/CADASTUR 65.063.425/0001-95'
 };
-var NOME_PATH={'/holambra':'Holambra','/holambra.html':'Holambra','/gramado':'Gramado','/gramado.html':'Gramado','/bonito':'Bonito','/bonito.html':'Bonito','/foz-iguacu':'Foz do Iguaçu','/foz-iguacu.html':'Foz do Iguaçu','/balneario-camboriu':'Balneário Camboriú','/balneario-camboriu.html':'Balneário Camboriú','/caldas-novas':'Caldas Novas','/caldas-novas.html':'Caldas Novas','/excursoes':'Excursões','/excursoes.html':'Excursões','/descubra-perfil':'Quiz','/descubra-perfil.html':'Quiz','/santiago-chile':'Santiago do Chile','/santiago-chile.html':'Santiago do Chile','/buenos-aires':'Buenos Aires','/buenos-aires.html':'Buenos Aires'};
+var NOME_PATH={'/holambra':'Holambra','/holambra.html':'Holambra','/gramado':'Gramado','/gramado.html':'Gramado','/bonito':'Bonito','/bonito.html':'Bonito','/foz-iguacu':'Foz do Iguaçu','/foz-iguacu.html':'Foz do Iguaçu','/balneario-camboriu':'Balneário Camboriú','/balneario-camboriu.html':'Balneário Camboriú','/caldas-novas':'Caldas Novas','/caldas-novas.html':'Caldas Novas','/florianopolis':'Florianópolis','/florianopolis.html':'Florianópolis','/excursoes':'Excursões','/excursoes.html':'Excursões','/descubra-perfil':'Quiz','/descubra-perfil.html':'Quiz','/santiago-chile':'Santiago do Chile','/santiago-chile.html':'Santiago do Chile','/buenos-aires':'Buenos Aires','/buenos-aires.html':'Buenos Aires'};
 var lastBotIntent='';
 var turn=0;
 var greetingsDone=false;
@@ -652,6 +688,7 @@ function textToHtml(t){
   var lista = [
     [/Balne[aá]rio\s+Cambori[uú]/gi, '/balneario-camboriu', 'Balneário Camboriú'],
     [/Foz\s+do\s+Igua[cç]u/gi, '/foz-iguacu', 'Foz do Iguaçu'],
+    [/Florian[oó]polis/gi, '/florianopolis', 'Florianópolis'],
     [/Santiago\s+do\s+Chile/gi, '/santiago-chile', 'Santiago do Chile'],
     [/Buenos\s+Aires/gi, '/buenos-aires', 'Buenos Aires'],
     [/Caldas\s+Novas/gi, '/caldas-novas', 'Caldas Novas'],
@@ -731,7 +768,7 @@ else addMsg('Opa! Bora achar sua próxima viagem? ✈️<br><br>Se fizer o <a hr
 })();
 </script>
 
-<script src="theme.js"></script>
-<script src="i18n.js"></script>
+<script src="/assets/js/theme.js"></script>
+<script src="/assets/js/i18n.js"></script>
 </body>
 </html>
